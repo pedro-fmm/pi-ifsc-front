@@ -1,4 +1,4 @@
-/* minuto 38:32 */
+/* minuto 1:06:23 */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -539,4 +539,16 @@ main .recent-orders a{
 
 .right .sales-analytics .add-product div h3{
     font-weight: 600;
+}
+
+/*----------------- Media Queries -----------------*/
+
+@media screen and (max-width: 1200px){
+    .container{
+        width: 94%;
+        grid-template-columns: 7rem auto 23rem;
+    }
+    aside .logo h2{
+        display: none;
+    }
 }
