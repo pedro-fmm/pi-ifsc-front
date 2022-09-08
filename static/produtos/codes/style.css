@@ -67,7 +67,7 @@ body{
     width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
-    grid-template-columns: 14rem auto 23rem;
+    grid-template-columns: 14rem auto;
 }
 
 a{
@@ -389,6 +389,20 @@ main .recent-orders a{
     display: block;
     margin: 1rem auto;
     color: var(--color-primary);
+}
+
+main .recent-orders::-webkit-scrollbar {
+    width: 12px;             
+}
+
+main .recent-orders::-webkit-scrollbar-track {
+    background: var(--color-background);        /* color of the tracking area */
+}
+  
+main .recent-orders::-webkit-scrollbar-thumb {
+background-color: var(--color-info-light);    /* color of the scroll thumb */
+border-radius: 20px;       /* roundness of the scroll thumb */
+border: 3px solid var(--color-background);  /* creates padding around scroll thumb */
 }
 
 /*----------------- Right -----------------*/

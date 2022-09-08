@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Produtos</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 
@@ -33,7 +33,7 @@
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">receipt_long</span>
-                    <h3>Pedidos</h3>
+                    <h3>Vendas</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">insights</span>
@@ -70,13 +70,32 @@
         <!---------------- FIM DA NAVEGACAO ---------------->
 
         <main>
-            <h1>Listagem de Produtos</h1>
+            <div class="right">
+                <div class="top">
+                    <button = id="menu-btn">
+                        <span class = " material-icons-sharp ">menu</span >
+                        </button>
+                        <div class="theme-toggler">
+                            <span class= " material-icons-sharp active"> light_mode </span>
+                            <span class= " material-icons-sharp "> dark_mode </span>
+                        </div>
+                        <div class="profile">
+                            <div class="info">
+                                <p>Hey, <b>Baiano</b></p>
+                                <small class="text-muted">Admin</small>
+                            </div>
+                            <div class="profile-photo">
+                                <img src="../images/profile-2.jpg" alt="Profile">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h1 style="text-align: left;">Listagem de Produtos</h1>
             <div class="date">
                 <input type="date">
             </div>
             <h2>Vendas Recentes</h2>
-           
-            <div class="recent-orders" style="overflow-y: auto; margin-bottom: 2rem;">
+            <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
                 <table>
                     <thead>
                         <tr>
@@ -205,25 +224,7 @@
         </main>
         <!-- ---------------- Fim da Main -------------------->
 
-        <div class="right">
-            <div class="top">
-                <button = id="menu-btn">
-                    <span class = " material-icons-sharp ">menu</span >
-                </button>
-                <div class="theme-toggler">
-                    <span class= " material-icons-sharp active"> light_mode </span>
-                    <span class= " material-icons-sharp "> dark_mode </span>
-                </div>
-                <div class="profile">
-                    <div class="info">
-                        <p>Hey, <b>Baiano</b></p>
-                        <small class="text-muted">Admin</small>
-                    </div>
-                    <div class="profile-photo">
-                        <img src="../images/profile-2.jpg" alt="Profile">
-                    </div>
-                </div>
-            </div>
+        
             
             <!------- Fim do User ------->
     </div>
