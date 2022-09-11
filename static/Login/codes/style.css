@@ -16,7 +16,7 @@
     --border-radius-1:0.4rem;
     --border-radius-2:0.8rem;
     --border-radius-3:1.2rem;
-
+    
     --card-padding:1.8rem;
     --padding-1:1.2rem; 
 
@@ -26,11 +26,12 @@
 /* ------------------ DARK THEME VARAIBLES -------------------*/
 
 .dark-theme-variables {
+    --color-primary:#379ef8;
     --color-background:#181a1e;
     --color-white:#202528;
     --color-dark:#edeffd;
     --color-dark-variant:#a3bdcc ;
-    --color-light: rgba(0, 0, 0, 0.4);
+    --color-light: rgb(255, 242, 242);
     --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
@@ -58,7 +59,7 @@ body, input{
     width: 2000px;
     height: 2000px;
     border-radius: 50%;
-    background: linear-gradient(-45deg, var(--color-primary), var(--color-primary-variant));
+    background: linear-gradient(-45deg, var(--color-primary), var(--color-primary));
     top: -10%;
     right: 48%;
     transform: translateY(-50%);
@@ -85,6 +86,77 @@ body, input{
     z-index: 5;
 }
 
+/* -------------- DARK MODE -------------- */
+
+.right{
+    margin-top: 1.4rem;
+}
+
+.right p{
+    color: var(--color-dark);
+    font-size: 1rem;
+}
+
+.right .top {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+}
+
+.right .top button {
+    display: none;
+}
+
+.right .theme-togglerOne {
+    background: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6rem;
+    width: 4.2rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+.right .theme-togglerOne span{
+        font-size: 1.2rem;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center 
+}
+
+.right .theme-togglerOne span.active{
+    border-radius: var(--border-radius-1);
+}
+
+.right .theme-togglerTwo {
+    background: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6rem;
+    width: 4.2rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+.right .theme-togglerTwo span{
+        font-size: 1.2rem;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center 
+}
+
+.right .theme-togglerTwo span.active{
+    border-radius: var(--border-radius-1);
+}
+
+/* -------------- FIM DARK MODE -------------- */
+
 form{
     display: flex;
     align-items: center;
@@ -108,7 +180,7 @@ form.Sign-Up{
 
 .title{
     font-size: 2.5rem;
-    color: #444;
+    color: var(--color-dark);
     margin-bottom: 10px;
 }
 
@@ -138,7 +210,7 @@ form.Sign-Up{
     line-height: 1;
     font-weight: 600;
     font-size: 1.1rem;
-    color: var(--color-dark);
+    color: black;
 }
 
 .input-field input::placeholder{
@@ -184,7 +256,7 @@ form.Sign-Up{
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: #333;
+    color: var(--color-dark);
     font-size: 1.1rem;
     border-radius: 50%;
     transition: 0.3s;
@@ -237,46 +309,6 @@ form.Sign-Up{
 .panel p{
     font-size: 0.95rem;
     padding: 0.7rem 0;
-}
-
-.right{
-    margin-top: 1.4rem;
-}
-
-.right .top {
-    display: flex;
-    justify-content: end;
-    gap: 2rem;
-}
-
-.right .top button {
-    display: none;
-}
-
-.right .theme-toggler {
-    background: var(--color-light);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 1.6rem;
-    width: 4.2rem;
-    cursor: pointer;
-    border-radius: var(--border-radius-1);
-}
-
-.right .theme-toggler span{
-        font-size: 1.2rem;
-        width: 50%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center 
-}
-
-.right .theme-toggler span.active{
-    background: var(--color-primary);
-    color: white;
-    border-radius: var(--border-radius-1);
 }
 
 .btn.transparent{
