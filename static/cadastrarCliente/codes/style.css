@@ -258,13 +258,15 @@ main .recent-orders input{
     width: 100%;
     height: 45px;
     background-color: var(--color-info-light);
-    color: var(--color-dark);
+    color: black;
     font-size: 1.3rem;
     margin: 10px 0;
     border-radius: 55px;
     display: grid;
+    flex-direction: row;
     grid-template-columns: 20% 85%;
     padding: 0.4rem;
+    text-align: center;
 }
 /*----------------- Right -----------------*/
 
