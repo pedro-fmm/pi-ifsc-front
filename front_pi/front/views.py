@@ -34,4 +34,9 @@ def login(request):
         
     return render(request, 'auth/auth.html', {'form': form})
 
+
+def home(request):
+
+    return render(request, 'home/home.html', {'titulo': 'Home'})
+
     
