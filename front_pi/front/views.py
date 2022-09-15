@@ -34,4 +34,16 @@ def login(request):
         
     return render(request, 'auth/auth.html', {'form': form})
 
-    
+
+def home(request):
+
+    return render(request, 'home/home.html', {'titulo': 'Home'})
+
+def clientes(request):
+
+    return render(request, 'clientes/clientes.html', {'titulo': 'Clientes'})
+
+def cadastrar_clientes(request):
+    return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})
+
+
