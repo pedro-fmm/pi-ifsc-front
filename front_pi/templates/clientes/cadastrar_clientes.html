@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/style-clientes-cadastro.css' %}">
+
+    <main>
+        <div class="right">
+            <div class="top">
+                <button = id="menu-btn">
+                    <span class = " material-icons-sharp ">menu</span >
+                    </button>
+                    <div class="theme-toggler">
+                        <span class= " material-icons-sharp active"> light_mode </span>
+                        <span class= " material-icons-sharp "> dark_mode </span>
+                    </div>
+                    <div class="profile">
+                        <div class="info">
+                            <p>Hey, <b>Baiano</b></p>
+                            <small class="text-muted">Admin</small>
+                        </div>
+                        <div class="profile-photo">
+                            <img src="../images/profile-2.jpg" alt="Profile">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1 style="text-align: left;">Cadastrar Clientes</h1>
+        <div class="date">
+            <input type="date">
+        </div>
+        <div class="recent-orders" style="overflow-y: auto; height: 69vh; margin-top: 1rem;">
+           <h2>Nome do Cliente</h2>
+           <input type="text">
+           <h2>CPF</h2>
+           <input type="text">
+           <h2>Email</h2>
+           <input type="email">
+           <h2>Telefone</h2>
+           <input type="number">
+           <h2>Cidade</h2>
+           <input type="text">
+           <h2>CEP</h2>
+           <input type="number">
+        </div>
+    </main>
+    <!-- ---------------- Fim da Main -------------------->
+
+    
+        
+        <!------- Fim do User ------->
+    
+{% endblock %}
