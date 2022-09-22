@@ -16,7 +16,6 @@ body, input{
     min-height: 100vh;
     background-color: #fff;
     overflow: hidden;
-
 }
 
 .container:before{
@@ -99,13 +98,14 @@ form.Sign-Up{
 }
 
 .input-field input{
-    background: none;
+    background: red;
     outline: none;
     border: none;
     line-height: 1;
     font-weight: 600;
     font-size: 1.1rem;
     color: #333;
+    width: 85%;
 }
 
 .input-field input::placeholder{
@@ -229,6 +229,10 @@ form.Sign-Up{
 
 .right-panel .content, .right-panel .image{
     transform: translate(800px);
+}
+
+.input-field #login-email{
+    width: 85%;  
 }
 
 /* ANIMATION */
