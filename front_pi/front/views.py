@@ -1,7 +1,6 @@
 import requests
 from django.shortcuts import render
 from .validators import validaEmail
-from django.contrib.auth.decorators import login_required
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
 
