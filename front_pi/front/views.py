@@ -3,11 +3,11 @@ from django.shortcuts import render
 from .validators import validaEmail
 from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
+from front_pi.settings import API_URL
 
 def login(request):
 
     if request.method == 'POST':
-        form = LoginForm(request.POST)
         email = request.POST['login-email']
         password = request.POST['login-password']
         
@@ -21,7 +21,7 @@ def login(request):
             mensagem = ['Você deve digitar uma senha.']
             return render(request, 'auth/auth.html', {'messages': mensagem})
 
-        resp = requests.post('http://localhost:9000/api/auth/login/', {'email': email, 'password': password})
+        resp = requests.post(API_URL + '/api/auth/login/', {'email': email, 'password': password})
         if resp.json().get('user', False):
             return render(request, 'home/home.html')
 
