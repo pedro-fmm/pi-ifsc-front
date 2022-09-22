@@ -1,3 +1,4 @@
+#local_settings.py front
 from pathlib import Path
 
 DJANGO_SECRET_KEY = 'django-insecure-mws8w#9=8i)twc#hvw1*t1j2nc!p^#11#a=j8&ac64m%$3ll37'
@@ -39,5 +40,3 @@ AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 AWS_S3_FILE_OVERWRITE = False  
 
 AWS_DEFAULT_ACL = None  
-
-AWS_S3_ADDRESSING_STYLE = "virtual"
