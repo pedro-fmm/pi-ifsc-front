@@ -60,7 +60,7 @@ coverage.xml
 
 # Django stuff:
 *.log
-local_settings.py
+front_pi/front_pi/local_settings.py
 
 # Flask stuff:
 instance/
