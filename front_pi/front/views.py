@@ -22,8 +22,9 @@ def login(request):
 
         resp = requests.post(API_URL + '/api/auth/login/', {'email': email, 'password': password})
         if resp.json().get('user', False):
+            response = 'lala'
+            response["Authorization"] = resp.json().get('access')
             return render(request, 'home/home.html')
-
         mensagem = ['Usuário ou senha inválidos']
         return render(request, 'auth/auth.html', {'messages': mensagem})
         
