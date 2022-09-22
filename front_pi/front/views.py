@@ -33,8 +33,10 @@ def login(request):
 def home(request):
     return render(request, 'home/home.html', {'titulo': 'Home'})
 
+@is_authenticated
 def clientes(request):
-    return render(request, 'clientes/clientes.html', {'titulo': 'Clientes'})
+    resp = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
+    return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.content})
 
 def cadastrar_clientes(request):
     return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})

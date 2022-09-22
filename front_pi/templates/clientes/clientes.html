@@ -18,133 +18,30 @@
             <table> 
                 <thead>
                     <tr>
-                        <th>Nome do Produto</th>
-                        <th>Número do Produto</th>
-                        <th>Pagamento</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                    {% for cliente in clientes %}
                     
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                        <tr>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.email }}</td>
+                            <td>{{ cliente.telefone }}a</td>
+                            <td class="success">Confirmado</td>
+                            <td class="primary">Detalhes</td>
+                        </tr>
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                    {% endfor %}
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </main>
-    <!-- ---------------- Fim da Main -------------------->
-
-    
-        
-        <!------- Fim do User ------->
     
 {% endblock %}
