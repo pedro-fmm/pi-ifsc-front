@@ -2,6 +2,7 @@ import requests
 from django.shortcuts import render
 from .validators import validaEmail
 from .forms import LoginForm
+from django.contrib.auth.decorators import login_required
 
 def login(request):
 
@@ -20,22 +21,23 @@ def login(request):
             mensagem = ['Você deve digitar uma senha.']
             return render(request, 'auth/auth.html', {'messages': mensagem})
 
-        user = requests.post('http://localhost:9000/api/auth/login/', {'email': email, 'password': password})
+        resp = requests.post('http://localhost:9000/api/auth/login/', {'email': email, 'password': password})
+        if resp.json().get('user', False):
+            return render(request, 'home/home.html')
 
-        return render(request, 'home/home.html')
+        mensagem = ['Usuário ou senha inválidos']
+        return render(request, 'auth/auth.html', {'messages': mensagem})
         
     else:
         form = LoginForm()
         
     return render(request, 'auth/auth.html', {'form': form})
 
-
+@login_required
 def home(request):
-
     return render(request, 'home/home.html', {'titulo': 'Home'})
 
 def clientes(request):
-
     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes'})
 
 def cadastrar_clientes(request):
