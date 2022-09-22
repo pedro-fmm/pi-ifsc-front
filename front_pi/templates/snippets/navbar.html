@@ -12,27 +12,27 @@
         </div>
 
         <div class="sidebar">
-            <a href="{% url 'front:home' %}">
+            <a id="link-home" href="{% url 'front:home' %}">
                 <span class="material-icons-sharp">grid_view</span>
                 <h3>Dashboard</h3>
             </a>
-            <a href="{% url 'front:clientes' %}">
+            <a id="link-clientes" href="{% url 'front:clientes' %}">
                 <span class="material-icons-sharp">person_outline</span>
                 <h3>Clientes</h3>
             </a>
-            <a href="{% url 'front:cadastrar_clientes' %}">
+            <a id="link-cadastrar-clientes" href="{% url 'front:cadastrar_clientes' %}">
                 <span class="material-icons-sharp">person</span>
                 <h3>Cadastrar Cliente</h3>
             </a>
-            <a href="../../vendas/codes/index.html">
+            <a id="link-vendas" href="../../vendas/codes/index.html">
                 <span class="material-icons-sharp">receipt_long</span>
                 <h3>Vendas</h3>
             </a>
-            <a href="../../produtos/codes/index.html">
+            <a id="link-produtos" href="../../produtos/codes/index.html">
                 <span class="material-icons-sharp">inventory</span>
                 <h3>Produtos</h3>
             </a>
-            <a href="../../cadastrarProduto/codes/index.html">
+            <a id="link-cadastrar-produtos" href="../../cadastrarProduto/codes/index.html">
                 <span class="material-icons-sharp">inventory</span>
                 <h3>Cadastrar Produtos</h3>
             </a>
@@ -54,5 +54,7 @@
             </a>
         </div>
     </aside>
+
+    <script src="{% static 'js/page_toggler.js' %}"></script>
 
 {% endblock %}
