@@ -27,10 +27,7 @@ def login(request):
         mensagem = ['Usuário ou senha inválidos']
         return render(request, 'auth/auth.html', {'messages': mensagem})
         
-    else:
-        form = LoginForm()
-        
-    return render(request, 'auth/auth.html', {'form': form})
+    return render(request, 'auth/auth.html')
 
 @login_required
 def home(request):
