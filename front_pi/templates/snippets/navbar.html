@@ -21,21 +21,34 @@
                 <h3>Clientes</h3>
             </a>
             <a id="link-cadastrar-clientes" href="{% url 'front:cadastrar_clientes' %}">
-                <span class="material-icons-sharp">person</span>
+                <span class="material-icons-sharp">person_add</span>
                 <h3>Cadastrar Cliente</h3>
             </a>
-            <a id="link-vendas" href="../../vendas/codes/index.html">
+            <a id="link-vendas" href="">
                 <span class="material-icons-sharp">receipt_long</span>
                 <h3>Vendas</h3>
             </a>
-            <a id="link-produtos" href="../../produtos/codes/index.html">
+            <a id="link-vendas" href="">
+                <span class="material-icons-sharp">add_shopping_cart</span>
+                <h3>Realizar Vendas</h3>
+            </a>
+            <a id="link-produtos" href="{% url 'front:produtos' %}">
                 <span class="material-icons-sharp">inventory</span>
                 <h3>Produtos</h3>
             </a>
-            <a id="link-cadastrar-produtos" href="../../cadastrarProduto/codes/index.html">
-                <span class="material-icons-sharp">inventory</span>
+            <a id="link-cadastrar-produtos" href="{% url 'front:cadastrar_produtos' %}">
+                <span class="material-symbols-outlined">assignment_add</span>
                 <h3>Cadastrar Produtos</h3>
             </a>
+            <a href="#">
+                <span class="material-symbols-outlined">badge</span>
+                <h3>Funionários</h3>
+            </a>
+            <a href="#">
+                <span class="material-symbols-outlined">medical_information</span>
+                <h3>Cadastrar Funionários</h3>
+            </a>
+
             <a href="#">
                 <span class="material-icons-sharp">insights</span>
                 <h3>Analítico</h3>

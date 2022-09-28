@@ -41,4 +41,10 @@ def clientes(request):
 def cadastrar_clientes(request):
     return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})
 
+def produtos(request):
+    return render(request, 'produtos/produtos.html', {'titulo': 'Produtos'})
+
+def cadastrar_produtos(request):
+    return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto'})
+
 
