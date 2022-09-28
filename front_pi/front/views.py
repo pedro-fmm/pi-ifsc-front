@@ -38,7 +38,26 @@ def clientes(request):
     resp = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
 
+@is_authenticated
 def cadastrar_clientes(request):
+    if request.method == 'POST':
+        nome        = request.POST['cliente-nome']
+        cpf         = request.POST['cliente-cpf']
+        email       = request.POST['cliente-email']
+        telefone    = request.POST['cliente-telefone']
+        cidade      = request.POST['cliente-cidade']
+        cep         = request.POST['cliente-cep']
+
+        if not nome:
+            mensagem = ['Você deve preencher o campo de nome']
+            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})
+        if not cpf:
+            mensagem = ['Você deve preencher o campo de CPF']
+            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})
+        if not email:
+            mensagem = ['Você deve preencher o campo de nome']
+            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})    
+
     return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})
 
 def produtos(request):
