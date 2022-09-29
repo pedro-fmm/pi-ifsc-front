@@ -4,9 +4,13 @@
 
 {% block title %}{{titulo}}{% endblock %}
 
-{% block content %}
+{% block style %}
 
-    <link rel="stylesheet" href="{% static 'css/style-clientes-cadastro.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-clientes-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
 
     <main>        
         <h1 style="text-align: left;">Cadastrar Clientes</h1>
@@ -41,7 +45,7 @@
 
         </form>
     </main>
-    
-    <script src="{% static 'js/clientes/mascara-cadastro-clientes.js' %}"></script>
+
+    {% block script %} <script src="{% static 'js/clientes/mascara-cadastro-clientes.js' %}"></script> {% endblock %}
     
 {% endblock %}

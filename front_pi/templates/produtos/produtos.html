@@ -4,9 +4,13 @@
 
 {% block title %}{{titulo}}{% endblock %}
 
-{% block content %}
+{% block style %}
 
-    <link rel="stylesheet" href="{% static 'css/style-produtos.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-produtos.css' %}">
+
+{% endblock %}
+
+{% block content %}
 
     <main>
             
@@ -141,10 +145,5 @@
             </table>
         </div>
     </main>
-    <!-- ---------------- Fim da Main -------------------->
-
-    
-        
-        <!------- Fim do User ------->
     
 {% endblock %}

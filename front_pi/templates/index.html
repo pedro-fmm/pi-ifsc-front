@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="{% static 'css/style-home.css' %}">
+    {% block style %} {% endblock %}
 </head>
 <body onLoad="setNavbarPageActive()">
 
@@ -26,5 +27,6 @@
     </div>
 
 <script src="{% static 'js/toggle_theme.js' %}"></script>
+{% block script %} {% endblock %}
 </body>
 </html>

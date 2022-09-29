@@ -4,9 +4,13 @@
 
 {% block title %}{{titulo}}{% endblock %}
 
-{% block content %}
+{% block style %}
 
-    <link rel="stylesheet" href="{% static 'css/style-clientes-cadastro.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-produtos-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
 
     <main>        
         <h1 style="text-align: left;">Cadastrar Clientes</h1>
@@ -29,10 +33,5 @@
         </div>
         <button id="cadastrar">Cadastrar</button>
     </main>
-    <!-- ---------------- Fim da Main -------------------->
-
-    
-        
-        <!------- Fim do User ------->
     
 {% endblock %}
