@@ -1,3 +1,4 @@
+from asyncio.log import logger
 import requests
 from django.shortcuts import render
 from .validators import validaEmail
@@ -107,7 +108,73 @@ def cadastrar_clientes(request):
 def produtos(request):
     return render(request, 'produtos/produtos.html', {'titulo': 'Produtos'})
 
-def cadastrar_produtos(request):
-    return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto'})
 
+@is_authenticated
+def cadastrar_produtos(request):
+
+    resp_plat = requests.get(API_URL + '/api/plataforma/list/', headers={'Authorization': request.session['Authorization']})
+    resp_gen = requests.get(API_URL + '/api/genero/list/', headers={'Authorization': request.session['Authorization']})
+    resp_faixa = requests.get(API_URL + '/api/faixa/list/', headers={'Authorization': request.session['Authorization']})        
+    resp_cate = requests.get(API_URL + '/api/categoria/list/', headers={'Authorization': request.session['Authorization']})
+
+    if request.method == 'POST':
+        nome = request.POST['nome']
+        descricao = request.POST['descricao']
+        imagem = request.FILES
+        plataforma = request.POST['plataformas']
+        genero = request.POST['generos']
+        faixa_etaria = request.POST['faixas']
+        categoria = request.POST['categorias']
+        estoque = request.POST['estoque']
+
+        if not nome:
+            mensagem = ['Você deve preencher o campo de nome']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not descricao:
+            mensagem = ['Você deve preencher o campo de descrição']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not imagem:
+            mensagem = ['Você deve preencher o campo de imagem']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not plataforma:
+            mensagem = ['Você deve preencher o campo de plataforma']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not genero:
+            mensagem = ['Você deve preencher o campo de gênero']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not faixa_etaria:
+            mensagem = ['Você deve preencher o campo de faixa etária']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not categoria:
+            mensagem = ['Você deve preencher o campo de categoria']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+        if not estoque:
+            mensagem = ['Você deve preencher o campo de estoque']
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+
+        data = {
+            'nome': nome,
+            'descricao': descricao,
+            'imagem': imagem,
+            'plataforma': plataforma,
+            'genero': genero,
+            'faixa_etaria': faixa_etaria,
+            'categoria': categoria,
+            'estoque': estoque,
+        }
+
+        resp = requests.post(API_URL + '/api/produto/create/', data, headers={'Authorization': request.session['Authorization']})
+
+        if resp.status_code == '201':
+            mensagem = ['Produto adicionado com sucesso!']
+            render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json(), 'messages': mensagem})        
+    
+        render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json(), 'messages': mensagem})
+
+    logger.warn(resp_cate.json())
+    logger.warn(resp_faixa.json())
+    logger.warn(resp_gen.json())
+    logger.warn(resp_plat.json())
+
+    return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
 
