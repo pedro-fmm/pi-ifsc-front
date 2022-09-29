@@ -10,29 +10,38 @@
 
     <main>        
         <h1 style="text-align: left;">Cadastrar Clientes</h1>
-        <div class="date">
-            <input type="date">
-        </div>
-        <div class="register-clients" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
-           <h2>Nome do Cliente</h2>
-           <input type="text">
-           <h2>CPF</h2>
-           <input type="text">
-           <h2>Email</h2>
-           <input type="email">
-           <h2>Telefone</h2>
-           <input type="number">
-           <h2>Cidade</h2>
-           <input type="text">
-           <h2>CEP</h2>
-           <input type="number">
-        </div>
-        <button id="cadastrar">Cadastrar</button>
-    </main>
-    <!-- ---------------- Fim da Main -------------------->
-
-    
         
-        <!------- Fim do User ------->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <form method="post" action="{% url 'front:cadastrar_clientes' %}" class="Sign-In">
+
+            {% csrf_token %}
+
+            <div class="register-clients" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+            <h2>Nome do Cliente</h2>
+            <input id="cliente-nome" name="cliente-nome" type="text">
+            <h2>CPF</h2>
+            <input id="cliente-cpf" name="cliente-cpf" type="text" maxlength="14">
+            <h2>Email</h2>
+            <input id="cliente-email" name="cliente-email" type="email">
+            <h2>Telefone</h2>
+            <input id="cliente-telefone" name="cliente-telefone" type="text" maxlength="15">
+            <h2>Endereço</h2>
+            <input id="cliente-endereco" name="cliente-endereco" type="text">
+            <h2>Cidade</h2>
+            <input id="cliente-cidade" name="cliente-cidade" type="text">
+            </div>
+            <button id="cadastrar">Cadastrar</button>
+
+        </form>
+    </main>
+    
+    <script src="{% static 'js/clientes/mascara-cadastro-clientes.js' %}"></script>
     
 {% endblock %}

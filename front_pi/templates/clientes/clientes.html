@@ -11,9 +11,6 @@
     <main>
             
         <h1 style="text-align: left;">Listagem de Clientes</h1>
-        <div class="date">
-            <input type="date">
-        </div>
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
             <table> 
                 <thead>
@@ -27,17 +24,25 @@
                 </thead>
                 <tbody>
 
-                    {% for cliente in clientes %}
-                        
-                        <tr>
-                            <td>{{ cliente.nome }}</td>
-                            <td>{{ cliente.email }}</td>
-                            <td>{{ cliente.telefone }}</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+                    {% if clientes %}
 
-                    {% endfor %}
+                        {% for cliente in clientes %}
+                            
+                            <tr>
+                                <td>{{ cliente.nome }}</td>
+                                <td>{{ cliente.email }}</td>
+                                <td>{{ cliente.telefone }}</td>
+                                <td class="success">Confirmado</td>
+                                <td class="primary">Detalhes</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                            <p>Nenhum cliente cadastrado</p>
+
+                    {% endif %}
 
                 </tbody>
             </table>
