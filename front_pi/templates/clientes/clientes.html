@@ -27,17 +27,25 @@
                 </thead>
                 <tbody>
 
-                    {% for cliente in clientes %}
-                        
-                        <tr>
-                            <td>{{ cliente.nome }}</td>
-                            <td>{{ cliente.email }}</td>
-                            <td>{{ cliente.telefone }}</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+                    {% if clientes %}
 
-                    {% endfor %}
+                        {% for cliente in clientes %}
+                            
+                            <tr>
+                                <td>{{ cliente.nome }}</td>
+                                <td>{{ cliente.email }}</td>
+                                <td>{{ cliente.telefone }}</td>
+                                <td class="success">Confirmado</td>
+                                <td class="primary">Detalhes</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                            <p>Nenhum cliente cadastrado</p>
+
+                    {% endif %}
 
                 </tbody>
             </table>
