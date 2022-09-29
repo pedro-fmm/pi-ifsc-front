@@ -59,28 +59,28 @@ def cadastrar_clientes(request):
 
         if not nome:
             mensagem = ['Você deve preencher o campo de nome']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
         if not cpf:
             mensagem = ['Você deve preencher o campo de CPF']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
         if not validate_cpf(cpf=cpf):
             mensagem = ['Você deve cadastrar um CPF válido']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
         if not email:
             mensagem = ['Você deve preencher o campo de e-mail']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})    
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})    
         if not validaEmail(email=email):
             mensagem = ['Você deve cadastrar um e-mail válido']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})  
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})  
         if not telefone:
             mensagem = ['Você deve preencher o campo de telefone']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})  
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})  
         if not cidade:
             mensagem = ['Você deve preencher o campo de cidade']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})  
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})  
         if not endereco:
             mensagem = ['Você deve preencher o campo de endereço']
-            return render(request, 'clientes/cadastrar_clientes.html', {'messages': mensagem})  
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})  
 
         data = {
             "nome": nome,
@@ -91,12 +91,16 @@ def cadastrar_clientes(request):
             "endereco": endereco,
         }
 
-        # response = requests.post(API_URL + '/api/cliente/create/', headers={"Authorization": request.session["Authorization"]}, json=data)
+        response = requests.post(API_URL + '/api/cliente/create/', headers={"Authorization": request.session["Authorization"]}, json=data)
 
         logger.warn(data)
         
-        # if request.status_code != 201:
-        #     return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})
+        if response.status_code != 201:
+            mensagem = ['Falha na realização do cadastro']
+            return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem}) 
+                  
+        mensagem = ['Cadastro realizado com sucesso']
+        return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
 
     return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})
 
