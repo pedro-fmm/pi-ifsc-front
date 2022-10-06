@@ -38,6 +38,9 @@ def login(request):
 def home(request):
     return render(request, 'home/home.html', {'titulo': 'Home'})
 
+def error(request):
+    return render(request, 'error/error.html', {'titulo': 'Error'})
+
 @is_authenticated
 def clientes(request):
     resp = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
