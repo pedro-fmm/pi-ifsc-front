@@ -4,7 +4,11 @@
 
 {% block title %}{{titulo}}{% endblock %}
 
-{% block link %}<link rel="stylesheet" href="{% static 'css/style-produtos-cadastro.css' %}">{% endblock %}
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-produtos-cadastro.css' %}">
+
+{% endblock %}
 
 {% block content %}
 
@@ -72,5 +76,5 @@
         </div>
         <button id="cadastrar">Cadastrar</button>
     </main>
-    <!-- ---------------- Fim da Main -------------------->    
+
 {% endblock %}

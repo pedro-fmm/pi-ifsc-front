@@ -4,9 +4,13 @@
 
 {% block title %}{{titulo}}{% endblock %}
 
-{% block content %}
+{% block style %}
 
-    <link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+
+{% endblock %}
+
+{% block content %}
 
     <main>
             
@@ -33,7 +37,7 @@
                                 <td>{{ cliente.email }}</td>
                                 <td>{{ cliente.telefone }}</td>
                                 <td class="success">Confirmado</td>
-                                <td class="primary">Detalhes</td>
+                                <td class="primary"><a href="{% url 'front:detalhes_cliente' pk=cliente.id %}">Detalhes</a></td>
                             </tr>
 
                         {% endfor %}

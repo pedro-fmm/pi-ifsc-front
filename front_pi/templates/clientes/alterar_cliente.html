@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-clientes-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Alterar cliente</h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if cliente %}
+            
+            <form method="post" action="{% url 'front:alterar_cliente' pk=cliente.id %}" class="Sign-In">
+
+                {% csrf_token %}
+
+                <div class="register-clients" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+                <h2>Nome do Cliente</h2>
+                <input id="cliente-nome" name="cliente-nome" type="text" value="{{ cliente.nome }}">
+                <h2>CPF</h2>"
+                <input id="cliente-cpf" name="cliente-cpf" type="text" maxlength="14" value="{{ cliente.cpf }}">
+                <h2>Email</h2>
+                <input id="cliente-email" name="cliente-email" type="email" value="{{ cliente.email }}">
+                <h2>Telefone</h2>
+                <input id="cliente-telefone" name="cliente-telefone" type="text" maxlength="15" value="{{ cliente.telefone }}">
+                <h2>Endereço</h2>
+                <input id="cliente-endereco" name="cliente-endereco" type="text" value="{{ cliente.endereco }}">
+                </div>
+                <button id="cadastrar">Alterar</button>
+
+            </form>
+
+        {% else %}
+        
+            <p>Cliente inválido</p>
+
+        {% endif %}
+        
+    </main>
+
+    {% block script %} <script src="{% static 'js/clientes/mascara-cadastro-clientes.js' %}"></script> {% endblock %}
+    
+{% endblock %}
