@@ -41,11 +41,6 @@ def home(request):
 @is_authenticated
 def clientes(request):
     resp = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
-    
-    # try:
-    #     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
-    # except ValueError:
-    #     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes'}) 
     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
 
 @is_authenticated
@@ -124,7 +119,6 @@ def alterar_cliente(request, pk):
 
     cliente = response.json()
 
-    logger.warn(cliente)
     return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Alterar cliente', 'cliente': cliente})
 
 def produtos(request):
@@ -193,10 +187,19 @@ def cadastrar_produtos(request):
     
         render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json(), 'messages': mensagem})
 
-    logger.warn(resp_cate.json())
-    logger.warn(resp_faixa.json())
-    logger.warn(resp_gen.json())
-    logger.warn(resp_plat.json())
-
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
 
+
+@is_authenticated
+def vendas(request):
+    return render(request, 'vendas/vendas.html', {'titulo': 'Venda'})
+
+@is_authenticated
+def vendas_adicionar_produto(request):
+    resp_plat = requests.get(API_URL + '/api/plataforma/list/', headers={'Authorization': request.session['Authorization']})
+    resp_gen = requests.get(API_URL + '/api/genero/list/', headers={'Authorization': request.session['Authorization']})
+    resp_faixa = requests.get(API_URL + '/api/faixa/list/', headers={'Authorization': request.session['Authorization']})        
+    resp_cate = requests.get(API_URL + '/api/categoria/list/', headers={'Authorization': request.session['Authorization']})
+    
+
+    return render(request, 'vendas/adicionar_produto.html', {'titulo': 'Adicionar produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
