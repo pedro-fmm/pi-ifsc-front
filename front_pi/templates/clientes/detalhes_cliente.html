@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>
+            
+        <h1 style="text-align: left;">Detalhe do cliente</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+            <section>
+
+
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if cliente %}
+                            <table>
+                                <tr>
+                                    <td>{{ cliente.nome }}</td>
+                                    <td>{{ cliente.email }}</td>
+                                    <td>{{ cliente.telefone }}</td>
+                                    <td><a href="{% url 'front:excluir_cliente' pk=cliente.id  %}">Excluir</a></td>
+                                    <td><a href="{% url 'front:alterar_cliente' pk=cliente.id  %}">Alterar</a></td>
+                                </tr>
+                            </table>
+
+                    {% else %}
+
+                            <p>Nenhum cliente cadastrado com esse ID</p>
+
+                    {% endif %}
+            </section>
+        </div>
+    </main>
+    
+{% endblock %}
