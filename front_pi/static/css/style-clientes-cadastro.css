@@ -24,6 +24,10 @@ main .register-clients input{
     padding: 0.4rem;
 }
 
+.messages {
+    background-color: red;
+}
+
 /*----------------- Media Queries -----------------*/
 
 @media screen and (max-width: 1200px){
