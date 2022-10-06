@@ -28,15 +28,19 @@
                 {% endif %}
 
                 {% if cliente %}
-                            <table>
-                                <tr>
-                                    <td>{{ cliente.nome }}</td>
-                                    <td>{{ cliente.email }}</td>
-                                    <td>{{ cliente.telefone }}</td>
-                                    <td><a href="{% url 'front:excluir_cliente' pk=cliente.id  %}">Excluir</a></td>
-                                    <td><a href="{% url 'front:alterar_cliente' pk=cliente.id  %}">Alterar</a></td>
-                                </tr>
-                            </table>
+                            
+                <div class="details">
+
+                    <h1>{{ cliente.nome }}</h1>
+                    <span>{{ cliente.email }}</span>
+                    <br>
+                    <span>{{ cliente.telefone }}</span>
+                    <br>
+                    <span>{{ cliente.endereco }}</span>
+                    <span><a href="{% url 'front:excluir_cliente' pk=cliente.id  %}">Excluir</a></span>
+                    <span><a href="{% url 'front:alterar_cliente' pk=cliente.id  %}">Alterar</a></span>
+
+                </div>
 
                     {% else %}
 
