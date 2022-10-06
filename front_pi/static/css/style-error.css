@@ -1,7 +1,7 @@
 .circle-center{
     margin-top: 4vh;
     margin-bottom: 4vh;
-    background: white;
+    background: var(--color-white);
     border-radius: 3%;
     display: flex;
     justify-content: center;
