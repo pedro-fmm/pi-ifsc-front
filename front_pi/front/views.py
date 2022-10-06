@@ -110,10 +110,7 @@ def alterar_cliente(request, pk):
             return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': validate['message']}) 
 
         cliente = validate['data']
-
         response = requests.put(f'{API_URL}/api/cliente/{pk}', headers={"Authorization": request.session["Authorization"]}, json=cliente)
-
-        logger.warn(response.status_code)
 
         if response.status_code != 200:
             mensagem = ['Falha na realização do cadastro']
