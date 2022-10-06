@@ -54,10 +54,9 @@ def cadastrar_clientes(request):
         cpf         = request.POST['cliente-cpf'].replace('.', '').replace('-', '')
         email       = request.POST['cliente-email']
         telefone    = request.POST['cliente-telefone'].replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
-        cidade      = request.POST['cliente-cidade']
         endereco    = request.POST['cliente-endereco']
 
-        validate = validate_cadastro_cliente(nome=nome, cpf=cpf, email=email, telefone=telefone, cidade=cidade, endereco=endereco)
+        validate = validate_cadastro_cliente(nome=nome, cpf=cpf, email=email, telefone=telefone, endereco=endereco)
 
         if not validate['status']:
             return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': validate['message']}) 
@@ -72,6 +71,63 @@ def cadastrar_clientes(request):
         return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
 
     return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente'})
+
+@is_authenticated
+def detalhes_cliente(request, pk):
+
+    response = requests.get(f'{API_URL}/api/cliente/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    return render(request, 'clientes/detalhes_cliente.html', {'titulo': 'Detalhes do cliente', 'cliente': response.json()})
+
+@is_authenticated
+def excluir_cliente(request, pk):
+
+    response = requests.delete(f'{API_URL}/api/cliente/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code != 204:
+        mensagem = ['Cadastro realizado com sucesso']
+        return render(request, 'clientes/detalhes_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
+    
+    mensagem = ['Cliente deletado com sucesso!']
+
+    return render(request, 'clientes/detalhes_cliente.html', {'titulo': 'Detalhes do cliente', 'messages': mensagem})
+
+@is_authenticated
+def alterar_cliente(request, pk):
+
+
+    if request.method == 'POST':
+        nome        = request.POST['cliente-nome']
+        cpf         = request.POST['cliente-cpf'].replace('.', '').replace('-', '')
+        email       = request.POST['cliente-email']
+        telefone    = request.POST['cliente-telefone'].replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
+        endereco    = request.POST['cliente-endereco']
+
+        validate = validate_cadastro_cliente(nome=nome, cpf=cpf, email=email, telefone=telefone, endereco=endereco)
+
+        if not validate['status']:
+            return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': validate['message']}) 
+
+        cliente = validate['data']
+
+        response = requests.put(f'{API_URL}/api/cliente/{pk}', headers={"Authorization": request.session["Authorization"]}, json=cliente)
+
+        logger.warn(response.status_code)
+
+        if response.status_code != 200:
+            mensagem = ['Falha na realização do cadastro']
+            return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem}) 
+                  
+        mensagem = ['Cadastro realizado com sucesso']
+        return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
+
+    
+    response = requests.get(f'{API_URL}/api/cliente/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    cliente = response.json()
+
+    logger.warn(cliente)
+    return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Alterar cliente', 'cliente': cliente})
 
 def produtos(request):
     return render(request, 'produtos/produtos.html', {'titulo': 'Produtos'})

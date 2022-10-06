@@ -53,7 +53,7 @@ def validate_cpf(cpf: str):
 
     return False
 
-def validate_cadastro_cliente(nome, cpf, email, telefone, cidade, endereco):
+def validate_cadastro_cliente(nome, cpf, email, telefone, endereco):
     if not nome:
         mensagem = ['Você deve preencher o campo de nome']
         return {'status': False, 'message': mensagem}
@@ -72,9 +72,6 @@ def validate_cadastro_cliente(nome, cpf, email, telefone, cidade, endereco):
     if not telefone:
         mensagem = ['Você deve preencher o campo de telefone']
         return {'status': False, 'message': mensagem}  
-    if not cidade:
-        mensagem = ['Você deve preencher o campo de cidade']
-        return {'status': False, 'message': mensagem}  
     if not endereco:
         mensagem = ['Você deve preencher o campo de endereço']
         return {'status': False, 'message': mensagem}
@@ -84,7 +81,6 @@ def validate_cadastro_cliente(nome, cpf, email, telefone, cidade, endereco):
             "cpf": cpf,
             "email": email,
             "telefone": telefone,
-            "cidade": cidade,
             "endereco": endereco,
         }
 
