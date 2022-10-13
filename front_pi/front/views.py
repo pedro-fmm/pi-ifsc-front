@@ -1,11 +1,12 @@
 from asyncio.log import logger
 import requests
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from toolbox import validaEmail
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
 from toolbox import validate_cpf, validate_cadastro_cliente
 import logging
+from uuid import uuid4
 
 logger = logging.getLogger(__name__)
 
@@ -192,14 +193,27 @@ def cadastrar_produtos(request):
 
 @is_authenticated
 def vendas(request):
+
+    if request.session['produtos'] or request.session['produtos'] != None:
+        produtos_id = request.session['produtos']
+        produtos = []
+
+        for produto_id in produtos_id:
+            logger.warn(produto_id)
+            produtos += requests.get(f'{API_URL}/api/produto/{produto_id}/', headers={'Authorization': request.session['Authorization']})
+        logger.warn(produtos.json())
+        return render(request, 'vendas/vendas.html', {'titulo': 'Venda', 'produtos': produtos.json()})
     return render(request, 'vendas/vendas.html', {'titulo': 'Venda'})
 
 @is_authenticated
 def vendas_adicionar_produto(request):
-    resp_plat = requests.get(API_URL + '/api/plataforma/list/', headers={'Authorization': request.session['Authorization']})
-    resp_gen = requests.get(API_URL + '/api/genero/list/', headers={'Authorization': request.session['Authorization']})
-    resp_faixa = requests.get(API_URL + '/api/faixa/list/', headers={'Authorization': request.session['Authorization']})        
-    resp_cate = requests.get(API_URL + '/api/categoria/list/', headers={'Authorization': request.session['Authorization']})
-    
+  
+    if request.method == 'POST':
+        id = request.POST['produto-id']
+        request.session['produtos'] += [f'{str(id)}']
+        logger.warn(request.session['produtos'])
+        return vendas(request)
 
-    return render(request, 'vendas/adicionar_produto.html', {'titulo': 'Adicionar produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
+    resp_produto = requests.get(API_URL + '/api/produto/list/', headers={'Authorization': request.session['Authorization']})
+
+    return render(request,  'vendas/adicionar_produto.html', {'titulo': 'Adicionar produto', 'produtos': resp_produto.json()})

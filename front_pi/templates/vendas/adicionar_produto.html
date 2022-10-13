@@ -6,7 +6,7 @@
 
 {% block style %}
 
-<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-produtos.css' %}">
 
 {% endblock %}
 
@@ -14,9 +14,10 @@
 
     <main>
             
-        <h1 style="text-align: left;">Listagem de Clientes</h1>
+        <h1 style="text-align: left;">Listagem de produtos</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
             
+            <!--
             <h2>Plataforma</h2>
             <select name="plataformas" id="plataformas">
                 <option value="-1">Qualquer</option>
@@ -56,8 +57,52 @@
         
 
             <p><a onclick="busca()">Pesquisar</a></p>>
+            -->
 
+            <table> 
+                <thead>
+                    <tr>
+                        <th>Nome do Produto</th>
+                        <!-- <th>Valor</th> -->
+                        <th>Gênero</th>
+                        <th>Plataforma</th>
+                        <th>Faixa etária</th>
+                        <th>Categoria</th>
+                        <th>Estoque</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if produtos %}
+
+                        {% for produto in produtos %}
+                            
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <!-- <td>{{ produto.nome }}</td> -->
+                                <td>{{ produto.genero }}</td>
+                                <td>{{ produto.plataforma }}</td>
+                                <td>{{ produto.faixa_etaria }}</td>
+                                <td>{{ produto.categoria }}</td>
+                                <td>{{ produto.estoque }}</td>
+                                <td>
+                                    <form method="post" action="{% url 'front:adicionar_produto' %}" class="Sign-In">
+                                        {% csrf_token %}
+                                        <input style="display: none" id="produto-id" name="produto-id" type="text" value={{produto.id}}>
+                                        <button id="cadastrar">Cadastrar</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+                            <p>Nenhum produto cadastrado</p>
+                    {% endif %}
+                </tbody>
+            </table>
         </div>
     </main>
     
 {% endblock %}
+
