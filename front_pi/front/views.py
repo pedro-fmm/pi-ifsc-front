@@ -1,4 +1,5 @@
 from asyncio.log import logger
+from cmath import log
 import requests
 from django.shortcuts import render
 from toolbox import validaEmail
@@ -136,11 +137,13 @@ def produtos(request):
 
 @is_authenticated
 def cadastrar_produtos(request):
+    resp = requests.get(API_URL + '/api/dados/cadastro_produto/', headers={'Authorization': request.session['Authorization']})
+    resp = resp.json()
 
-    resp_plat = requests.get(API_URL + '/api/plataforma/list/', headers={'Authorization': request.session['Authorization']})
-    resp_gen = requests.get(API_URL + '/api/genero/list/', headers={'Authorization': request.session['Authorization']})
-    resp_faixa = requests.get(API_URL + '/api/faixa/list/', headers={'Authorization': request.session['Authorization']})        
-    resp_cate = requests.get(API_URL + '/api/categoria/list/', headers={'Authorization': request.session['Authorization']})
+    resp_gen = resp['generos']
+    resp_cate = resp['categorias']
+    resp_plat = resp['plataformas']
+    resp_faixa = resp['faixas']
 
     if request.method == 'POST':
         nome = request.POST['nome']
@@ -192,14 +195,9 @@ def cadastrar_produtos(request):
 
         if resp.status_code == '201':
             mensagem = ['Produto adicionado com sucesso!']
-            render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json(), 'messages': mensagem})        
+            render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})        
     
-        render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json(), 'messages': mensagem})
+        render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
 
-    logger.warn(resp_cate.json())
-    logger.warn(resp_faixa.json())
-    logger.warn(resp_gen.json())
-    logger.warn(resp_plat.json())
-
-    return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
+    return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
