@@ -7,6 +7,7 @@ from .decorators import is_authenticated
 from toolbox import validate_cpf, validate_cadastro_cliente
 import logging
 from uuid import uuid4
+from collections import ChainMap
 
 logger = logging.getLogger(__name__)
 
@@ -195,14 +196,15 @@ def cadastrar_produtos(request):
 def vendas(request):
 
     if request.session['produtos'] or request.session['produtos'] != None:
-        produtos_id = request.session['produtos']
+        produtos_id = set(request.session['produtos'])
         produtos = []
 
         for produto_id in produtos_id:
             logger.warn(produto_id)
-            produtos += requests.get(f'{API_URL}/api/produto/{produto_id}/', headers={'Authorization': request.session['Authorization']})
-        logger.warn(produtos.json())
-        return render(request, 'vendas/vendas.html', {'titulo': 'Venda', 'produtos': produtos.json()})
+            produtos.append(requests.get(f'{API_URL}/api/produto/{produto_id}', headers={'Authorization': request.session['Authorization']}).json())
+        logger.warn(produtos)
+
+        return render(request, 'vendas/vendas.html', {'titulo': 'Venda', 'produtos': produtos})
     return render(request, 'vendas/vendas.html', {'titulo': 'Venda'})
 
 @is_authenticated
