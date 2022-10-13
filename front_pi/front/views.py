@@ -44,12 +44,11 @@ def error(request):
 @is_authenticated
 def clientes(request):
     resp = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
-    
-    # try:
-    #     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
-    # except ValueError:
-    #     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes'}) 
-    return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
+    try:
+        return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+    # return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
 
 @is_authenticated
 def cadastrar_clientes(request):
@@ -131,7 +130,12 @@ def alterar_cliente(request, pk):
     return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Alterar cliente', 'cliente': cliente})
 
 def produtos(request):
-    return render(request, 'produtos/produtos.html', {'titulo': 'Produtos'})
+    # return render(request, 'produtos/produtos.html', {'titulo': 'Produtos'})
+    resp = requests.get(API_URL + '/api/produto/list/', headers={'Authorization': request.session['Authorization']})
+    try:
+        return render(request, 'produtos/produtos.html', {'titulo': 'Produto', 'produtos': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
 
 
 @is_authenticated
