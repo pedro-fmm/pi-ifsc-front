@@ -14,9 +14,7 @@
 
     <main>        
         <h1 style="text-align: left;">Cadastrar Produtos</h1>
-        <div class="date">
-            <input type="date">
-        </div>
+      
         {% if messages %}
             <ul class="messages" style="color: red; font-size: larger;">
                 {% for message in messages %}
@@ -29,8 +27,6 @@
             <input id="produto" type="text">
             <h2>Descrição</h2>
             <input id="descricao" type="text">
-            <h2>Imagem</h2>
-            <input type="file" accept="image/png, image/jpeg, image/jpg">
             <h2>Plataforma</h2>
             {% if plataformas %}
                 <select name="plataformas" id="plataformas">
@@ -73,6 +69,8 @@
             {% endif %}
             <h2>Estoque</h2>
             <input id="estoque" type="number">
+            <h2>Imagem</h2>
+            <input type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-background)">
         </div>
         <button id="cadastrar">Cadastrar</button>
     </main>
