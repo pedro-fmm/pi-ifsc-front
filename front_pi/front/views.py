@@ -195,7 +195,7 @@ def cadastrar_produtos(request):
 @is_authenticated
 def vendas(request):
 
-    if request.session['produtos'] or request.session['produtos'] != None:
+    if request.session.get('produtos', None) != None:
         produtos_id = set(request.session['produtos'])
         produtos = []
 
@@ -212,10 +212,28 @@ def vendas_adicionar_produto(request):
   
     if request.method == 'POST':
         id = request.POST['produto-id']
-        request.session['produtos'] += [f'{str(id)}']
+
+        if request.session.get('produtos', None) != None:
+            request.session['produtos'] += [f'{str(id)}']
+        else: 
+            request.session['produtos'] = [f'{str(id)}']
         logger.warn(request.session['produtos'])
         return vendas(request)
 
     resp_produto = requests.get(API_URL + '/api/produto/list/', headers={'Authorization': request.session['Authorization']})
 
     return render(request,  'vendas/adicionar_produto.html', {'titulo': 'Adicionar produto', 'produtos': resp_produto.json()})
+
+@is_authenticated
+def vendas_realizar(request):
+    if request.method == 'POST':
+        venda = requests.post(API_URL + '/api/venda/create/', data, headers={'Authorization': request.session['Authorization']})
+        # request.session.get('produtos', None)
+    return None
+
+@is_authenticated
+def vendas_get_cliente(request):
+    if request.method == 'POST':
+        venda = requests.post(f'{API_URL}/api/clientes/{uuid}', data, headers={'Authorization': request.session['Authorization']})
+        # request.session.get('produtos', None)
+    return None
