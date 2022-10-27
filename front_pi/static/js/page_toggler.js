@@ -25,4 +25,19 @@ function setNavbarPageActive() {
             link.classList.add('active')
         }  
     }
+
+    if (path.includes('funcionario')) {
+        if (path.includes('cadastro')){
+            let link = window.document.getElementById('link-cadastrar-funcionario')
+            link.classList.add('active')
+        } else {
+            let link = window.document.getElementById('link-funcionario')
+            link.classList.add('active')
+        }  
+    }
+
+    if (path.includes('analitico')) {
+            let link = window.document.getElementById('link-analitico')
+            link.classList.add('active')
+    }
 }

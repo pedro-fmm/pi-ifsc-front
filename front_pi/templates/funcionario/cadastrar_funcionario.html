@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-funcionario-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Cadastrar Funcionario</h1>
+      
+        {% if messages %}
+            <ul class="messages" style="color: red; font-size: larger;">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="register-user" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+            <h2>Nome do Funcionario</h2>
+            <input id="nome" type="text">
+            <h2>Empresa</h2>
+            {% if empresas %}
+                <select name="empresas" id="empresas">
+                    {% for e in empresas %}
+                        <option value="{{e.id}}">{{e.nome_fantasia}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <h3>Não há empresas cadastradas</h3>
+            {% endif %}
+            <h2>Estoque</h2>
+            <input id="estoque" type="number">
+            <h2>Imagem</h2>
+            <input type="file">
+        </div>
+        <button id="cadastrar">Cadastrar</button>
+    </main>
+
+{% endblock %}
