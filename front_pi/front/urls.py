@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import login, home, clientes, alterar_cliente ,cadastrar_clientes, detalhes_cliente, excluir_cliente, produtos, cadastrar_produtos, error, analitico
+from .views import login, home, clientes, alterar_cliente ,cadastrar_clientes, detalhes_cliente, excluir_cliente, produtos, cadastrar_produtos, error, analitico, cadastrar_funcionario
 
 app_name = 'front'
 
@@ -17,6 +17,7 @@ urlpatterns = [
     path('clientes/alterar/<uuid:pk>', alterar_cliente, name='alterar_cliente'),
     path('produtos/', produtos, name='produtos'),
     path('produtos/cadastro/', cadastrar_produtos, name='cadastrar_produtos'),
-    path('error', error, name='erro'),
-    path('analitico', analitico, name='analitico')
+    path('error/', error, name='erro'),
+    path('analitico/', analitico, name='analitico'),
+    path('funcionario/cadastro/', cadastrar_funcionario, name='cadastrar_funcionario')
 ]

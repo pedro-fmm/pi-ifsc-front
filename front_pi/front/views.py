@@ -208,3 +208,44 @@ def cadastrar_produtos(request):
 @is_authenticated
 def analitico(request):
     return render(request, 'analitico/analitico.html', {'titulo': 'Analítico'})
+
+@is_authenticated
+def cadastrar_funcionario(request):
+    # resp = requests.get(API_URL + '/api/dados/cadastro_funcionario/', headers={'Authorization': request.session['Authorization']})
+    # resp = resp.json()
+
+    # resp_emp = resp['empresa']
+
+    if request.method == 'POST':
+        nome = request.POST['usuario']
+        cargo = request.POST['cargo']
+        comissao = request.POST['comissao']
+
+        if not nome:
+            mensagem = ['Você deve preencher o campo de nome']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not empresa:
+            mensagem = ['Você deve preencher o campo de empresa']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not cargo:
+            mensagem = ['Você deve preencher o campo de cargo']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not comissao:
+            mensagem = ['Você deve preencher o campo de comissao']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+
+        data = {
+            'usuario': nome,
+            'empresa': empresa,
+            'cargo': cargo,
+            'comissao': comissao
+        }
+
+        resp = requests.post(API_URL + '/api/funcionario/create/', data, headers={'Authorization': request.session['Authorization']})
+        if resp.status_code == '201':
+            mensagem = ['Funcionário adicionado com sucesso!']
+            render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Funcionario', 'messages': mensagem})        
+        
+        render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Produto', 'messages': mensagem})
+
+    return render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Produto'})

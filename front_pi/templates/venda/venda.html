@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-produtos-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Cadastrar Produtos</h1>
+      
+        {% if messages %}
+            <ul class="messages" style="color: red; font-size: larger;">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="register-products" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+            <h2>Nome do Produto</h2>
+            <input id="produto" type="text">
+            <h2>Descrição</h2>
+            <input id="descricao" type="text">
+            <h2>Plataforma</h2>
+            {% if plataformas %}
+                <select name="plataformas" id="plataformas">
+                    {% for p in plataformas %}
+                        <option value="{{p.id}}">{{p.nome}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <h3>Não há plataformas cadastradas</h3>
+            {% endif %}
+            <h2>Gênero</h2>
+            {% if generos %}
+                <select name="generos" id="genero">
+                    {% for g in generos %}
+                        <option value="{{g.id}}">{{g.nome}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <h3>Não há gêneros cadastrados</h3>
+            {% endif %}
+            <h2>Faixa Etária</h2>
+            {% if faixas %}
+                <select name="faixas" id="faixas">
+                    {% for f in faixas %}
+                        <option value="{{f.id}}">{{f.faixa}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <h3>Não há faixas etárias cadastradas</h3>
+            {% endif %}
+            <h2>Categoria</h2>
+            {% if categorias %}
+                <select name="categorias" id="categorias">
+                    {% for c in categorias %}
+                        <option value="{{c.id}}">{{c.nome}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <h3>Não há categorias cadastradas</h3>
+            {% endif %}
+            <h2>Estoque</h2>
+            <input id="estoque" type="number">
+            <h2>Imagem</h2>
+            <input type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-background)">
+        </div>
+        <button id="cadastrar">Cadastrar</button>
+    </main>
+
+{% endblock %}
