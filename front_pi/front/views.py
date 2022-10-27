@@ -150,7 +150,7 @@ def cadastrar_produtos(request):
     resp_faixa = resp['faixas']
 
     if request.method == 'POST':
-        nome = request.POST['nome']
+        nome = request.POST['produto']
         descricao = request.POST['descricao']
         imagem = request.FILES
         plataforma = request.POST['plataformas']
@@ -161,28 +161,28 @@ def cadastrar_produtos(request):
 
         if not nome:
             mensagem = ['Você deve preencher o campo de nome']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not descricao:
             mensagem = ['Você deve preencher o campo de descrição']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not imagem:
             mensagem = ['Você deve preencher o campo de imagem']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not plataforma:
             mensagem = ['Você deve preencher o campo de plataforma']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not genero:
             mensagem = ['Você deve preencher o campo de gênero']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not faixa_etaria:
             mensagem = ['Você deve preencher o campo de faixa etária']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not categoria:
             mensagem = ['Você deve preencher o campo de categoria']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
         if not estoque:
             mensagem = ['Você deve preencher o campo de estoque']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem})
+            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
         data = {
             'nome': nome,

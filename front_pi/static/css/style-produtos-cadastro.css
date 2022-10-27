@@ -69,6 +69,7 @@ main .register-products select option{
     -webkit-user-select: none;
     touch-action: manipulation;
     width: 100%;
+    font-size: 16px;
   }
   
   .button:disabled {
