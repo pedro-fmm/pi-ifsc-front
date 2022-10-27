@@ -1,5 +1,5 @@
 from asyncio.log import logger
-from cmath import log
+from email.mime import image
 import requests
 from django.shortcuts import render
 from toolbox import validaEmail
@@ -150,44 +150,51 @@ def cadastrar_produtos(request):
     resp_faixa = resp['faixas']
 
     if request.method == 'POST':
-        nome = request.POST['produto']
-        descricao = request.POST['descricao']
+        nome = request.POST.get('produto', False)
+        descricao = request.POST.get('descricao', False)
         imagem = request.FILES
-        plataforma = request.POST['plataformas']
-        genero = request.POST['generos']
-        faixa_etaria = request.POST['faixas']
-        categoria = request.POST['categorias']
-        estoque = request.POST['estoque']
+        plataforma = request.POST.get('plataformas', False)
+        genero = request.POST.get('generos', False)
+        faixa_etaria = request.POST.get('faixas', False)
+        categoria = request.POST.get('categorias', False)
+        estoque = request.POST.get('estoque', False)
+        preco_custo = request.POST.get('preco_custo', False)
+        preco_venda = request.POST.get('preco_venda', False)
 
         if not nome:
-            mensagem = ['Você deve preencher o campo de nome']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            mensagem = ['Você deve preencher o campo de nome do produto']
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not descricao:
             mensagem = ['Você deve preencher o campo de descrição']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not imagem:
             mensagem = ['Você deve preencher o campo de imagem']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not plataforma:
             mensagem = ['Você deve preencher o campo de plataforma']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not genero:
             mensagem = ['Você deve preencher o campo de gênero']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not faixa_etaria:
             mensagem = ['Você deve preencher o campo de faixa etária']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not categoria:
             mensagem = ['Você deve preencher o campo de categoria']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
         if not estoque:
             mensagem = ['Você deve preencher o campo de estoque']
-            return render(request, 'produtos/cadastrar_produtos.html', {'messages': mensagem, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
+        if not preco_custo:
+            mensagem = ['Você deve preencher o campo de preço de custo']
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
+        if not preco_venda:
+            mensagem = ['Você deve preencher o campo de preço de venda']
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
 
         data = {
             'nome': nome,
             'descricao': descricao,
-            'imagem': imagem,
             'plataforma': plataforma,
             'genero': genero,
             'faixa_etaria': faixa_etaria,
@@ -195,9 +202,19 @@ def cadastrar_produtos(request):
             'estoque': estoque,
         }
 
-        resp = requests.post(API_URL + '/api/produto/create/', data, headers={'Authorization': request.session['Authorization']})
+        resp = requests.post(API_URL + '/api/produto/create/', data, files=imagem, headers={'Authorization': request.session['Authorization']})
+        print(resp.json())
+        produto = resp.json()['id']
+        data = {
+            'produto': produto,
+            'preco_custo': preco_custo,
+            'preco_venda': preco_venda,
+            'descricao': 'Primeiro preço'
+        }
 
-        if resp.status_code == '201':
+        resp_preco = requests.post(API_URL + '/api/preco/create/', data, headers={'Authorization': request.session['Authorization']})
+
+        if resp.status_code == '201' and resp_preco.status_code == '201':
             mensagem = ['Produto adicionado com sucesso!']
             render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})        
     
