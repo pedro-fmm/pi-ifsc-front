@@ -139,7 +139,7 @@ b{
 }
 
 aside{
-    height: 100vh;
+    height: 90vh;
 }
 
 aside .top{
@@ -169,7 +169,7 @@ aside .sidebar{
     background: var(--color-white);
     display:flex;
     flex-direction:column;
-    height:86vh;
+    height:82vh;
     position:relative;
     top:3rem;
 }

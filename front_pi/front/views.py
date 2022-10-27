@@ -222,3 +222,6 @@ def cadastrar_produtos(request):
 
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
+@is_authenticated
+def analitico(request):
+    return render(request, 'analitico/analitico.html', {'titulo': 'Analítico'})
