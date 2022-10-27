@@ -22,23 +22,13 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <div class="register-user" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+        <div class="register-user" >
             <h2>Nome do Funcionario</h2>
-            <input id="nome" type="text">
-            <h2>Empresa</h2>
-            {% if empresas %}
-                <select name="empresas" id="empresas">
-                    {% for e in empresas %}
-                        <option value="{{e.id}}">{{e.nome_fantasia}}</option>
-                    {% endfor %}
-                </select>
-            {% else %}
-                <h3>Não há empresas cadastradas</h3>
-            {% endif %}
-            <h2>Estoque</h2>
-            <input id="estoque" type="number">
-            <h2>Imagem</h2>
-            <input type="file">
+            <input id="nome" name="nome" type="text">
+            <h2>Cargo</h2>
+            <input id="cargo" name="cargo" type="text">
+            <h2>Comissão</h2>
+            <input type="number" name="comissao">
         </div>
         <button id="cadastrar">Cadastrar</button>
     </main>
