@@ -14,7 +14,6 @@
 
     <main>        
         <h1 style="text-align: left;">Cadastrar Produtos</h1>
-      
         {% if messages %}
             <ul class="messages" style="color: red; font-size: larger;">
                 {% for message in messages %}
@@ -23,13 +22,17 @@
             </ul>
         {% endif %}
         <div class="register-products" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+            <form enctype="multipart/form-data" action="" method="post" id="form-produtos">
+            {% csrf_token %}
             <h2>Nome do Produto</h2>
-            <input id="produto" type="text">
+            <input id="produto" name="produto" type="text">
             <h2>Descrição</h2>
-            <input id="descricao" type="text">
+            <input id="descricao" name="descricao" type="text">
+            <h2>Imagem</h2>
+            <input type="file" name="imagem" accept="image/png, image/jpeg, image/jpg">
             <h2>Plataforma</h2>
             {% if plataformas %}
-                <select name="plataformas" id="plataformas">
+                <select name="plataformas" name="plataformas" id="plataformas">
                     {% for p in plataformas %}
                         <option value="{{p.id}}">{{p.nome}}</option>
                     {% endfor %}
@@ -39,7 +42,7 @@
             {% endif %}
             <h2>Gênero</h2>
             {% if generos %}
-                <select name="generos" id="genero">
+                <select name="generos" name="generos" id="genero">
                     {% for g in generos %}
                         <option value="{{g.id}}">{{g.nome}}</option>
                     {% endfor %}
@@ -49,7 +52,7 @@
             {% endif %}
             <h2>Faixa Etária</h2>
             {% if faixas %}
-                <select name="faixas" id="faixas">
+                <select name="faixas" name="faixas" id="faixas">
                     {% for f in faixas %}
                         <option value="{{f.id}}">{{f.faixa}}</option>
                     {% endfor %}
@@ -59,7 +62,7 @@
             {% endif %}
             <h2>Categoria</h2>
             {% if categorias %}
-                <select name="categorias" id="categorias">
+                <select name="categorias" name="categorias" id="categorias">
                     {% for c in categorias %}
                         <option value="{{c.id}}">{{c.nome}}</option>
                     {% endfor %}
@@ -68,11 +71,14 @@
                 <h3>Não há categorias cadastradas</h3>
             {% endif %}
             <h2>Estoque</h2>
-            <input id="estoque" type="number">
-            <h2>Imagem</h2>
-            <input type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-background)">
+            <input id="estoque" name="estoque" type="number">
+            <h2>Preço de custo</h2>
+            <input id="preco_custo" name="preco_custo" type="number">
+            <h2>Preço de venda</h2>
+            <input id="preco_venda" name="preco_venda" type="number">
+        </form>
         </div>
-        <button id="cadastrar">Cadastrar</button>
+        <button form="form-produtos" id="cadastrar">Cadastrar</button>
     </main>
 
 {% endblock %}
