@@ -203,7 +203,6 @@ def cadastrar_produtos(request):
         }
 
         resp = requests.post(API_URL + '/api/produto/create/', data, files=imagem, headers={'Authorization': request.session['Authorization']})
-        print(resp.json())
         produto = resp.json()['id']
         data = {
             'produto': produto,
@@ -214,11 +213,12 @@ def cadastrar_produtos(request):
 
         resp_preco = requests.post(API_URL + '/api/preco/create/', data, headers={'Authorization': request.session['Authorization']})
 
-        if resp.status_code == '201' and resp_preco.status_code == '201':
+        if resp.status_code == 201 and resp_preco.status_code == 201:
             mensagem = ['Produto adicionado com sucesso!']
-            render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})        
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})        
     
-        render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
+        mensagem = ['Houve um erro no servidor!']
+        return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
 
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
