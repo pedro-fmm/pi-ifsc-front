@@ -29,21 +29,32 @@
                 </thead>
                 <tbody>
 
-                    {% if vendas %}
-
-                        {% for venda in vendas %}
+                    {% if venda %}
                             
-                            <tr>
-                                <td>{{ venda.numero }}</td>
-                                <td>{{ venda.vendedor_nome }}</td>
-                                <td>{{ venda.cliente_nome }}</td>
-                                <td>{{ venda.dia }}</td>
-                                <td>{{ venda.hora }}</td>
-                                <td>{{ venda.valor }}</td>
-                                <td class="primary"><a href="#">Detalhes</a></td>
-                            </tr>
+                        <tr>
+                            <td>{{ venda.numero }}</td>
+                            <td>{{ venda.vendedor_nome }}</td>
+                            <td>{{ venda.cliente_nome }}</td>
+                            <td>{{ venda.dia }}</td>
+                            <td>{{ venda.hora }}</td>
+                            <td>{{ venda.valor }}</td>
+                            
+                            {% if produtos %}
 
-                        {% endfor %}
+                                {% for produto in produtos %}
+
+                                    <div>
+                                        
+                                        <p>{{ produto.nome }}</p>
+                                        <p>{{ produto.valor_produto }}</p>
+                                        <!-- <p>{{ produto.quantidade }}</p> -->
+
+                                    </div>
+
+                                {% endfor %}
+
+                            {% endif %}
+                        </tr>
 
                     {% else %}
 

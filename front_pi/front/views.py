@@ -192,9 +192,13 @@ def cadastrar_produtos(request):
 
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
 
+@is_authenticated
+def vendas_list(request):
+    vendas = requests.get(API_URL + '/api/venda/list/', headers={'Authorization': request.session['Authorization']}).json()
+    return render(request, 'vendas/vendas.html', {'titulo': 'Vendas', 'vendas': vendas})
 
 @is_authenticated
-def vendas(request):
+def vendas_iniciar(request):
       
     if request.session.get('produtos', None) != None:
         produtos_id = set(request.session['produtos'])
@@ -205,8 +209,8 @@ def vendas(request):
             produtos.append(requests.get(f'{API_URL}/api/produto/{produto_id}', headers={'Authorization': request.session['Authorization']}).json())
         logger.warn(produtos)
 
-        return render(request, 'vendas/vendas.html', {'titulo': 'Venda', 'produtos': produtos})
-    return render(request, 'vendas/vendas.html', {'titulo': 'Venda'})
+        return render(request, 'vendas/venda.html', {'titulo': 'Venda', 'produtos': produtos})
+    return render(request, 'vendas/venda.html', {'titulo': 'Venda'})
 
 @is_authenticated
 def vendas_adicionar_produto(request):
@@ -220,7 +224,7 @@ def vendas_adicionar_produto(request):
             request.session['produtos'] = [f'{str(id)}']
         logger.warn(request.session['produtos'])
         request.method = 'GET'
-        return vendas(request)
+        return vendas_iniciar(request)
 
     resp_produto = requests.get(API_URL + '/api/produto/list/', headers={'Authorization': request.session['Authorization']})
 

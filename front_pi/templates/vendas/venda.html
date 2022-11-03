@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>
+            
+        <h1 style="text-align: left;">Realizando venda</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+            <table> 
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                        <th>Estoque</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if produtos %}
+
+                        {% for produto in produtos %}
+                            
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <td>{{ produto.preco }}</td>
+                                <td>{{ produto.estoque }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                            <p>Cadastre produtos na venda</p>
+
+                    {% endif %}
+
+                </tbody>
+            </table>
+
+            <div>
+                <a href="{% url 'front:adicionar_produto' %}">Adicionar produto</a>
+            </div>
+
+            <div>
+                
+                <!-- <form action="{% url 'front:get_cliente_venda' %}" method="post">
+                        {% csrf_token %}
+                        
+                        <input type="submit" value="Realizar venda">
+                </form> -->
+                
+                <form action="{% url 'front:realizar_venda' %}" method="post">
+                    {% csrf_token %}
+
+                    <input type="submit" value="Realizar venda">
+                </form>
+            </div>
+        </div>
+    </main>
+    
+{% endblock %}
