@@ -22,7 +22,7 @@
             </ul>
         {% endif %}
         <div class="register-products" style="overflow-y: auto; height: 700px; margin-top: 1rem;">
-            <form enctype="multipart/form-data" action="" method="post" id="form-produtos">
+            <form enctype="multipart/form-data" action="{% url 'front:cadastrar_produtos' %}" method="post" id="form-produtos">
             {% csrf_token %}
             <h2>Nome do Produto</h2>
             <input id="produto" name="produto" type="text">

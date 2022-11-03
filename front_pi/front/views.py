@@ -138,6 +138,18 @@ def produtos(request):
     except ValueError:
         return render(request, 'error/error.html', {'titulo': 'Erro'}) 
 
+@is_authenticated
+def excluir_produto(request, pk):
+
+    response = requests.delete(f'{API_URL}/api/produto/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code != 204:
+        mensagem = ['Cadastro realizado com sucesso']
+        return render(request, 'produto/detalhes_produto.html', {'titulo': 'Cadastro de produto', 'messages': mensagem})
+    
+    mensagem = ['Produto deletado com sucesso!']
+
+    return render(request, 'produtos/detalhes_produto.html', {'titulo': 'Detalhes do produto', 'messages': mensagem})
 
 @is_authenticated
 def cadastrar_produtos(request):
@@ -211,17 +223,27 @@ def cadastrar_produtos(request):
             'descricao': 'Primeiro preço'
         }
 
-        resp_preco = requests.post(API_URL + '/api/preco/create/', data, headers={'Authorization': request.session['Authorization']})
+        resp_preco = requests.post(API_URL + '/api/preco/create/' + resp.json()['id'], data, headers={'Authorization': request.session['Authorization']})
 
-        if resp.status_code == 201 and resp_preco.status_code == 201:
-            mensagem = ['Produto adicionado com sucesso!']
-            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})        
+        if resp.status_code != 201 and resp_preco.status_code != 201:
+            mensagem = ['Houve um erro no servidor!']
+            return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
+            
+        mensagem = ['Produto adicionado com sucesso!']
+        return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})        
     
-        mensagem = ['Houve um erro no servidor!']
-        return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate, 'messages': mensagem})
+        
 
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
+@is_authenticated
+def detalhes_produto(request, pk):
+
+    response = requests.get(f'{API_URL}/api/produto/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    return render(request, 'produtos/detalhes_produto.html', {'titulo': 'Detalhes do Produto', 'produto': response.json()})
+
+  
 @is_authenticated
 def analitico(request):
     return render(request, 'analitico/analitico.html', {'titulo': 'Analítico'})
@@ -240,8 +262,6 @@ def cadastrar_funcionario(request):
     # resp = requests.get(API_URL + '/api/dados/cadastro_funcionario/', headers={'Authorization': request.session['Authorization']})
     # resp = resp.json()
 
-    # resp_emp = resp['empresa']
-
     if request.method == 'POST':
         nome = request.POST['usuario']
         cargo = request.POST['cargo']
@@ -249,9 +269,6 @@ def cadastrar_funcionario(request):
 
         if not nome:
             mensagem = ['Você deve preencher o campo de nome']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if not empresa:
-            mensagem = ['Você deve preencher o campo de empresa']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
         if not cargo:
             mensagem = ['Você deve preencher o campo de cargo']
@@ -262,7 +279,6 @@ def cadastrar_funcionario(request):
 
         data = {
             'usuario': nome,
-            'empresa': empresa,
             'cargo': cargo,
             'comissao': comissao
         }
@@ -272,6 +288,6 @@ def cadastrar_funcionario(request):
             mensagem = ['Funcionário adicionado com sucesso!']
             render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Funcionario', 'messages': mensagem})        
         
-        render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Produto', 'messages': mensagem})
+        render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Funcionario', 'messages': mensagem})
 
-    return render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Produto'})
+    return render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Funcionario'})

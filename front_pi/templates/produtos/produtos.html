@@ -44,7 +44,7 @@
                         <td>{{ produto.categoria_nome }}</td>
                         <td>{{ produto.estoque }}</td>
                         <td>{{ produto.qtd_vendas }}</td>
-                        <td class="primary"><a href="#">Detalhes</a></td>
+                        <td class="primary"><a href="{% url 'front:detalhes_produto' pk=produto.id %}">Detalhes</a></td>
                     </tr>
 
                     {% endfor %}
