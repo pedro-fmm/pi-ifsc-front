@@ -22,15 +22,22 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <div class="register-user" >
-            <h2>Nome do Funcionario</h2>
-            <input id="nome" name="nome" type="text">
-            <h2>Cargo</h2>
-            <input id="cargo" name="cargo" type="text">
-            <h2>Comissão</h2>
-            <input type="number" name="comissao">
-        </div>
-        <button id="cadastrar">Cadastrar</button>
+
+        <form method="post" action="{% url 'front:cadastrar_funcionario' %}" class="Sign-In">
+
+            {% csrf_token %}
+
+            <div class="register-user" >
+                <h2>Nome do Funcionario</h2>
+                <input id="nome" name="nome" type="text">
+                <h2>Cargo</h2>
+                <input id="cargo" name="cargo" type="text">
+                <h2>Comissão</h2>
+                <input type="number" name="comissao">
+            </div>
+            <button id="cadastrar">Cadastrar</button>
+        </form>
+
     </main>
 
 {% endblock %}

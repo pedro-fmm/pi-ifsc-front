@@ -227,6 +227,15 @@ def analitico(request):
     return render(request, 'analitico/analitico.html', {'titulo': 'Analítico'})
 
 @is_authenticated
+def funcionario(request):
+    resp = requests.get(API_URL + '/api/funcionario/list/', headers={'Authorization': request.session['Authorization']})
+    try:
+        return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+    # return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
+
+@is_authenticated
 def cadastrar_funcionario(request):
     # resp = requests.get(API_URL + '/api/dados/cadastro_funcionario/', headers={'Authorization': request.session['Authorization']})
     # resp = resp.json()
