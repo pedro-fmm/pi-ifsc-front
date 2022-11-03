@@ -10,13 +10,15 @@
 
 <style>
 
-    h1{
+    .details h1{
+        color: black;
         margin-left: 2%;
         margin-bottom: 2%;   
         font-size: 35px; 
     }
 
     .details span{
+        color: black;
         margin-left: 5%;
         font-size: 18px;
     }
@@ -24,7 +26,7 @@
     .details{
         background-color: white;
         width: 60vw;
-        height: 70vh;
+        height: 75vh;
         border-radius: 20px;
         display: flex;
         flex-direction: column;
@@ -87,6 +89,8 @@
                     <h1>{{ produto.nome }}</h1>
                     <span>Descrição: {{ produto.descricao }}</span>
                     <br>
+                    <span>Preço: {{ produto.preco }}</span>
+                    <br>
                     <span>Plataforma: {{ produto.plataforma_nome }}</span>
                     <br>
                     <span>Faixa Etaria: {{ produto.faixa_etaria_nome }}</span>
@@ -104,6 +108,10 @@
                 
                         <button>
                             <a href="{% url 'front:excluir_produto' pk=produto.id  %}" style="color: white; font-size: 20px">Excluir</a> 
+                        </button>
+
+                        <button>
+                            <a href="{% url 'front:alterar_produto' pk=produto.id  %}" style="color: white; font-size: 20px">Alterar</a> 
                         </button>
 
                         
