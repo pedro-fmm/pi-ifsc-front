@@ -8,6 +8,7 @@ from toolbox import validate_cpf, validate_cadastro_cliente
 import logging
 from uuid import uuid4
 from collections import ChainMap
+from django.http import HttpResponseRedirect
 
 logger = logging.getLogger(__name__)
 
@@ -194,7 +195,7 @@ def cadastrar_produtos(request):
 
 @is_authenticated
 def vendas(request):
-
+      
     if request.session.get('produtos', None) != None:
         produtos_id = set(request.session['produtos'])
         produtos = []
@@ -218,6 +219,7 @@ def vendas_adicionar_produto(request):
         else: 
             request.session['produtos'] = [f'{str(id)}']
         logger.warn(request.session['produtos'])
+        request.method = 'GET'
         return vendas(request)
 
     resp_produto = requests.get(API_URL + '/api/produto/list/', headers={'Authorization': request.session['Authorization']})
@@ -226,14 +228,27 @@ def vendas_adicionar_produto(request):
 
 @is_authenticated
 def vendas_realizar(request):
+
     if request.method == 'POST':
-        venda = requests.post(API_URL + '/api/venda/create/', data, headers={'Authorization': request.session['Authorization']})
-        # request.session.get('produtos', None)
-    return None
+        if request.session.get('produtos', None) != None:
+            
+            venda_data = {"cliente": '21fb9fe0-283b-442b-a30d-d07fda18dae2', "valor": "0", "vendedor": "2"}
+            response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
+            id_venda = response_venda.json()['id']
+
+            id_produtos = request.session.get('produtos', None)
+            id_produtos_venda = []
+
+            for produto in id_produtos:
+                produto_data = {"produto": produto, "venda": id_venda}
+                id_produtos_venda.append(requests.post(f'{API_URL}/api/vendaitem/create/', data=produto_data, headers={'Authorization': request.session['Authorization']}))
+            return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': f'foi {id_venda}, {id_produtos_venda}'})
+
+    return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': 'nao foi'})
 
 @is_authenticated
 def vendas_get_cliente(request):
-    if request.method == 'POST':
-        venda = requests.post(f'{API_URL}/api/clientes/{uuid}', data, headers={'Authorization': request.session['Authorization']})
+    # if request.method == 'POST':
+        # venda = requests.post(f'{API_URL}/api/clientes/{uuid}', data, headers={'Authorization': request.session['Authorization']})
         # request.session.get('produtos', None)
     return None

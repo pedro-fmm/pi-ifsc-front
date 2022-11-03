@@ -30,7 +30,7 @@ urlpatterns = [
     # Venda
 
     path('vendas/', vendas, name='vendas'),
-    path('vendas/realizar-venda', vendas_realizar, name='realizar_venda'),
+    path('vendas/realizar-venda', vendas_realizar, name='realizar_venda'), 
     path('vendas/cliente-venda', vendas_get_cliente, name='get_cliente_venda'),
     path('vendas/adicionar_produto', vendas_adicionar_produto, name='adicionar_produto')
 ]

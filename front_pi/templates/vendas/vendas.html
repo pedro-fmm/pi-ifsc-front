@@ -14,7 +14,7 @@
 
     <main>
             
-        <h1 style="text-align: left;">Listagem de Clientes</h1>
+        <h1 style="text-align: left;">Realizando venda</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
             <table> 
                 <thead>
@@ -54,11 +54,11 @@
 
             <div>
                 
-                <form action="{% url 'front:get_cliente_venda' %}" method="post">
+                <!-- <form action="{% url 'front:get_cliente_venda' %}" method="post">
                         {% csrf_token %}
                         
                         <input type="submit" value="Realizar venda">
-                </form>
+                </form> -->
                 
                 <form action="{% url 'front:realizar_venda' %}" method="post">
                     {% csrf_token %}
