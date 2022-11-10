@@ -5,7 +5,7 @@ from django.shortcuts import render
 from toolbox import validaEmail
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
-from toolbox import validate_cpf, validate_cadastro_cliente
+from toolbox import validate_cpf, validate_cadastro_cliente, validate_plataforma_genero_categoria
 import logging
 
 logger = logging.getLogger(__name__)
@@ -89,16 +89,15 @@ def excluir_cliente(request, pk):
     response = requests.delete(f'{API_URL}/api/cliente/{pk}', headers={'Authorization': request.session['Authorization']})
 
     if response.status_code != 204:
-        mensagem = ['Cadastro realizado com sucesso']
-        return render(request, 'clientes/detalhes_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
+        mensagem = ['Houve um erro no servidor']
+        return render(request, 'clientes/detalhes_cliente.html', {'titulo': 'Detalhes de cliente', 'messages': mensagem})
     
     mensagem = ['Cliente deletado com sucesso!']
 
-    return render(request, 'clientes/detalhes_cliente.html', {'titulo': 'Detalhes do cliente', 'messages': mensagem})
+    return render(request, 'clientes/clientes.html', {'titulo': 'Detalhes do cliente', 'messages': mensagem})
 
 @is_authenticated
 def alterar_cliente(request, pk):
-
 
     if request.method == 'POST':
         nome        = request.POST['cliente-nome']
@@ -339,36 +338,58 @@ def analitico(request):
 @is_authenticated
 def funcionario(request):
     resp = requests.get(API_URL + '/api/funcionario/list/', headers={'Authorization': request.session['Authorization']})
+    logger.warn(resp.json())
     try:
-        return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
+        return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionarios': resp.json()})
     except ValueError:
         return render(request, 'error/error.html', {'titulo': 'Erro'}) 
     # return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
 
 @is_authenticated
 def cadastrar_funcionario(request):
-    # resp = requests.get(API_URL + '/api/dados/cadastro_funcionario/', headers={'Authorization': request.session['Authorization']})
-    # resp = resp.json()
 
     if request.method == 'POST':
-        nome = request.POST['usuario']
-        cargo = request.POST['cargo']
+        primeiroNome = request.POST['primeiro-nome']
+        ultimoNome = request.POST['ultimo-nome']
+        username = request.POST['username']
         comissao = request.POST['comissao']
+        email = request.POST['email']
+        senha = request.POST['password']
+        confirmarSenha = request.POST['confirm-password']
+        mensagem = 'deu pau'
 
-        if not nome:
-            mensagem = ['Você deve preencher o campo de nome']
+        if not primeiroNome:
+            mensagem = ['Você deve preencher o campo de Primeiro Nome']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if not cargo:
-            mensagem = ['Você deve preencher o campo de cargo']
+        if not ultimoNome:
+            mensagem = ['Você deve preencher o campo de Último Nome']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not username:
+            mensagem = ['Você deve preencher o campo de Username']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
         if not comissao:
             mensagem = ['Você deve preencher o campo de comissao']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not email:
+            mensagem = ['Você deve preencher o campo de Email']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not senha:
+            mensagem = ['Você deve preencher o campo de Senha']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not confirmarSenha:
+            mensagem = ['Você deve preencher o campo de Confirmar Senha']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if confirmarSenha != senha:
+            mensagem = ['Senha não corresponde']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
 
         data = {
-            'usuario': nome,
-            'cargo': cargo,
-            'comissao': comissao
+            'primeiro_nome': primeiroNome,
+            'ultimo_nome': ultimoNome,
+            'username': username,
+            'comissao': comissao,
+            'email': email,
+            'password': senha
         }
 
         resp = requests.post(API_URL + '/api/funcionario/create/', data, headers={'Authorization': request.session['Authorization']})
@@ -378,4 +399,323 @@ def cadastrar_funcionario(request):
         
         render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Funcionario', 'messages': mensagem})
 
-    return render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Funcionario'})
+    return render(request, 'funcionario/cadastrar_funcionario.html', {'titulo': 'Cadastro de Produto'})
+
+
+@is_authenticated
+def plataformas(request):
+    resp = requests.get(API_URL + '/api/plataforma/list/', headers={'Authorization': request.session['Authorization']})
+    try:
+        return render(request, 'plataforma/plataformas.html', {'titulo': 'Plataformas', 'plataformas': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+
+
+@is_authenticated
+def detalhes_plataforma(request, pk):
+
+    response = requests.get(f'{API_URL}/api/plataforma/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    return render(request, 'plataforma/detalhes_plataforma.html', {'titulo': 'Detalhes da plataforma', 'plataforma': response.json()})
+
+
+@is_authenticated
+def cadastrar_plataforma(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", False)
+        descricao = request.POST.get("descricao", False)
+
+        if not nome:
+            mensagem = ['Você deve preencher o campo de nome da plataforma']
+            return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma', 'messages': mensagem})
+        if not descricao:
+            mensagem = ['Você deve preencher o campo de descrição']
+            return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma', 'messages': mensagem})
+        
+        data = {
+            "nome": nome,
+            "descricao": descricao
+        }
+
+        resp = requests.post(API_URL + '/api/plataforma/create/', data, headers={'Authorization': request.session['Authorization']})
+        if resp.status_code == '201':
+            mensagem = ['Plataforma adicionada com sucesso!']
+            return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma', 'messages': mensagem})        
+        
+        return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma', 'messages': mensagem})
+    return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma'})
+        
+
+@is_authenticated
+def alterar_categoria(request, pk):
+
+    if request.method == 'POST':
+        nome        = request.POST['nome']
+        descricao   = request.POST['descricao']
+
+        validate = validate_plataforma_genero_categoria(nome=nome, descricao=descricao)
+
+        if not validate['status']:
+            return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'messages': validate['message']}) 
+
+        categoria = validate['data']
+        response = requests.put(f'{API_URL}/api/categoria/{pk}', headers={"Authorization": request.session["Authorization"]}, json=categoria)
+
+        if response.status_code != 200:
+            mensagem = ['Falha na atualização']
+            return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria' , 'messages': mensagem}) 
+                  
+        mensagem = ['Atualização realizada com sucesso']
+        return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'messages': mensagem})
+
+    
+    response = requests.get(f'{API_URL}/api/categoria/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    categoria = response.json()
+    return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'categoria': categoria})
+
+
+@is_authenticated
+def excluir_plataforma(request, pk):
+
+    response = requests.delete(f'{API_URL}/api/plataforma/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code != 204:
+        mensagem = ['Houve um erro no servidor']
+        return render(request, 'plataforma/detalhes_plataforma.html', {'titulo': 'Detalhes de plataforma etária', 'messages': mensagem})
+    
+    mensagem = ['Plataforma deletado com sucesso!']
+
+    return render(request, 'plataforma/plataformas.html', {'titulo': 'Detalhes da plataforma etária', 'messages': mensagem})
+
+
+@is_authenticated
+def faixas(request):
+    resp = requests.get(API_URL + '/api/faixa/list/', headers={'Authorization': request.session['Authorization']})
+    try:
+        return render(request, 'faixa/faixas.html', {'titulo': 'Faixas Etárias', 'faixas': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+
+
+@is_authenticated
+def detalhes_faixa(request, pk):
+
+    response = requests.get(f'{API_URL}/api/faixa/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    return render(request, 'faixa/detalhes_faixa.html', {'titulo': 'Detalhes da faixa etária', 'faixa': response.json()})
+
+
+@is_authenticated
+def cadastrar_faixa(request):
+    if request.method == "POST":
+        faixa = request.POST.get("faixa", False)
+        descricao = request.POST.get("descricao", False)
+
+        if not faixa:
+            mensagem = ['Você deve preencher o campo de faixa etária']
+            return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária', 'messages': mensagem})
+        if not descricao:
+            mensagem = ['Você deve preencher o campo de descrição']
+            return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária', 'messages': mensagem})
+        
+        data = {
+            "faixa": faixa,
+            "descricao": descricao
+        }
+
+        resp = requests.post(API_URL + '/api/faixa/create/', data, headers={'Authorization': request.session['Authorization']})
+        if resp.status_code == '201':
+            mensagem = ['Faixa Etária adicionada com sucesso!']
+            return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária', 'messages': mensagem})        
+        
+        return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária', 'messages': mensagem})
+    return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária'})
+        
+
+@is_authenticated
+def excluir_faixa(request, pk):
+
+    response = requests.delete(f'{API_URL}/api/faixa/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code != 204:
+        mensagem = ['Houve um erro no servidor']
+        return render(request, 'faixa/detalhes_faixa.html', {'titulo': 'Detalhes de faixa etária', 'messages': mensagem})
+    
+    mensagem = ['Gênero deletado com sucesso!']
+
+    return render(request, 'faixa/faixas.html', {'titulo': 'Detalhes da faixa etária', 'messages': mensagem})
+
+
+@is_authenticated
+def categorias(request):
+    resp = requests.get(API_URL + '/api/categoria/list/', headers={'Authorization': request.session['Authorization']})
+    try:
+        return render(request, 'categoria/categorias.html', {'titulo': 'Categorias', 'categorias': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+
+
+@is_authenticated
+def detalhes_categoria(request, pk):
+
+    response = requests.get(f'{API_URL}/api/categoria/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    return render(request, 'categoria/detalhes_categoria.html', {'titulo': 'Detalhes da categoria', 'categoria': response.json()})
+
+
+@is_authenticated
+def cadastrar_categoria(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", False)
+        descricao = request.POST.get("descricao", False)
+
+        if not nome:
+            mensagem = ['Você deve preencher o campo de nome da categoria']
+            return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria', 'messages': mensagem})
+        if not descricao:
+            mensagem = ['Você deve preencher o campo de descrição']
+            return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria', 'messages': mensagem})
+        
+        data = {
+            "nome": nome,
+            "descricao": descricao
+        }
+
+        resp = requests.post(API_URL + '/api/categoria/create/', data, headers={'Authorization': request.session['Authorization']})
+        if resp.status_code == '201':
+            mensagem = ['Categoria adicionada com sucesso!']
+            return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria', 'messages': mensagem})        
+        
+        return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria', 'messages': mensagem})
+    return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria'})
+        
+
+@is_authenticated
+def alterar_categoria(request, pk):
+
+    if request.method == 'POST':
+        nome        = request.POST['nome']
+        descricao   = request.POST['descricao']
+
+        validate = validate_plataforma_genero_categoria(nome=nome, descricao=descricao)
+
+        if not validate['status']:
+            return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'messages': validate['message']}) 
+
+        categoria = validate['data']
+        response = requests.put(f'{API_URL}/api/categoria/{pk}', headers={"Authorization": request.session["Authorization"]}, json=categoria)
+
+        if response.status_code != 200:
+            mensagem = ['Falha na atualização']
+            return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'messages': mensagem}) 
+                  
+        mensagem = ['Atualização realizada com sucesso']
+        return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'messages': mensagem})
+
+    
+    response = requests.get(f'{API_URL}/api/categoria/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    categoria = response.json()
+    return render(request, 'categoria/alterar_categoria.html', {'titulo': 'Alterar categoria', 'categoria': categoria})
+
+
+@is_authenticated
+def excluir_categoria(request, pk):
+
+    response = requests.delete(f'{API_URL}/api/categoria/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code != 204:
+        mensagem = ['Houve um erro no servidor']
+        return render(request, 'categoria/detalhes_categoria.html', {'titulo': 'Detalhes da categoria', 'messages': mensagem})
+    
+    mensagem = ['Categoria deletado com sucesso!']
+
+    return render(request, 'categoria/categorias.html', {'titulo': 'Detalhes da categoria', 'messages': mensagem})
+
+
+@is_authenticated
+def generos(request):
+    resp = requests.get(API_URL + '/api/genero/list/', headers={'Authorization': request.session['Authorization']})
+    try:
+        return render(request, 'genero/generos.html', {'titulo': 'Gêneros', 'generos': resp.json()})
+    except ValueError:
+        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+
+
+@is_authenticated
+def detalhes_genero(request, pk):
+
+    response = requests.get(f'{API_URL}/api/genero/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    return render(request, 'genero/detalhes_genero.html', {'titulo': 'Detalhes do gênero', 'genero': response.json()})
+
+
+@is_authenticated
+def cadastrar_genero(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", False)
+        descricao = request.POST.get("descricao", False)
+
+        if not nome:
+            mensagem = ['Você deve preencher o campo de nome do gênero']
+            return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})
+        if not descricao:
+            mensagem = ['Você deve preencher o campo de descrição']
+            return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})
+        
+        data = {
+            "nome": nome,
+            "descricao": descricao
+        }
+
+        resp = requests.post(API_URL + '/api/genero/create/', data, headers={'Authorization': request.session['Authorization']})
+        if resp.status_code == '201':
+            mensagem = ['Gênero adicionada com sucesso!']
+            return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})        
+        
+        return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})
+    return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero'})
+        
+
+@is_authenticated
+def alterar_cliente(request, pk):
+
+    if request.method == 'POST':
+        nome        = request.POST['nome']
+        descricao   = request.POST['descricao']
+
+        validate = validate_plataforma_genero_categoria(nome=nome, descricao=descricao)
+
+        if not validate['status']:
+            return render(request, 'genero/alterar_genero.html', {'titulo': 'Cadastro de genero', 'messages': validate['message']}) 
+
+        genero = validate['data']
+        response = requests.put(f'{API_URL}/api/genero/{pk}', headers={"Authorization": request.session["Authorization"]}, json=genero)
+
+        if response.status_code != 200:
+            mensagem = ['Falha na realização do cadastro']
+            return render(request, 'genero/alterar_genero.html', {'titulo': 'Cadastro de genero', 'messages': mensagem}) 
+                  
+        mensagem = ['Cadastro realizado com sucesso']
+        return render(request, 'genero/alterar_genero.html', {'titulo': 'Cadastro de genero', 'messages': mensagem})
+
+    
+    response = requests.get(f'{API_URL}/api/genero/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    genero = response.json()
+    return render(request, 'genero/alterar_genero.html', {'titulo': 'Alterar gênero', 'genero': genero})
+
+
+@is_authenticated
+def excluir_genero(request, pk):
+
+    response = requests.delete(f'{API_URL}/api/genero/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code != 204:
+        mensagem = ['Houve um erro no servidor']
+        return render(request, 'genero/detalhes_genero.html', {'titulo': 'Detalhes de gênero', 'messages': mensagem})
+    
+    mensagem = ['Gênero deletado com sucesso!']
+
+    return render(request, 'genero/generos.html', {'titulo': 'Detalhes do gênero', 'messages': mensagem})

@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-categoria-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Alterar categoria</h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if categoria %}
+            
+            <form method="post" action="{% url 'front:alterar_categoria' pk=categoria.id %}" class="Sign-In">
+
+                {% csrf_token %}
+
+                <div class="register-categoria" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+                <h2>Nome da Categoria</h2>
+                <input id="nome" name="nome" type="text" value="{{ categoria.nome }}">
+                <h2>Descrição</h2>
+                <input id="descricao" name="descricao" type="text" maxlength="14" value="{{ categoria.descricao }}">
+                </div>
+                <button id="cadastrar">Alterar</button>
+
+            </form>
+
+        {% else %}
+        
+            <p>Categoria inválido</p>
+
+        {% endif %}
+        
+    </main>
+    
+{% endblock %}

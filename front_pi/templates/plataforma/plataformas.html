@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-plataformas.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>
+            
+        <h1 style="text-align: left;">Listagem de Plataformas</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 80vh;">
+            <table style="height: 88%;"> 
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if plataformas %}
+
+                        {% for plataforma in plataformas %}
+                            
+                            <tr>
+                                <td>{{ plataforma.nome }}</td>
+                                <td class="primary"><a href="{% url 'front:detalhes_plataforma' pk=plataforma.id %}">Detalhes</a></td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                            <p>Nenhuma plataforma cadastrada</p>
+
+                    {% endif %}
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+{% endblock %}
