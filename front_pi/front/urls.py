@@ -23,5 +23,6 @@ urlpatterns = [
     path('produtos/delete/<uuid:pk>', excluir_produto, name='excluir_produto'),
     path('error/', error, name='erro'),
     path('analitico/', analitico, name='analitico'),
+    path('funcionarios/', funcionario, name='funcionarios'),
     path('funcionario/cadastro/', cadastrar_funcionario, name='cadastrar_funcionario')
 ]
