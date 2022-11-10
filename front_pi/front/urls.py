@@ -1,11 +1,11 @@
 from django.urls import path
-from .views import login, home, error
+from .views import login, home
 from .views import clientes, alterar_cliente ,cadastrar_clientes, detalhes_cliente, excluir_cliente
 from .views import produtos, cadastrar_produtos, detalhes_produto, alterar_produto, excluir_produto
 from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_get_cliente, vendas_deletar
 from .views import analitico
 from .views import funcionario, cadastrar_funcionario
-from .views import cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma, 
+from .views import cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma
 from .views import faixas, detalhes_faixa, excluir_faixa
 from .views import categorias, detalhes_categoria, excluir_categoria
 from .views import generos, detalhes_genero, excluir_genero
@@ -73,7 +73,7 @@ urlpatterns = [
     path('genero/delete/<uuid:pk>', excluir_genero, name='excluir_genero'),
     path('genero/cadastro/', cadastrar_genero, name='cadastrar_genero'),
     
-    path('error/', error, name='erro'),
+    # path('error/', error, name='erro'),
     path('analitico/', analitico, name='analitico'),
 
     # Categorias
