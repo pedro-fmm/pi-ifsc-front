@@ -85,3 +85,19 @@ def validate_cadastro_cliente(nome, cpf, email, telefone, endereco):
         }
 
     return {'status': True, 'data': data}
+
+
+def validate_plataforma_genero_categoria(nome, descricao):
+    if not nome:
+        mensagem = ['Você deve preencher o campo de nome']
+        return {'status': False, 'message': mensagem}
+    if not descricao:
+        mensagem = ['Você deve preencher o campo de descrição']
+        return {'status': False, 'message': mensagem}
+
+    data = {
+        "nome": nome,
+        "descricao": descricao,
+    }
+
+    return {'status': True, 'data': data}

@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-genero-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Cadastrar Gênero</h1>
+        
+        {% if messages %}
+            <ul class="messages" style="color: red; font-size: larger;">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>** {{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <form method="post" action="{% url 'front:cadastrar_genero' %}" class="Sign-In">
+
+            {% csrf_token %}
+
+            <div class="register-genero" style="overflow-y: auto; height: 65%; margin-top: 1rem;">
+            <h2>Nome do Gênero</h2>
+            <input id="genero-nome" name="nome" type="text">
+            <h2>Descrição</h2>
+            <input id="genero-desc" name="descricao" type="text" maxlength="14">
+            <button id="cadastrar">Cadastrar</button>
+            </div>
+
+        </form>
+        
+    </main>
+    
+{% endblock %}
