@@ -18,11 +18,13 @@ Urls do app front.
 """
 
 urlpatterns = [
+    
     path('login/', login, name='login'),
     path('home/', home, name='home'),
 
     # Clientes
 
+    path('funcionario/', funcionario, name='funcionario'),
     path('clientes/', clientes, name='clientes'),
     path('clientes/<uuid:pk>', detalhes_cliente, name='detalhes_cliente'),
     path('clientes/cadastro/', cadastrar_clientes, name='cadastrar_clientes'),
@@ -33,6 +35,9 @@ urlpatterns = [
 
     path('produtos/', produtos, name='produtos'),
     path('produtos/cadastro/', cadastrar_produtos, name='cadastrar_produtos'),
+    path('produtos/<uuid:pk>', detalhes_produto, name='detalhes_produto'),
+    path('produtos/alterar/<uuid:pk>', alterar_produto, name='alterar_produto'),
+    path('produtos/delete/<uuid:pk>', excluir_produto, name='excluir_produto'),
 
     # Venda
 
@@ -41,5 +46,41 @@ urlpatterns = [
     path('vendas/realizar-venda', vendas_realizar, name='realizar_venda'), 
     path('vendas/cliente-venda', vendas_get_cliente, name='get_cliente_venda'),
     path('vendas/deletar/<uuid:pk>', vendas_deletar, name='deletar_venda'),
-    path('vendas/adicionar_produto', vendas_adicionar_produto, name='adicionar_produto')
+    path('vendas/adicionar_produto', vendas_adicionar_produto, name='adicionar_produto'),
+
+    # Funcionario
+    
+    path('funcionario/cadastro/', cadastrar_funcionario, name='cadastrar_funcionario'),
+
+    # Plataforma
+    
+    path('plataformas/', plataformas, name='plataformas'),
+    path('plataforma/<uuid:pk>', detalhes_plataforma, name='detalhes_plataforma'),
+    path('plataforma/delete/<uuid:pk>', excluir_plataforma, name='excluir_plataforma'),
+    path('plataforma/cadastro/', cadastrar_plataforma, name='cadastrar_plataforma'),
+
+    # Faixas
+    
+    path('faixas/', faixas, name='faixas'),
+    path('faixa/<uuid:pk>', detalhes_faixa, name='detalhes_faixa'),
+    path('faixa/delete/<uuid:pk>', excluir_faixa, name='excluir_faixa'),
+    path('faixa/cadastro/', cadastrar_faixa, name='cadastrar_faixa'),
+
+    # Genero
+    
+    path('generos/', generos, name='generos'),
+    path('genero/<uuid:pk>', detalhes_genero, name='detalhes_genero'),
+    path('genero/delete/<uuid:pk>', excluir_genero, name='excluir_genero'),
+    path('genero/cadastro/', cadastrar_genero, name='cadastrar_genero'),
+    
+    path('error/', error, name='erro'),
+    path('analitico/', analitico, name='analitico'),
+
+    # Categorias
+    
+    path('categorias/', categorias, name='categorias'),
+    path('categoria/<uuid:pk>', detalhes_categoria, name='detalhes_categoria'),
+    path('categoria/delete/<uuid:pk>', excluir_categoria, name='excluir_categoria'),
+    path('categoria/cadastro/', cadastrar_categoria, name='cadastrar_categoria'),
+
 ]
