@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-funcionario-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Cadastrar Funcionario</h1>
+      
+        {% if messages %}
+            <ul class="messages" style="color: red; font-size: larger;">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post" action="{% url 'front:cadastrar_funcionario' %}" class="Sign-In">
+
+            {% csrf_token %}
+
+            <div class="register-user" >
+                <h2>Nome do Funcionario</h2>
+                <input id="nome" name="nome" type="text">
+                <h2>Cargo</h2>
+                <input id="cargo" name="cargo" type="text">
+                <h2>Comissão</h2>
+                <input type="number" name="comissao">
+            </div>
+            <button id="cadastrar">Cadastrar</button>
+        </form>
+
+    </main>
+
+{% endblock %}

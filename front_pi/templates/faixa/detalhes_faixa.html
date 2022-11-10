@@ -6,28 +6,27 @@
 
 {% block style %}
 
-<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-faixas.css' %}">
 
 <style>
 
     h1{
-        margin-bottom: 2%;
         font-size: 35px; 
     }
 
-    .details span{
-        font-size: 18px;
+    span{
+        font-size: 20px;
     }
 
     .details{
         background-color: white;
         width: 60vw;
         height: 70vh;
-        border-radius: 20px;
+        border-radius: 5%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center ;
+        align-items: center;
     }
 
     .recent-orders{
@@ -64,7 +63,7 @@
 
     <main>
             
-        <h1 style="text-align: left;">Detalhe do cliente</h1>
+        <h1 style="text-align: left;">Detalhes da faixa etária</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 80vh;">
             <section>
 
@@ -77,29 +76,25 @@
                     </ul>
                 {% endif %}
 
-                {% if cliente %}
+                {% if faixa %}
                             
                 <div class="details">
 
-                    <h1>{{ cliente.nome }}</h1>
-                    <span>Email: {{ cliente.email }}</span>
-                    <br>
-                    <span>Telefone: {{ cliente.telefone }}</span>
-                    <br>
-                    <span>Endereço: {{ cliente.endereco }}</span>
+                    <h1>{{ faixa.faixa }}</h1>
+                    <span>Descrição: {{ faixa.descricao }}</span>
                     <br>
                         <button>
-                            <a href="{% url 'front:excluir_cliente' pk=cliente.id  %}" style="color: white; font-size: 20px">Excluir</a> 
+                            <a href="{% url 'front:excluir_faixa' pk=faixa.id  %}" style="color: white; font-size: 20px">Excluir</a> 
                         </button>
 
                         <button> 
-                            <a href="{% url 'front:alterar_cliente' pk=cliente.id  %}" style="color: white; font-size: 20px" >Alterar</a> 
+                            <a href="{% url 'front:alterar_faixa' pk=faixa.id  %}" style="color: white; font-size: 20px" >Alterar</a> 
                         </button>
                 </div>
 
                     {% else %}
 
-                            <p>Nenhum cliente cadastrado com esse ID</p>
+                            <p>Nenhuma faixa etária cadastrada com esse ID</p>
 
                     {% endif %}
             </section>

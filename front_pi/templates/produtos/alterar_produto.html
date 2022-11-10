@@ -14,10 +14,6 @@
 
     <main>        
         <h1 style="text-align: left;">Cadastrar Produtos</h1>
-<<<<<<< HEAD
-        
-=======
->>>>>>> 2c50703b058cce00ba705b130d15fff19d4460ad
         {% if messages %}
             <ul class="messages" style="color: red; font-size: larger;">
                 {% for message in messages %}
@@ -25,9 +21,14 @@
                 {% endfor %}
             </ul>
         {% endif %}
+
+        {% if produto %}
+
         <div class="register-products" style="overflow-y: auto; height: 700px; margin-top: 1rem;">
-            <form enctype="multipart/form-data" action="{% url 'front:cadastrar_produtos' %}" method="post" id="form-produtos">
+            <form enctype="multipart/form-data" action="{% url 'front:alterar_produto' pk=produto.id %}" method="post" id="form-produtos">
+
             {% csrf_token %}
+
             <h2>Nome do Produto</h2>
             <input id="produto" name="produto" type="text">
             <h2>Descrição</h2>
@@ -83,6 +84,12 @@
         </form>
         </div>
         <button form="form-produtos" id="cadastrar">Cadastrar</button>
+
+        {% else %}
+        
+        <p>Produto inválido</p>
+
+    {% endif %}
     </main>
 
 {% endblock %}

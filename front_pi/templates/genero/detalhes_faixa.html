@@ -6,28 +6,27 @@
 
 {% block style %}
 
-<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-generos.css' %}">
 
 <style>
 
     h1{
-        margin-bottom: 2%;
         font-size: 35px; 
     }
 
-    .details span{
-        font-size: 18px;
+    span{
+        font-size: 20px;
     }
 
     .details{
         background-color: white;
         width: 60vw;
         height: 70vh;
-        border-radius: 20px;
+        border-radius: 5%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center ;
+        align-items: center;
     }
 
     .recent-orders{
@@ -64,7 +63,7 @@
 
     <main>
             
-        <h1 style="text-align: left;">Detalhe do cliente</h1>
+        <h1 style="text-align: left;">Detalhe do gênero</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 80vh;">
             <section>
 
@@ -77,29 +76,25 @@
                     </ul>
                 {% endif %}
 
-                {% if cliente %}
+                {% if genero %}
                             
                 <div class="details">
 
-                    <h1>{{ cliente.nome }}</h1>
-                    <span>Email: {{ cliente.email }}</span>
-                    <br>
-                    <span>Telefone: {{ cliente.telefone }}</span>
-                    <br>
-                    <span>Endereço: {{ cliente.endereco }}</span>
+                    <h1>{{ genero.nome }}</h1>
+                    <span>Descrição: {{ genero.descricao }}</span>
                     <br>
                         <button>
-                            <a href="{% url 'front:excluir_cliente' pk=cliente.id  %}" style="color: white; font-size: 20px">Excluir</a> 
+                            <a href="{% url 'front:excluir_genero' pk=genero.id  %}" style="color: white; font-size: 20px">Excluir</a> 
                         </button>
 
                         <button> 
-                            <a href="{% url 'front:alterar_cliente' pk=cliente.id  %}" style="color: white; font-size: 20px" >Alterar</a> 
+                            <a href="{% url 'front:alterar_genero' pk=genero.id  %}" style="color: white; font-size: 20px" >Alterar</a> 
                         </button>
                 </div>
 
                     {% else %}
 
-                            <p>Nenhum cliente cadastrado com esse ID</p>
+                            <p>Nenhum gênero cadastrado com esse ID</p>
 
                     {% endif %}
             </section>

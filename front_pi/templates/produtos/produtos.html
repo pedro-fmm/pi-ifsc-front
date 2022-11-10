@@ -14,131 +14,47 @@
 
     <main>
             
-        <h1 style="text-align: left;">Listagem de Clientes</h1>
-        <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+        <h1 style="text-align: left;">Listagem de Produtos</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 75vh;">
             <table> 
                 <thead>
                     <tr>
                         <th>Nome do Produto</th>
-                        <th>Número do Produto</th>
-                        <th>Pagamento</th>
-                        <th>Status</th>
+                        <th>Valor</th>
+                        <th>Plataforma</th>
+                        <th>Faixa Etária</th>
+                        <th>Gênero</th>
+                        <th>Categoria</th>
+                        <th>Estoque</th>
+                        <th>Vendas</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                
+                {% if produtos %}
+
+                    {% for produto in produtos %}
+                                
                     <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.preco }}</td>
+                        <td>{{ produto.plataforma_nome }}</td>
+                        <td>{{ produto.faixa_etaria_nome }}</td>
+                        <td>{{ produto.genero_nome }}</td>
+                        <td>{{ produto.categoria_nome }}</td>
+                        <td>{{ produto.estoque }}</td>
+                        <td>{{ produto.qtd_vendas }}</td>
+                        <td class="primary"><a href="{% url 'front:detalhes_produto' pk=produto.id %}">Detalhes</a></td>
                     </tr>
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                    {% endfor %}
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                {% else %}
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                        <p>Nenhum produto cadastrado</p>
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
+                {% endif %}
 
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-
-                    <tr>
-                        <td>God of War Ragnarok</td>
-                        <td>1987423</td>
-                        <td>A vista</td>
-                        <td class="success">Confirmado</td>
-                        <td class="primary">Detalhes</td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </main>

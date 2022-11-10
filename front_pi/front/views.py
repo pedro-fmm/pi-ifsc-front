@@ -100,7 +100,6 @@ def excluir_cliente(request, pk):
 @is_authenticated
 def alterar_cliente(request, pk):
 
-
     if request.method == 'POST':
         nome        = request.POST['cliente-nome']
         cpf         = request.POST['cliente-cpf'].replace('.', '').replace('-', '')

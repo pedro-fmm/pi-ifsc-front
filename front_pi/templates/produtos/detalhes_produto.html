@@ -6,28 +6,32 @@
 
 {% block style %}
 
-<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-produtos.css' %}">
 
 <style>
 
-    h1{
-        margin-bottom: 2%;
+    .details h1{
+        color: black;
+        margin-left: 2%;
+        margin-bottom: 2%;   
         font-size: 35px; 
     }
 
     .details span{
+        color: black;
+        margin-left: 5%;
         font-size: 18px;
     }
 
     .details{
         background-color: white;
         width: 60vw;
-        height: 70vh;
+        height: 75vh;
         border-radius: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center ;
+        align-items: flex-start;
     }
 
     .recent-orders{
@@ -54,6 +58,7 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    margin-left: 5%;
     }
     
 </style>
@@ -77,29 +82,44 @@
                     </ul>
                 {% endif %}
 
-                {% if cliente %}
+                {% if produto %}
                             
                 <div class="details">
 
-                    <h1>{{ cliente.nome }}</h1>
-                    <span>Email: {{ cliente.email }}</span>
+                    <h1>{{ produto.nome }}</h1>
+                    <span>Descrição: {{ produto.descricao }}</span>
                     <br>
-                    <span>Telefone: {{ cliente.telefone }}</span>
+                    <span>Preço: {{ produto.preco }}</span>
                     <br>
-                    <span>Endereço: {{ cliente.endereco }}</span>
+                    <span>Plataforma: {{ produto.plataforma_nome }}</span>
                     <br>
+                    <span>Faixa Etaria: {{ produto.faixa_etaria_nome }}</span>
+                    <br>
+                    <span>Gênero: {{ produto.genero_nome }}</span>
+                    <br>
+                    <span>Categoria: {{ produto.categoria_nome }}</span>
+                    <br>
+                    <span>Data criação: {{ produto.data_criacao }}</span>
+                    <br>
+                    <span>Estoque: {{ produto.estoque }}</span>
+                    <br>
+                    <span>Quantidade de vendas: {{ produto.qtd_vendas }}</span>
+                    <br>
+                
                         <button>
-                            <a href="{% url 'front:excluir_cliente' pk=cliente.id  %}" style="color: white; font-size: 20px">Excluir</a> 
+                            <a href="{% url 'front:excluir_produto' pk=produto.id  %}" style="color: white; font-size: 20px">Excluir</a> 
                         </button>
 
-                        <button> 
-                            <a href="{% url 'front:alterar_cliente' pk=cliente.id  %}" style="color: white; font-size: 20px" >Alterar</a> 
+                        <button>
+                            <a href="{% url 'front:alterar_produto' pk=produto.id  %}" style="color: white; font-size: 20px">Alterar</a> 
                         </button>
+
+                        
                 </div>
 
                     {% else %}
 
-                            <p>Nenhum cliente cadastrado com esse ID</p>
+                            <p>Nenhum produto cadastrado com esse ID</p>
 
                     {% endif %}
             </section>

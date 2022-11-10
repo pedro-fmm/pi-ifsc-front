@@ -6,7 +6,7 @@
 
 {% block style %}
 
-<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+<link rel="stylesheet" href="{% static 'css/style-funcionario.css' %}">
 
 {% endblock %}
 
@@ -14,14 +14,14 @@
 
     <main>
             
-        <h1 style="text-align: left;">Listagem de Clientes</h1>
+        <h1 style="text-align: left;">Listagem de Funcionarios</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 80vh;">
             <table style="height: 88%;"> 
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Telefone</th>
+                        <th>Cargo</th>
+                        <th>Comissão</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -33,18 +33,18 @@
                         {% for cliente in clientes %}
                             
                             <tr>
-                                <td>{{ cliente.nome }}</td>
-                                <td>{{ cliente.email }}</td>
-                                <td>{{ cliente.telefone }}</td>
+                                <td>{{ funcionario.nome }}</td>
+                                <td>{{ funcionario.cargo }}</td>
+                                <td>{{ funcionario.comissao }}</td>
                                 <td class="success">Confirmado</td>
-                                <td class="primary"><a href="{% url 'front:detalhes_cliente' pk=cliente.id %}">Detalhes</a></td>
+                                <td class="primary"><a href="{% url 'front:detalhes_funcionario' pk=funcionario.id %}">Detalhes</a></td>
                             </tr>
 
                         {% endfor %}
 
                     {% else %}
 
-                            <p>Nenhum cliente cadastrado</p>
+                            <p>Nenhum funcionario cadastrado</p>
 
                     {% endif %}
 
