@@ -1,4 +1,5 @@
 from asyncio.log import logger
+import json
 import requests
 from django.shortcuts import render, redirect
 from toolbox import validaEmail
@@ -39,7 +40,12 @@ def login(request):
 
 @is_authenticated
 def home(request):
-    return render(request, 'home/home.html', {'titulo': 'Home'})
+
+    vendas = requests.get(API_URL + '/api/venda/list/', headers={'Authorization': request.session['Authorization']}).json()
+
+    logger.warn(vendas)
+
+    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas})
 
 @is_authenticated
 def clientes(request):
@@ -246,6 +252,8 @@ def vendas_realizar(request):
             for produto in id_produtos:
                 produto_data = {"produto": produto, "venda": id_venda}
                 id_produtos_venda.append(requests.post(f'{API_URL}/api/vendaitem/create/', data=produto_data, headers={'Authorization': request.session['Authorization']}))
+
+            request.session['produtos'] = None
             return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': f'foi {id_venda}, {id_produtos_venda}'})
 
     return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': 'nao foi'})
@@ -256,3 +264,17 @@ def vendas_get_cliente(request):
         # venda = requests.post(f'{API_URL}/api/clientes/{uuid}', data, headers={'Authorization': request.session['Authorization']})
         # request.session.get('produtos', None)
     return None
+
+@is_authenticated
+def vendas_deletar(request, pk):
+    
+    response = requests.delete(f'{API_URL}/api/venda/{pk}', headers={'Authorization': request.session['Authorization']})
+
+    if response.status_code == 204:
+        mensagem = ['Venda deletada com sucesso!']
+        vendas = requests.get(API_URL + '/api/venda/list/', headers={'Authorization': request.session['Authorization']}).json()
+        return render(request, 'vendas/vendas.html', {'titulo': 'Vendas', 'vendas': vendas, 'messages': mensagem})
+
+    mensagem = ['Ocorreu um erro.']
+    return render(request, 'vendas/vendas.html', {'titulo': 'Vendas', 'vendas': vendas, 'messages': mensagem})
+    

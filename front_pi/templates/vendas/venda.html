@@ -16,21 +16,23 @@
             
         <h1 style="text-align: left;">Realizando venda</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
-            <table> 
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Valor</th>
-                        <th>Estoque</th>
-                        <th>Quantidade</th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                    {% if produtos %}
+            {% if produtos %}
 
+                <table> 
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Valor</th>
+                            <th>Estoque</th>
+                            <th>Quantidade</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                
                         {% for produto in produtos %}
-                            
+                        
                             <tr>
                                 <td>{{ produto.nome }}</td>
                                 <td>{{ produto.preco }}</td>
@@ -39,14 +41,21 @@
 
                         {% endfor %}
 
-                    {% else %}
+                    </tbody>
+                </table>
 
-                            <p>Cadastre produtos na venda</p>
+                <form action="{% url 'front:realizar_venda' %}" method="post">
+                    {% csrf_token %}
 
-                    {% endif %}
+                    <!-- <button>Realizar venda</button> -->
+                    <button type="submit">Realizar venda</button> 
+                </form>
 
-                </tbody>
-            </table>
+            {% else %}
+
+                    <p>Cadastre produtos na venda</p>
+
+            {% endif %}
 
             <div>
                 <a href="{% url 'front:adicionar_produto' %}">Adicionar produto</a>
@@ -59,12 +68,7 @@
                         
                         <input type="submit" value="Realizar venda">
                 </form> -->
-                
-                <form action="{% url 'front:realizar_venda' %}" method="post">
-                    {% csrf_token %}
-
-                    <input type="submit" value="Realizar venda">
-                </form>
+                             
             </div>
         </div>
     </main>

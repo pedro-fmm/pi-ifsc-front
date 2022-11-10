@@ -31,7 +31,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -78,10 +77,9 @@ WSGI_APPLICATION = 'front_pi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = MYSQL_CONN #connecting to cloud mysql
+#DATABASES = MYSQL_CONN #connecting to cloud mysql
 
-#DATABASES = SQLITE_CONN #connecting to local sqlite
-
+DATABASES = SQLITE_CONN #connecting to local sqlite
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

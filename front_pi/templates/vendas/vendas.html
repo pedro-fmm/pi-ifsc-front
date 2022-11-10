@@ -16,6 +16,17 @@
             
         <h1 style="text-align: left;">Listagem de vendas</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+
+            {% if messages %}
+
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            
+            {% endif %}
+
             <table> 
                 <thead>
                     <tr>
@@ -40,7 +51,7 @@
                                 <td>{{ venda.dia }}</td>
                                 <td>{{ venda.hora }}</td>
                                 <td>{{ venda.valor }}</td>
-                                <td class="primary"><a href="#">Detalhes</a></td>
+                                <td class="primary"><a href="{% url 'front:deletar_venda' pk=venda.id %}">Excluir</a></td>
                             </tr>
 
                         {% endfor %}

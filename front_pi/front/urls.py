@@ -2,7 +2,7 @@ from django.urls import path
 from .views import login, home
 from .views import clientes, alterar_cliente ,cadastrar_clientes, detalhes_cliente, excluir_cliente
 from .views import produtos, cadastrar_produtos
-from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_get_cliente
+from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_get_cliente, vendas_deletar
 
 app_name = 'front'
 
@@ -33,5 +33,6 @@ urlpatterns = [
     path('vendas/iniciar', vendas_iniciar, name='iniciar_venda'),
     path('vendas/realizar-venda', vendas_realizar, name='realizar_venda'), 
     path('vendas/cliente-venda', vendas_get_cliente, name='get_cliente_venda'),
+    path('vendas/deletar/<uuid:pk>', vendas_deletar, name='deletar_venda'),
     path('vendas/adicionar_produto', vendas_adicionar_produto, name='adicionar_produto')
 ]
