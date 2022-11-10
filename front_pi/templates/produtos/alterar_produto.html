@@ -13,7 +13,7 @@
 {% block content %}
 
     <main>        
-        <h1 style="text-align: left;">Cadastrar Produtos</h1>
+        <h1 style="text-align: left;">Alterar Produtos</h1>
         {% if messages %}
             <ul class="messages" style="color: red; font-size: larger;">
                 {% for message in messages %}
@@ -30,11 +30,11 @@
             {% csrf_token %}
 
             <h2>Nome do Produto</h2>
-            <input id="produto" name="produto" type="text">
+            <input id="produto" name="produto" type="text" value="{{ produto.nome }}">
             <h2>Descrição</h2>
-            <input id="descricao" name="descricao" type="text">
+            <input id="descricao" name="descricao" type="text" value="{{ produto.descricao }}">
             <h2>Imagem</h2>
-            <input type="file" name="imagem" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-backgroud)">
+            <input type="file" name="imagem" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-backgroud)" value="{{ produto.imagem }}">
             <h2>Plataforma</h2>
             {% if plataformas %}
                 <select name="plataformas" name="plataformas" id="plataformas">
@@ -76,14 +76,14 @@
                 <h3>Não há categorias cadastradas</h3>
             {% endif %}
             <h2>Estoque</h2>
-            <input id="estoque" name="estoque" type="number">
+            <input id="estoque" name="estoque" type="number" value="{{ produto.estoque }}">
             <h2>Preço de custo</h2>
             <input id="preco_custo" name="preco_custo" type="number">
             <h2>Preço de venda</h2>
-            <input id="preco_venda" name="preco_venda" type="number">
+            <input id="preco_venda" name="preco_venda" type="number" value="{{ produto.preco }}">
         </form>
         </div>
-        <button form="form-produtos" id="cadastrar">Cadastrar</button>
+        <button form="form-produtos" id="cadastrar">Alterar</button>
 
         {% else %}
         

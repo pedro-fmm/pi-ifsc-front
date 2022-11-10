@@ -116,10 +116,10 @@ def alterar_cliente(request, pk):
         response = requests.put(f'{API_URL}/api/cliente/{pk}', headers={"Authorization": request.session["Authorization"]}, json=cliente)
 
         if response.status_code != 200:
-            mensagem = ['Falha na realização do cadastro']
+            mensagem = ['Falha na realização da alterção']
             return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem}) 
                   
-        mensagem = ['Cadastro realizado com sucesso']
+        mensagem = ['Alteração realizada com sucesso']
         return render(request, 'clientes/alterar_cliente.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem})
 
     response = requests.get(f'{API_URL}/api/cliente/{pk}', headers={'Authorization': request.session['Authorization']})
@@ -161,16 +161,16 @@ def alterar_produto(request, pk):
     resp_faixa = resp['faixas']
 
     if request.method == 'POST':
-        nome = request.POST.get('produto', False)
-        descricao = request.POST.get('descricao', False)
-        imagem = request.FILES
-        plataforma = request.POST.get('plataformas', False)
-        genero = request.POST.get('generos', False)
-        faixa_etaria = request.POST.get('faixas', False)
-        categoria = request.POST.get('categorias', False)
-        estoque = request.POST.get('estoque', False)
-        preco_custo = request.POST.get('preco_custo', False)
-        preco_venda = request.POST.get('preco_venda', False)
+        nome            = request.POST.get('produto', False)
+        descricao       = request.POST.get('descricao', False)
+        imagem          = request.FILES
+        plataforma      = request.POST.get('plataformas', False)
+        genero          = request.POST.get('generos', False)
+        faixa_etaria    = request.POST.get('faixas', False)
+        categoria       = request.POST.get('categorias', False)
+        estoque         = request.POST.get('estoque', False)
+        preco_custo     = request.POST.get('preco_custo', False)
+        preco_venda     = request.POST.get('preco_venda', False)
 
         if not nome:
             mensagem = ['Você deve preencher o campo de nome do produto']
@@ -213,7 +213,7 @@ def alterar_produto(request, pk):
             'estoque': estoque,
         }
 
-        resp = requests.put(API_URL + '/api/produto/create/', data, files=imagem, headers={'Authorization': request.session['Authorization']})
+        resp = requests.post(API_URL + '/api/produto/create/', data, files=imagem, headers={'Authorization': request.session['Authorization']})
         produto = resp.json()['id']
         data = {
             'produto': produto,
@@ -222,9 +222,12 @@ def alterar_produto(request, pk):
             'descricao': 'Primeiro preço'
         }
 
-        resp_preco = requests.put(API_URL + '/api/preco/create/' + resp.json()['id'], data, headers={'Authorization': request.session['Authorization']})
+        resp_preco = requests.post(API_URL + '/api/preco/create/' + resp.json()['id'], data, headers={'Authorization': request.session['Authorization']})
 
-        response = requests.get(f'{API_URL}/api/produto/{pk}', headers={'Authorization': request.session['Authorization']})
+        # response = requests.get(f'{API_URL}/api/produto/{pk}', headers={'Authorization': request.session['Authorization']})
+
+        produto = ['data']
+        response = requests.put(f'{API_URL}/api/produto/{pk}', headers={"Authorization": request.session["Authorization"]}, json=produto)
 
         if response.status_code != 200 and resp_preco.status_code != 201:
             mensagem = ['Falha na realização da alteração']
@@ -237,7 +240,7 @@ def alterar_produto(request, pk):
 
     produto = response.json()
 
-    return render(request, 'produtos/alterar_produto.html', {'titulo': 'Alteracao de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
+    return render(request, 'produtos/alterar_produto.html', {'titulo': 'Alteracao de Produto', 'produto': produto, 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
 @is_authenticated
 def cadastrar_produtos(request):
