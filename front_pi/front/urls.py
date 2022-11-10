@@ -18,13 +18,12 @@ Urls do app front.
 """
 
 urlpatterns = [
-    
+
     path('login/', login, name='login'),
     path('home/', home, name='home'),
 
     # Clientes
 
-    path('funcionario/', funcionario, name='funcionario'),
     path('clientes/', clientes, name='clientes'),
     path('clientes/<uuid:pk>', detalhes_cliente, name='detalhes_cliente'),
     path('clientes/cadastro/', cadastrar_clientes, name='cadastrar_clientes'),
@@ -50,6 +49,7 @@ urlpatterns = [
 
     # Funcionario
     
+    path('funcionario/', funcionario, name='funcionario'),
     path('funcionario/cadastro/', cadastrar_funcionario, name='cadastrar_funcionario'),
 
     # Plataforma
