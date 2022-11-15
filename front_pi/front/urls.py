@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import login, home, clientes, alterar_cliente, cadastrar_clientes, detalhes_cliente, excluir_cliente, produtos, cadastrar_produtos, error, analitico, funcionario, cadastrar_funcionario, cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma, faixas, categorias, generos, plataformas, detalhes_categoria, detalhes_faixa, detalhes_genero, detalhes_plataforma, excluir_categoria, excluir_faixa, excluir_genero, excluir_plataforma
+from .views import auth, home, clientes, alterar_cliente, cadastrar_clientes, detalhes_cliente, excluir_cliente, produtos, cadastrar_produtos, error, analitico, funcionario, cadastrar_funcionario, cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma, faixas, categorias, generos, plataformas, detalhes_categoria, detalhes_faixa, detalhes_genero, detalhes_plataforma, excluir_categoria, excluir_faixa, excluir_genero, excluir_plataforma
 from .views import detalhes_produto, alterar_produto, excluir_produto
 
 app_name = 'front'
@@ -9,7 +9,7 @@ Urls do app front.
 """
 
 urlpatterns = [
-    path('login/', login, name='login'),
+    path('login/', auth, name='login'),
     path('home/', home, name='home'),
     path('funcionario/', funcionario, name='funcionarios'),
     path('clientes/', clientes, name='clientes'),

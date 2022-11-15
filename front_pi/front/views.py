@@ -1,36 +1,103 @@
 from asyncio.log import logger
-from email.mime import image
 import requests
 from django.shortcuts import render
 from toolbox import validaEmail
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
-from toolbox import validate_cpf, validate_cadastro_cliente, validate_plataforma_genero_categoria
+from toolbox import validate_cadastro_cliente, validate_plataforma_genero_categoria
 import logging
 
 logger = logging.getLogger(__name__)
 
-def login(request):
+def auth(request):
 
     if request.method == 'POST':
-        email = request.POST['login-email']
-        password = request.POST['login-password']
+
+        form = request.POST["form"]
+        if form == "login":
+
+            email = request.POST['login-email']
+            password = request.POST['login-password']
+            
+            if not email:
+                mensagem = ['Você deve preencher o campo de e-mail']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not validaEmail(email=email):
+                mensagem = ['Você deve digitar um campo de e-mail válido']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not password:
+                mensagem = ['Você deve digitar uma senha.']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+
+            resp = requests.post(API_URL + '/api/auth/login/', {'email': email, 'password': password})
+            if resp.json().get('user', False):
+                request.session["Authorization"] = 'Bearer ' + resp.json().get('access')
+                return render(request, 'home/home.html')
+            mensagem = ['Usuário ou senha inválidos']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
         
+    elif form == "cadastro":
+
+        email = request.POST['cadastro-email']
+        password = request.POST['cadastro-password']
+        password2 = request.POST['cadastro-password2']
+        username = request.POST['cadastro-username']
+        primeiro_nome = request.POST['cadastro-primeiro-nome']
+        ultimo_nome = request.POST['cadastro-ultimo-nome']
+        razao_social = request.POST['cadastro-razao']
+        nome_fantasia = request.POST['cadastro-fantasia']
+        cnpj = request.POST['cadastro-cnpj']
+        icone = request.FILES
+
+        if not razao_social:
+            mensagem = ['Você deve preencher o campo de razão social']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not nome_fantasia:
+            mensagem = ['Você deve preencher o campo de nome fantasia']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not cnpj:
+            mensagem = ['Você deve preencher o campo de CNPJ']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not icone:
+            mensagem = ['Você deve preencher o campo de ícone']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
         if not email:
             mensagem = ['Você deve preencher o campo de e-mail']
             return render(request, 'auth/auth.html', {'messages': mensagem})
         if not validaEmail(email=email):
             mensagem = ['Você deve digitar um campo de e-mail válido']
             return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not username:
+            mensagem = ['Você deve preencher o campo de nome de usuário']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not primeiro_nome:
+            mensagem = ['Você deve preencher o campo de primeiro nome']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not ultimo_nome:
+            mensagem = ['Você deve preencher o campo de último nome']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
         if not password:
             mensagem = ['Você deve digitar uma senha.']
             return render(request, 'auth/auth.html', {'messages': mensagem})
+        if not password2:
+            mensagem = ['As senhas devem ser iguais']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
 
-        resp = requests.post(API_URL + '/api/auth/login/', {'email': email, 'password': password})
-        if resp.json().get('user', False):
-            request.session["Authorization"] = 'Bearer ' + resp.json().get('access')
-            return render(request, 'home/home.html')
-        mensagem = ['Usuário ou senha inválidos']
+        data = {
+            "razao_social": razao_social,
+            "nome_fantasia": nome_fantasia,
+            "cnpj": cnpj,
+            "email": email,
+            "username": username,
+            "primeiro_nome": primeiro_nome,
+            "ultimo_nome": ultimo_nome,
+            "password": password,
+        }
+
+        resp = requests.post(API_URL + '/api/empresa/create/', data, files=icone)
+        if resp.status_code == 201:
+            return render(request, 'auth/auth.html')
+        mensagem = ['Houve um erro no servidor']
         return render(request, 'auth/auth.html', {'messages': mensagem})
         
     return render(request, 'auth/auth.html')
