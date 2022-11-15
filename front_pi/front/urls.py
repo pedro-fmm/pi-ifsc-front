@@ -8,7 +8,7 @@ from .views import funcionario, cadastrar_funcionario
 from .views import cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma
 from .views import faixas, detalhes_faixa, excluir_faixa
 from .views import categorias, detalhes_categoria, excluir_categoria
-from .views import generos, detalhes_genero, excluir_genero
+from .views import generos, detalhes_genero, excluir_genero, alterar_genero
 from .views import plataformas, detalhes_plataforma, excluir_plataforma
 
 app_name = 'front'
@@ -72,6 +72,7 @@ urlpatterns = [
     path('genero/<uuid:pk>', detalhes_genero, name='detalhes_genero'),
     path('genero/delete/<uuid:pk>', excluir_genero, name='excluir_genero'),
     path('genero/cadastro/', cadastrar_genero, name='cadastrar_genero'),
+    path('genero/alterar/<uuid:pk>', alterar_genero, name='alterar_genero'),
     
     # path('error/', error, name='erro'),
     path('analitico/', analitico, name='analitico'),

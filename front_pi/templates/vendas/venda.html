@@ -17,6 +17,16 @@
         <h1 style="text-align: left;">Realizando venda</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
 
+            {% if cliente %}
+
+                <div>
+                    <p>{{ cliente.nome }}</p>
+                </div>
+
+            {% else %}
+
+            {% endif %}
+            
             {% if produtos %}
 
                 <table> 
@@ -61,16 +71,9 @@
                 <a href="{% url 'front:adicionar_produto' %}">Adicionar produto</a>
             </div>
 
-            <div>
-                
-                <!-- <form action="{% url 'front:get_cliente_venda' %}" method="post">
-                        {% csrf_token %}
-                        
-                        <input type="submit" value="Realizar venda">
-                </form> -->
-                             
-            </div>
         </div>
     </main>
+
+    {% block script %} <script src="{% static 'js/vendas/mascara-cadastro-clientes.js' %}"></script> {% endblock %}
     
 {% endblock %}

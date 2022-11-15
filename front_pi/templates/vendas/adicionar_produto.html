@@ -63,10 +63,10 @@
                 <thead>
                     <tr>
                         <th>Nome do Produto</th>
-                        <!-- <th>Valor</th> -->
-                        <th>Gênero</th>
+                        <th>Valor</th>
                         <th>Plataforma</th>
                         <th>Faixa etária</th>
+                        <th>Gênero</th>
                         <th>Categoria</th>
                         <th>Estoque</th>
                     </tr>
@@ -79,11 +79,11 @@
                             
                             <tr>
                                 <td>{{ produto.nome }}</td>
-                                <!-- <td>{{ produto.nome }}</td> -->
-                                <td>{{ produto.genero }}</td>
-                                <td>{{ produto.plataforma }}</td>
-                                <td>{{ produto.faixa_etaria }}</td>
-                                <td>{{ produto.categoria }}</td>
+                                <td>{{ produto.preco }}</td>
+                                <td>{{ produto.plataforma_nome }}</td>
+                                <td>{{ produto.faixa_etaria_nome }}</td>
+                                <td>{{ produto.genero_nome }}</td>
+                                <td>{{ produto.categoria_nome }}</td>
                                 <td>{{ produto.estoque }}</td>
                                 <td>
                                     <form method="post" action="{% url 'front:adicionar_produto' %}" class="Sign-In">

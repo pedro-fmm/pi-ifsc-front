@@ -1,11 +1,12 @@
 from asyncio.log import logger
 import json
+from email.mime import image
 import requests
 from django.shortcuts import render, redirect
 from toolbox import validaEmail
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
-from toolbox import validate_cpf, validate_cadastro_cliente
+from toolbox import validate_cpf, validate_cadastro_cliente, validate_plataforma_genero_categoria
 import logging
 from uuid import uuid4
 from collections import ChainMap
@@ -241,7 +242,7 @@ def vendas_realizar(request):
     if request.method == 'POST':
         if request.session.get('produtos', None) != None:
             
-            venda_data = {"cliente": '21fb9fe0-283b-442b-a30d-d07fda18dae2', "valor": "0", "vendedor": "2"}
+            venda_data = {"cliente": "0b5cc5a4-282a-4946-9621-fbca0418c629", "valor": "0", "vendedor": "2"}
             response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
             id_venda = response_venda.json()['id']
 
@@ -259,9 +260,12 @@ def vendas_realizar(request):
 
 @is_authenticated
 def vendas_get_cliente(request):
-    # if request.method == 'POST':
-        # venda = requests.post(f'{API_URL}/api/clientes/{uuid}', data, headers={'Authorization': request.session['Authorization']})
-        # request.session.get('produtos', None)
+
+    if request.method == 'POST':
+        if request.POST['cpf']:
+            cpf = request.POST['cpf']
+            cliente = requests.get(f'{API_URL}/api/clientes/cpf/{cpf}', headers={'Authorization': request.session['Authorization']})
+            logger.warn(cliente.json())
     return None
 
 @is_authenticated
@@ -795,7 +799,7 @@ def cadastrar_genero(request):
         
 
 @is_authenticated
-def alterar_cliente(request, pk):
+def alterar_genero(request, pk):
 
     if request.method == 'POST':
         nome        = request.POST['nome']
