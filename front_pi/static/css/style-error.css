@@ -1,69 +1,29 @@
-
-/* --------------- MAIN ---------------- */
-
-main{
-    margin-top: 3rem;
-}
-
-.register-clients{
-    margin-left: 5%;
-    height: 80vh;
-}
-
-main .register-clients input{
-    max-width: 90%;
-    width: 100%;
-    height: 45px;
-    background-color: var(--color-info-light);
-    color: black;
-    font-size: 1.3rem;;
-    border-radius: 55px;
-    margin: 10px 0;
+.circle-center{
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    background: var(--color-white);
+    border-radius: 3%;
     display: flex;
-    text-align: center;
-    padding: 0.4rem;
+    justify-content: center;
+    align-items: center;
 }
 
-#cadastrar{
-    margin-left: 50%;
-    max-width: 40%;
-    backface-visibility: hidden;
-    background-color: var(--color-primary);
-    border-radius: 30px;
-    border-width: 0;
-    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-    font-size: 100%;
-    height: 44px;
-    line-height: 1.15;
-    outline: none;
-    overflow: hidden;
-    margin-top: 10px;
-    text-align: center;
-    text-transform: none;
-    transform: translateZ(0);
-    transition: all .2s,box-shadow .08s ease-in;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 100%;
-    font-size: 16px;
-  }
-  
-  .button:disabled {
-    cursor: default;
-  }
+.circle-center img {
+    max-width: 30%;
+    max-height: 60%;
+}
 
+.circle-center p{
+    text-align: center;
+    font-size: larger;
+}
 
 /*----------------- Media Queries -----------------*/
 
 @media screen and (max-width: 1200px){
     .container{
         width: 94%;
-        grid-template-columns: 7rem auto;
+        grid-template-columns: 7rem auto 7rem;
     }
     aside .logo h2{
         display: none;
@@ -159,13 +119,13 @@ main .register-clients input{
         padding: 0 1rem;
     }
 
-    main .register-clients{
+    main .recent-orders{
         position: relative;
         margin: 3rem 0 0 0;
         width: 100%;
     }
 
-    main .register-clients table {
+    main .recent-orders table {
         width: 100%;
         margin: 0;
     }
