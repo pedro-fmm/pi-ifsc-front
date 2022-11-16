@@ -75,64 +75,33 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Nome do Produto</th>
-                            <th>Número do Produto</th>
-                            <th>Pagamento</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th>Cliente</th>
+                            <th>Vendedor</th>
+                            <th>Número da venda</th>
+                            <th>Valor</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
-                        <tr>
-                            <td>God of War Ragnarok</td>
-                            <td>1987423</td>
-                            <td>A vista</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
 
-                        <tr>
-                            <td>God of War Ragnarok</td>
-                            <td>1987423</td>
-                            <td>A vista</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>God of War Ragnarok</td>
-                            <td>1987423</td>
-                            <td>A vista</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+                        {% if vendas %}
 
-                        <tr>
-                            <td>God of War Ragnarok</td>
-                            <td>1987423</td>
-                            <td>A vista</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+                            {% for venda in vendas %}
 
-                        <tr>
-                            <td>God of War Ragnarok</td>
-                            <td>1987423</td>
-                            <td>A vista</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+                                <tr>
+                                    <td>{{ venda.cliente_nome }}</td>
+                                    <td>{{ venda.vendedor_nome }}</td>
+                                    <td>{{ venda.numero }}</td>
+                                    <td>R$ {{ venda.valor }}</td>
+                                </tr>
 
-                        <tr>
-                            <td>God of War Ragnarok</td>
-                            <td>1987423</td>
-                            <td>A vista</td>
-                            <td class="success">Confirmado</td>
-                            <td class="primary">Detalhes</td>
-                        </tr>
+                            {% endfor %}
+
+                        {% endif %}
+
                     </tbody>
                 </table>
-                <a href="#">Ver Tudo</a>
+                <a href="{% url 'front:vendas' %}">Ver Tudo</a>
             </div>
         </main>
         <!-- ---------------- Fim da Main -------------------->

@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>
+            
+        <h1 style="text-align: left;">Listagem de vendas</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+            <table> 
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Vendedor</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if venda %}
+                            
+                        <tr>
+                            <td>{{ venda.numero }}</td>
+                            <td>{{ venda.vendedor_nome }}</td>
+                            <td>{{ venda.cliente_nome }}</td>
+                            <td>{{ venda.dia }}</td>
+                            <td>{{ venda.hora }}</td>
+                            <td>{{ venda.valor }}</td>
+                            
+                            {% if produtos %}
+
+                                {% for produto in produtos %}
+
+                                    <div>
+                                        
+                                        <p>{{ produto.nome }}</p>
+                                        <p>{{ produto.valor_produto }}</p>
+                                        <!-- <p>{{ produto.quantidade }}</p> -->
+
+                                    </div>
+
+                                {% endfor %}
+
+                            {% endif %}
+                        </tr>
+
+                    {% else %}
+
+                            <p>Nenhum cliente cadastrado</p>
+
+                    {% endif %}
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+{% endblock %}

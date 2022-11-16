@@ -1,0 +1,89 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-clientes.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>
+            
+        <h1 style="text-align: left;">Realizando venda</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+
+            {% if cliente %}
+
+                <div>
+                    <p>Cliente: {{ cliente.nome }}</p>
+                </div>
+
+                <div>
+                    <a href="{% url 'front:listar_clientes_venda' %}">Alterar cliente</a>
+                </div>
+
+            {% else %}
+
+                <div>
+                    <a href="{% url 'front:listar_clientes_venda' %}">Selecionar cliente</a>
+                </div>
+
+            {% endif %}
+            
+            {% if produtos %}
+
+                <table> 
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Valor</th>
+                            <th>Estoque</th>
+                            <th>Quantidade</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                
+                        {% for produto in produtos %}
+                        
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <td>{{ produto.preco }}</td>
+                                <td>{{ produto.estoque }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+                <!-- <form action="{% url 'front:realizar_venda' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Realizar venda</button> 
+                </form> -->
+
+                <div>
+                    <a href="{% url 'front:realizar_venda' %}">Realizar venda</a>
+                </div>
+
+            {% else %}
+
+                    <p>Cadastre produtos na venda</p>
+
+            {% endif %}
+
+            <div>
+                <a href="{% url 'front:adicionar_produto' %}">Adicionar produto</a>
+            </div>
+
+        </div>
+    </main>
+
+    {% block script %} <script src="{% static 'js/vendas/mascara-cadastro-clientes.js' %}"></script> {% endblock %}
+    
+{% endblock %}

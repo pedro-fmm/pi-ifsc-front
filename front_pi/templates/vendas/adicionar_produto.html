@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-produtos.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>
+            
+        <h1 style="text-align: left;">Listagem de produtos</h1>
+        <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
+            
+            <!--
+            <h2>Plataforma</h2>
+            <select name="plataformas" id="plataformas">
+                <option value="-1">Qualquer</option>
+                {% if plataformas %}
+                    {% for p in plataformas %}
+                        <option value="{{p.id}}">{{p.nome}}</option>
+                    {% endfor %}
+                {% endif %}
+                </select>
+            <h2>Gênero</h2>
+                <select name="generos" id="genero">
+                    <option value="-1">Qualquer</option>
+                    {% if generos %}
+                        {% for g in generos %}
+                            <option value="{{g.id}}">{{g.nome}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            <h2>Faixa Etária</h2>
+                <select name="faixas" id="faixas">
+                    <option value="-1">Qualquer</option>
+                    {% if faixas %}
+                        {% for f in faixas %}
+                            <option value="{{f.id}}">{{f.faixa}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            <h2>Categoria</h2>
+                <select name="categorias" id="categorias">
+                    <option value="-1">Qualquer</option>
+                    {% if categorais %}
+                        {% for c in categorias %}
+                            <option value="{{c.id}}">{{c.nome}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+        
+
+            <p><a onclick="busca()">Pesquisar</a></p>>
+            -->
+
+            <table> 
+                <thead>
+                    <tr>
+                        <th>Nome do Produto</th>
+                        <th>Valor</th>
+                        <th>Plataforma</th>
+                        <th>Faixa etária</th>
+                        <th>Gênero</th>
+                        <th>Categoria</th>
+                        <th>Estoque</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if produtos %}
+
+                        {% for produto in produtos %}
+                            
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <td>{{ produto.preco }}</td>
+                                <td>{{ produto.plataforma_nome }}</td>
+                                <td>{{ produto.faixa_etaria_nome }}</td>
+                                <td>{{ produto.genero_nome }}</td>
+                                <td>{{ produto.categoria_nome }}</td>
+                                <td>{{ produto.estoque }}</td>
+                                <td>
+                                    <form method="post" action="{% url 'front:adicionar_produto' %}" class="Sign-In">
+                                        {% csrf_token %}
+                                        <input style="display: none" id="produto-id" name="produto-id" type="text" value={{produto.id}}>
+                                        <button id="cadastrar">Cadastrar</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+                            <p>Nenhum produto cadastrado</p>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+{% endblock %}
+
