@@ -24,16 +24,39 @@
     }
 
     .details{
+<<<<<<< HEAD
         background-color: white;
         width: 60vw;
         height: 75vh;
         border-radius: 20px;
+=======
+        width: 40%;
+>>>>>>> main
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
     }
 
+<<<<<<< HEAD
+=======
+    .layout_details{
+        background-color: white;
+        border-radius: 20px;
+        width: 65vw;
+        height: 75vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    img{
+       max-height: 50%;
+       max-width: 30%; 
+    }
+
+>>>>>>> main
     .recent-orders{
         display: flex;
         justify-content: center;
@@ -41,7 +64,11 @@
     }
 
     button{
+<<<<<<< HEAD
     width: 20%;
+=======
+    width: 80%;
+>>>>>>> main
     background-color: var(--color-primary);
     border-radius: 30px;
     border-width: 0;
@@ -69,7 +96,11 @@
 
     <main>
             
+<<<<<<< HEAD
         <h1 style="text-align: left;">Detalhe do cliente</h1>
+=======
+        <h1 style="text-align: left;">Detalhes do Produto</h1>
+>>>>>>> main
         <div class="recent-orders" style="overflow-y: auto; height: 80vh;">
             <section>
 
@@ -83,6 +114,7 @@
                 {% endif %}
 
                 {% if produto %}
+<<<<<<< HEAD
                             
                 <div class="details">
 
@@ -115,6 +147,41 @@
                         </button>
 
                         
+=======
+
+                <div class="layout_details">
+                    <div class="details">
+
+                        <h1>{{ produto.nome }}</h1>
+                        <span>Descrição: {{ produto.descricao }}</span>
+                        <br>
+                        <span>Preço: {{ produto.preco }}</span>
+                        <br>
+                        <span>Plataforma: {{ produto.plataforma_nome }}</span>
+                        <br>
+                        <span>Faixa Etaria: {{ produto.faixa_etaria_nome }}</span>
+                        <br>
+                        <span>Gênero: {{ produto.genero_nome }}</span>
+                        <br>
+                        <span>Categoria: {{ produto.categoria_nome }}</span>
+                        <br>
+                        <span>Data criação: {{ produto.data_criacao }}</span>
+                        <br>
+                        <span>Estoque: {{ produto.estoque }}</span>
+                        <br>
+                        <span>Quantidade de vendas: {{ produto.qtd_vendas }}</span>
+                        <br>
+                    
+                            <button>
+                                <a href="{% url 'front:excluir_produto' pk=produto.id  %}" style="color: white; font-size: 20px">Excluir</a> 
+                            </button>
+    
+                            <button>
+                                <a href="{% url 'front:alterar_produto' pk=produto.id  %}" style="color: white; font-size: 20px">Alterar</a> 
+                            </button>
+                    </div>
+                    <img src="{{ produto.imagem }}" alt="imagem">
+>>>>>>> main
                 </div>
 
                     {% else %}

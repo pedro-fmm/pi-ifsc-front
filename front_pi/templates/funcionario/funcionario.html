@@ -19,15 +19,24 @@
             <table style="height: 88%;"> 
                 <thead>
                     <tr>
+<<<<<<< HEAD
                         <th>Nome</th>
                         <th>Cargo</th>
                         <th>Comissão</th>
                         <th>Status</th>
+=======
+                        <th>Primeiro Nome</th>
+                        <th>Ultimo Nome</th>
+                        <th>Email</th>
+                        <th>Comissão</th>
+                        <th></th>
+>>>>>>> main
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
 
+<<<<<<< HEAD
                     {% if clientes %}
 
                         {% for cliente in clientes %}
@@ -38,6 +47,18 @@
                                 <td>{{ funcionario.comissao }}</td>
                                 <td class="success">Confirmado</td>
                                 <td class="primary"><a href="{% url 'front:detalhes_funcionario' pk=funcionario.id %}">Detalhes</a></td>
+=======
+                    {% if funcionarios %}
+
+                        {% for funcionario in funcionarios %}
+                            
+                            <tr>
+                                <td>{{ funcionario.primeiro_nome }}</td>
+                                <td>{{ funcionario.ultimo_nome }}</td>
+                                <td>{{ funcionario.email }}</td>
+                                <td>{{ funcionario.comissao }}</td>
+                                <td class="primary"><a href="">Detalhes</a></td>
+>>>>>>> main
                             </tr>
 
                         {% endfor %}
