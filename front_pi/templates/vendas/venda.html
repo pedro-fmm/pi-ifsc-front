@@ -20,10 +20,18 @@
             {% if cliente %}
 
                 <div>
-                    <p>{{ cliente.nome }}</p>
+                    <p>Cliente: {{ cliente.nome }}</p>
+                </div>
+
+                <div>
+                    <a href="{% url 'front:listar_clientes_venda' %}">Alterar cliente</a>
                 </div>
 
             {% else %}
+
+                <div>
+                    <a href="{% url 'front:listar_clientes_venda' %}">Selecionar cliente</a>
+                </div>
 
             {% endif %}
             
@@ -54,12 +62,14 @@
                     </tbody>
                 </table>
 
-                <form action="{% url 'front:realizar_venda' %}" method="post">
+                <!-- <form action="{% url 'front:realizar_venda' %}" method="post">
                     {% csrf_token %}
-
-                    <!-- <button>Realizar venda</button> -->
                     <button type="submit">Realizar venda</button> 
-                </form>
+                </form> -->
+
+                <div>
+                    <a href="{% url 'front:realizar_venda' %}">Realizar venda</a>
+                </div>
 
             {% else %}
 

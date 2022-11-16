@@ -215,7 +215,18 @@ def vendas_iniciar(request):
             produtos.append(requests.get(f'{API_URL}/api/produto/{produto_id}', headers={'Authorization': request.session['Authorization']}).json())
         logger.warn(produtos)
 
+        logger.warn(request.session.get('cliente', False))
+
+        if request.session.get('cliente', False):
+            cliente = request.session.get('cliente')
+            cliente = requests.get(f'{API_URL}/api/cliente/{cliente}/', headers={'Authorization': request.session['Authorization']}).json()
+            return render(request, 'vendas/venda.html', {'titulo': 'Venda', 'produtos': produtos, 'cliente': cliente})
         return render(request, 'vendas/venda.html', {'titulo': 'Venda', 'produtos': produtos})
+
+    if request.session.get('cliente', False):
+        cliente = request.session.get('cliente')
+        cliente = requests.get(f'{API_URL}/api/cliente/{cliente}', headers={'Authorization': request.session['Authorization']}).json()
+        return render(request, 'vendas/venda.html', {'titulo': 'Venda', 'cliente': cliente})
     return render(request, 'vendas/venda.html', {'titulo': 'Venda'})
 
 @is_authenticated
@@ -239,34 +250,26 @@ def vendas_adicionar_produto(request):
 @is_authenticated
 def vendas_realizar(request):
 
-    if request.method == 'POST':
-        if request.session.get('produtos', None) != None:
-            
-            venda_data = {"cliente": "0b5cc5a4-282a-4946-9621-fbca0418c629", "valor": "0", "vendedor": "2"}
-            response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
-            id_venda = response_venda.json()['id']
+    # if request.method == 'POST':
+    if request.session.get('produtos', None) != None:
 
-            id_produtos = request.session.get('produtos', None)
-            id_produtos_venda = []
+        cliente = request.session.get('cliente', None)
+        funcionario = request.session.get()
+        venda_data = {"cliente": "0b5cc5a4-282a-4946-9621-fbca0418c629", "valor": "0", "vendedor": "2"}
+        response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
+        id_venda = response_venda.json()['id']
 
-            for produto in id_produtos:
-                produto_data = {"produto": produto, "venda": id_venda}
-                id_produtos_venda.append(requests.post(f'{API_URL}/api/vendaitem/create/', data=produto_data, headers={'Authorization': request.session['Authorization']}))
+        id_produtos = request.session.get('produtos', None)
+        id_produtos_venda = []
 
-            request.session['produtos'] = None
-            return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': f'foi {id_venda}, {id_produtos_venda}'})
+        for produto in id_produtos:
+            produto_data = {"produto": produto, "venda": id_venda}
+            id_produtos_venda.append(requests.post(f'{API_URL}/api/vendaitem/create/', data=produto_data, headers={'Authorization': request.session['Authorization']}))
+
+        request.session['produtos'] = None
+        return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': f'foi {id_venda}, {id_produtos_venda}'})
 
     return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': 'nao foi'})
-
-@is_authenticated
-def vendas_get_cliente(request):
-
-    if request.method == 'POST':
-        if request.POST['cpf']:
-            cpf = request.POST['cpf']
-            cliente = requests.get(f'{API_URL}/api/clientes/cpf/{cpf}', headers={'Authorization': request.session['Authorization']})
-            logger.warn(cliente.json())
-    return None
 
 @is_authenticated
 def vendas_deletar(request, pk):
@@ -280,6 +283,20 @@ def vendas_deletar(request, pk):
 
     mensagem = ['Ocorreu um erro.']
     return render(request, 'vendas/vendas.html', {'titulo': 'Vendas', 'vendas': vendas, 'messages': mensagem})
+
+@is_authenticated
+def vendas_listar_cliente(request):
+    response = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
+    return render(request, 'vendas/clientes.html', {'titulo': 'Clientes', 'clientes': response.json()})
+
+@is_authenticated
+def vendas_selecionar_cliente(request, pk):
+    if pk == None:
+        messages = ['Cliente inválido.']
+        response = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
+        return render(request, 'vendas/clientes.html', {'titulo': 'Clientes', 'clientes': response.json(), 'messages': messages})
+    request.session['cliente'] = str(pk)
+    return vendas_iniciar(request)
 
 def produtos(request):
     resp = requests.get(API_URL + '/api/produto/list/', headers={'Authorization': request.session['Authorization']})

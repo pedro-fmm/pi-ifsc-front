@@ -2,7 +2,7 @@ from django.urls import path
 from .views import login, home
 from .views import clientes, alterar_cliente ,cadastrar_clientes, detalhes_cliente, excluir_cliente
 from .views import produtos, cadastrar_produtos, detalhes_produto, alterar_produto, excluir_produto
-from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_get_cliente, vendas_deletar
+from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_deletar, vendas_listar_cliente, vendas_selecionar_cliente
 from .views import analitico
 from .views import funcionario, cadastrar_funcionario
 from .views import cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma
@@ -43,7 +43,8 @@ urlpatterns = [
     path('vendas/', vendas_list, name='vendas'),
     path('vendas/iniciar', vendas_iniciar, name='iniciar_venda'),
     path('vendas/realizar-venda', vendas_realizar, name='realizar_venda'), 
-    path('vendas/cliente-venda', vendas_get_cliente, name='get_cliente_venda'),
+    path('vendas/listar-cliente', vendas_listar_cliente , name='listar_clientes_venda'),
+    path('vendas/selecionar-cliente/<uuid:pk>', vendas_selecionar_cliente, name='selecionar_cliente'),
     path('vendas/deletar/<uuid:pk>', vendas_deletar, name='deletar_venda'),
     path('vendas/adicionar_produto', vendas_adicionar_produto, name='adicionar_produto'),
 
