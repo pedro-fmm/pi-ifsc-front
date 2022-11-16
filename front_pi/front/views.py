@@ -6,11 +6,7 @@ from django.shortcuts import render, redirect
 from toolbox import validaEmail
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
-<<<<<<< HEAD
 from toolbox import validate_cpf, validate_cadastro_cliente, validate_plataforma_genero_categoria
-=======
-from toolbox import validate_cadastro_cliente, validate_plataforma_genero_categoria
->>>>>>> main
 import logging
 from uuid import uuid4
 from collections import ChainMap
@@ -39,74 +35,77 @@ def auth(request):
                 return render(request, 'auth/auth.html', {'messages': mensagem})
 
             resp = requests.post(API_URL + '/api/auth/login/', {'email': email, 'password': password})
+
             if resp.json().get('user', False):
                 request.session["Authorization"] = 'Bearer ' + resp.json().get('access')
                 return render(request, 'home/home.html')
             mensagem = ['Usuário ou senha inválidos']
             return render(request, 'auth/auth.html', {'messages': mensagem})
         
-    elif form == "cadastro":
+        elif form == "cadastro":
 
-        email = request.POST['cadastro-email']
-        password = request.POST['cadastro-password']
-        password2 = request.POST['cadastro-password2']
-        username = request.POST['cadastro-username']
-        primeiro_nome = request.POST['cadastro-primeiro-nome']
-        ultimo_nome = request.POST['cadastro-ultimo-nome']
-        razao_social = request.POST['cadastro-razao']
-        nome_fantasia = request.POST['cadastro-fantasia']
-        cnpj = request.POST['cadastro-cnpj']
-        icone = request.FILES
+            email = request.POST['cadastro-email']
+            password = request.POST['cadastro-password']
+            password2 = request.POST['cadastro-password2']
+            username = request.POST['cadastro-username']
+            primeiro_nome = request.POST['cadastro-primeiro-nome']
+            ultimo_nome = request.POST['cadastro-ultimo-nome']
+            razao_social = request.POST['cadastro-razao']
+            nome_fantasia = request.POST['cadastro-fantasia']
+            cnpj = request.POST['cadastro-cnpj']
+            icone = request.FILES
 
-        if not razao_social:
-            mensagem = ['Você deve preencher o campo de razão social']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not nome_fantasia:
-            mensagem = ['Você deve preencher o campo de nome fantasia']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not cnpj:
-            mensagem = ['Você deve preencher o campo de CNPJ']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not icone:
-            mensagem = ['Você deve preencher o campo de ícone']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not email:
-            mensagem = ['Você deve preencher o campo de e-mail']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not validaEmail(email=email):
-            mensagem = ['Você deve digitar um campo de e-mail válido']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not username:
-            mensagem = ['Você deve preencher o campo de nome de usuário']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not primeiro_nome:
-            mensagem = ['Você deve preencher o campo de primeiro nome']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not ultimo_nome:
-            mensagem = ['Você deve preencher o campo de último nome']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not password:
-            mensagem = ['Você deve digitar uma senha.']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
-        if not password2:
-            mensagem = ['As senhas devem ser iguais']
-            return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not razao_social:
+                mensagem = ['Você deve preencher o campo de razão social']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not nome_fantasia:
+                mensagem = ['Você deve preencher o campo de nome fantasia']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not cnpj:
+                mensagem = ['Você deve preencher o campo de CNPJ']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not icone:
+                mensagem = ['Você deve preencher o campo de ícone']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not email:
+                mensagem = ['Você deve preencher o campo de e-mail']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not validaEmail(email=email):
+                mensagem = ['Você deve digitar um campo de e-mail válido']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not username:
+                mensagem = ['Você deve preencher o campo de nome de usuário']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not primeiro_nome:
+                mensagem = ['Você deve preencher o campo de primeiro nome']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not ultimo_nome:
+                mensagem = ['Você deve preencher o campo de último nome']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not password:
+                mensagem = ['Você deve digitar uma senha.']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if not password2:
+                mensagem = ['As senhas devem ser iguais']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
 
-        data = {
-            "razao_social": razao_social,
-            "nome_fantasia": nome_fantasia,
-            "cnpj": cnpj,
-            "email": email,
-            "username": username,
-            "primeiro_nome": primeiro_nome,
-            "ultimo_nome": ultimo_nome,
-            "password": password,
-        }
+            data = {
+                "razao_social": razao_social,
+                "nome_fantasia": nome_fantasia,
+                "cnpj": cnpj,
+                "email": email,
+                "username": username,
+                "primeiro_nome": primeiro_nome,
+                "ultimo_nome": ultimo_nome,
+                "password": password,
+            }
 
-        resp = requests.post(API_URL + '/api/empresa/create/', data, files=icone)
-        if resp.status_code == 201:
-            return render(request, 'auth/auth.html')
-        mensagem = ['Houve um erro no servidor']
+            resp = requests.post(API_URL + '/api/empresa/create/', data, files=icone)
+            if resp.status_code == 201:
+                return render(request, 'auth/auth.html')
+            mensagem = ['Houve um erro no servidor']
+            return render(request, 'auth/auth.html', {'messages': mensagem})
+                
         return render(request, 'auth/auth.html', {'messages': mensagem})
         
     return render(request, 'auth/auth.html')
@@ -126,15 +125,7 @@ def error(request):
 @is_authenticated
 def clientes(request):
     resp = requests.get(API_URL + '/api/cliente/list/', headers={'Authorization': request.session['Authorization']})
-<<<<<<< HEAD
     return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
-=======
-    try:
-        return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
-    except ValueError:
-        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
-    # return render(request, 'clientes/clientes.html', {'titulo': 'Clientes', 'clientes': resp.json()})
->>>>>>> main
 
 @is_authenticated
 def cadastrar_clientes(request):
@@ -408,7 +399,6 @@ def cadastrar_produtos(request):
     
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
-<<<<<<< HEAD
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
 
 @is_authenticated
@@ -708,13 +698,6 @@ def detalhes_produto(request, pk):
 
     response = requests.get(f'{API_URL}/api/produto/{pk}', headers={'Authorization': request.session['Authorization']})
 
-=======
-@is_authenticated
-def detalhes_produto(request, pk):
-
-    response = requests.get(f'{API_URL}/api/produto/{pk}', headers={'Authorization': request.session['Authorization']})
-
->>>>>>> main
     return render(request, 'produtos/detalhes_produto.html', {'titulo': 'Detalhes do Produto', 'produto': response.json()})
   
 @is_authenticated
@@ -724,14 +707,8 @@ def analitico(request):
 @is_authenticated
 def funcionario(request):
     resp = requests.get(API_URL + '/api/funcionario/list/', headers={'Authorization': request.session['Authorization']})
-<<<<<<< HEAD
     try:
         return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
-=======
-    logger.warn(resp.json())
-    try:
-        return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionarios': resp.json()})
->>>>>>> main
     except ValueError:
         return render(request, 'error/error.html', {'titulo': 'Erro'}) 
     # return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
@@ -740,62 +717,19 @@ def funcionario(request):
 def cadastrar_funcionario(request):
 
     if request.method == 'POST':
-<<<<<<< HEAD
         nome = request.POST['usuario']
         comissao = request.POST['comissao']
 
         if not nome:
             mensagem = ['Você deve preencher o campo de nome']
-=======
-        primeiroNome = request.POST['primeiro-nome']
-        ultimoNome = request.POST['ultimo-nome']
-        username = request.POST['username']
-        comissao = request.POST['comissao']
-        email = request.POST['email']
-        senha = request.POST['password']
-        confirmarSenha = request.POST['confirm-password']
-        mensagem = 'deu pau'
-
-        if not primeiroNome:
-            mensagem = ['Você deve preencher o campo de Primeiro Nome']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if not ultimoNome:
-            mensagem = ['Você deve preencher o campo de Último Nome']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if not username:
-            mensagem = ['Você deve preencher o campo de Username']
->>>>>>> main
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
         if not comissao:
             mensagem = ['Você deve preencher o campo de comissao']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-<<<<<<< HEAD
 
         data = {
             'usuario': nome,
             'comissao': comissao
-=======
-        if not email:
-            mensagem = ['Você deve preencher o campo de Email']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if not senha:
-            mensagem = ['Você deve preencher o campo de Senha']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if not confirmarSenha:
-            mensagem = ['Você deve preencher o campo de Confirmar Senha']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-        if confirmarSenha != senha:
-            mensagem = ['Senha não corresponde']
-            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
-
-        data = {
-            'primeiro_nome': primeiroNome,
-            'ultimo_nome': ultimoNome,
-            'username': username,
-            'comissao': comissao,
-            'email': email,
-            'password': senha
->>>>>>> main
         }
 
         resp = requests.post(API_URL + '/api/funcionario/create/', data, headers={'Authorization': request.session['Authorization']})
@@ -1085,11 +1019,7 @@ def cadastrar_genero(request):
         
 
 @is_authenticated
-<<<<<<< HEAD
 def alterar_genero(request, pk):
-=======
-def alterar_cliente(request, pk):
->>>>>>> main
 
     if request.method == 'POST':
         nome        = request.POST['nome']
@@ -1127,9 +1057,4 @@ def excluir_genero(request, pk):
         return render(request, 'genero/detalhes_genero.html', {'titulo': 'Detalhes de gênero', 'messages': mensagem})
     
     mensagem = ['Gênero deletado com sucesso!']
-<<<<<<< HEAD
     
-=======
-
-    return render(request, 'genero/generos.html', {'titulo': 'Detalhes do gênero', 'messages': mensagem})
->>>>>>> main
