@@ -6,8 +6,13 @@ from front_pi.settings import API_URL
 from .decorators import is_authenticated
 from toolbox import validate_cadastro_cliente, validate_plataforma_genero_categoria
 import logging
+from datetime import datetime, date, timedelta
+import dateutil.parser
 
 logger = logging.getLogger(__name__)
+
+def landing_page(request):
+    return render(request, 'landing_page/index.html')
 
 def auth(request):
 
@@ -111,11 +116,21 @@ def auth(request):
 def home(request):
 
     vendas = requests.get(API_URL + '/api/venda/list/', headers={'Authorization': request.session['Authorization']}).json()
+    total_vendas = 0
+    ontem = date.today() - timedelta(1)
+    total_vendas_ultimo_dia = 0
+    numero_vendas_ultimo_dia = 0
 
-    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas})
+    for venda in vendas:
+        total_vendas += float(venda['valor'])
 
-def landing_page(request):
-    return render(request, 'landing_page/index.html')
+        dataVenda = datetime.strptime(venda['dia'], '%d/%m/%Y').date()
+
+        if dataVenda >= ontem:
+            total_vendas_ultimo_dia = float(venda['valor'])
+            numero_vendas_ultimo_dia += 1
+
+    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas, 'total_vendas': total_vendas, 'numero_vendas_ultimo_dia': numero_vendas_ultimo_dia, 'total_vendas_ultimo_dia': total_vendas_ultimo_dia})
 
 def error(request):
     return render(request, 'error/error.html', {'titulo': 'Error'})
@@ -141,7 +156,7 @@ def cadastrar_clientes(request):
 
         response = requests.post(API_URL + '/api/cliente/create/', headers={"Authorization": request.session["Authorization"]}, json=validate['data'])
 
-        if response.status_code != 201:
+        if response.status_code != 200:
             mensagem = ['Falha na realização do cadastro']
             return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem}) 
                   
@@ -454,8 +469,8 @@ def vendas_realizar(request):
     if request.session.get('produtos', None) != None:
 
         cliente = request.session.get('cliente', None)
-        # funcionario = request.session.get()
-        venda_data = {"cliente": cliente, "valor": "0", "vendedor": "2"}
+        funcionario = requests.get(f'{API_URL}/api/funcionario/', headers={'Authorization': request.session['Authorization']}).json()
+        venda_data = {"cliente": cliente, "valor": "0", "vendedor": funcionario['id']}
         response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
         id_venda = response_venda.json()['id']
 
@@ -790,6 +805,8 @@ def cadastrar_plataforma(request):
         nome = request.POST.get("nome", False)
         descricao = request.POST.get("descricao", False)
 
+        mensagem = ""
+
         if not nome:
             mensagem = ['Você deve preencher o campo de nome da plataforma']
             return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma', 'messages': mensagem})
@@ -890,7 +907,7 @@ def cadastrar_faixa(request):
         }
 
         resp = requests.post(API_URL + '/api/faixa/create/', data, headers={'Authorization': request.session['Authorization']})
-        if resp.status_code == '201':
+        if resp.status_code == 201:
             mensagem = ['Faixa Etária adicionada com sucesso!']
             return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária', 'messages': mensagem})        
         
@@ -948,7 +965,7 @@ def cadastrar_categoria(request):
         }
 
         resp = requests.post(API_URL + '/api/categoria/create/', data, headers={'Authorization': request.session['Authorization']})
-        if resp.status_code == '201':
+        if resp.status_code == 201:
             mensagem = ['Categoria adicionada com sucesso!']
             return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria', 'messages': mensagem})        
         
@@ -1005,7 +1022,7 @@ def generos(request):
     try:
         return render(request, 'genero/generos.html', {'titulo': 'Gêneros', 'generos': resp.json()})
     except ValueError:
-        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+        return render(request, 'error/error.html', {'titulo': 'Erro'})
 
 
 @is_authenticated
@@ -1035,8 +1052,8 @@ def cadastrar_genero(request):
         }
 
         resp = requests.post(API_URL + '/api/genero/create/', data, headers={'Authorization': request.session['Authorization']})
-        if resp.status_code == '201':
-            mensagem = ['Gênero adicionada com sucesso!']
+        if resp.status_code == 201:
+            mensagem = ['Gênero adicionado com sucesso!']
             return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})        
         
         return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})

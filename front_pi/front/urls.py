@@ -67,7 +67,7 @@ urlpatterns = [
     path('faixa/<uuid:pk>', detalhes_faixa, name='detalhes_faixa'),
     path('faixa/delete/<uuid:pk>', excluir_faixa, name='excluir_faixa'),
     path('faixa/cadastro/', cadastrar_faixa, name='cadastrar_faixa'),
-
+ 
     # Genero
     
     path('generos/', generos, name='generos'),
