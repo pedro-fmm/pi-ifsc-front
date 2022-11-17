@@ -11,6 +11,9 @@ import dateutil.parser
 
 logger = logging.getLogger(__name__)
 
+def landing_page(request):
+    return render(request, 'landing_page/index.html')
+
 def auth(request):
 
     if request.method == 'POST':
@@ -118,9 +121,16 @@ def home(request):
     total_vendas_ultimo_dia = 0
     numero_vendas_ultimo_dia = 0
 
-    logger.warn(vendas)
+    for venda in vendas:
+        total_vendas += float(venda['valor'])
 
-    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas})
+        dataVenda = datetime.strptime(venda['dia'], '%d/%m/%Y').date()
+
+        if dataVenda >= ontem:
+            total_vendas_ultimo_dia = float(venda['valor'])
+            numero_vendas_ultimo_dia += 1
+
+    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas, 'total_vendas': total_vendas, 'numero_vendas_ultimo_dia': numero_vendas_ultimo_dia, 'total_vendas_ultimo_dia': total_vendas_ultimo_dia})
 
 def error(request):
     return render(request, 'error/error.html', {'titulo': 'Error'})
@@ -1012,7 +1022,7 @@ def generos(request):
     try:
         return render(request, 'genero/generos.html', {'titulo': 'Gêneros', 'generos': resp.json()})
     except ValueError:
-        return render(request, 'error/error.html', {'titulo': 'Erro'}) 
+        return render(request, 'error/error.html', {'titulo': 'Erro'})
 
 
 @is_authenticated
