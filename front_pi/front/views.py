@@ -112,9 +112,10 @@ def home(request):
 
     vendas = requests.get(API_URL + '/api/venda/list/', headers={'Authorization': request.session['Authorization']}).json()
 
-    logger.warn(vendas)
-
     return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas})
+
+def landing_page(request):
+    return render(request, 'landing_page/index.html')
 
 def error(request):
     return render(request, 'error/error.html', {'titulo': 'Error'})
@@ -418,7 +419,7 @@ def vendas_iniciar(request):
 
         if request.session.get('cliente', False):
             cliente = request.session.get('cliente')
-            cliente = requests.get(f'{API_URL}/api/cliente/{cliente}/', headers={'Authorization': request.session['Authorization']}).json()
+            cliente = requests.get(f'{API_URL}/api/cliente/{cliente}', headers={'Authorization': request.session['Authorization']}).json()
             return render(request, 'vendas/venda.html', {'titulo': 'Venda', 'produtos': produtos, 'cliente': cliente})
         return render(request, 'vendas/venda.html', {'titulo': 'Venda', 'produtos': produtos})
 
@@ -453,8 +454,8 @@ def vendas_realizar(request):
     if request.session.get('produtos', None) != None:
 
         cliente = request.session.get('cliente', None)
-        funcionario = request.session.get()
-        venda_data = {"cliente": "0b5cc5a4-282a-4946-9621-fbca0418c629", "valor": "0", "vendedor": "2"}
+        # funcionario = request.session.get()
+        venda_data = {"cliente": cliente, "valor": "0", "vendedor": "2"}
         response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
         id_venda = response_venda.json()['id']
 
@@ -466,6 +467,7 @@ def vendas_realizar(request):
             id_produtos_venda.append(requests.post(f'{API_URL}/api/vendaitem/create/', data=produto_data, headers={'Authorization': request.session['Authorization']}))
 
         request.session['produtos'] = None
+        request.session['cliente'] = None
         return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': f'foi {id_venda}, {id_produtos_venda}'})
 
     return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': 'nao foi'})

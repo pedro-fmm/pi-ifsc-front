@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style_landing_page.css' %}">
+    <title>Landing Page</title>
+</head>
+<body>
+   
+    <header>
+        <a href="" class="logo">MOON GAMES</a>
+    </header>
+
+    <section>
+        
+        <img src="{% static 'img/landing_page/stars.png' %}" alt="stars" id="stars">
+        <img src="{% static 'img/landing_page/moon.png' %}" alt="moon" id="moon">
+        <img src="{% static 'img/landing_page/mountains_behind.png' %}" alt="mountais_behind" id="mountais_behind">
+
+        <h2 id="text">Moon Games</h2>
+        
+        <a href="{% url 'front:login' %}" id="btn">Entrar</a>
+        
+        <img src="{% static 'img/landing_page/mountains_front.png' %}" alt="mountains_front" id="mountains_front">
+
+    </section>
+
+    <div class="sec">
+    
+        <h2>Projeto Integrador IFSC</h2><br>
+
+        <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim iure ipsum unde placeat nisi, quos sequi rem cupiditate molestias repellendus natus nobis ratione perferendis id ipsa tempore magni doloribus nesciunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, vel soluta? Sapiente quas error repellendus quia temporibus voluptatem natus accusantium earum qui, cum amet ad maxime tempora corrupti voluptas rerum.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim iure ipsum unde placeat nisi, quos sequi rem cupiditate molestias repellendus natus nobis ratione perferendis id ipsa tempore magni doloribus nesciunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, vel soluta? Sapiente quas error repellendus quia temporibus voluptatem natus accusantium earum qui, cum amet ad maxime tempora corrupti voluptas rerum.  
+            <br><br> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim iure ipsum unde placeat nisi, quos sequi rem cupiditate molestias repellendus natus nobis ratione perferendis id ipsa tempore magni doloribus nesciunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, vel soluta? Sapiente quas error repellendus quia temporibus voluptatem natus accusantium earum qui, cum amet ad maxime tempora corrupti voluptas rerum. 
+        </p>
+
+    </div>
+
+</body>
+</html>

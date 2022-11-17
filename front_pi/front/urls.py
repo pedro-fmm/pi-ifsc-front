@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import auth, home
+from .views import auth, home, landing_page
 from .views import clientes, alterar_cliente ,cadastrar_clientes, detalhes_cliente, excluir_cliente
 from .views import produtos, cadastrar_produtos, detalhes_produto, alterar_produto, excluir_produto
 from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_deletar, vendas_listar_cliente, vendas_selecionar_cliente
@@ -19,6 +19,7 @@ Urls do app front.
 
 urlpatterns = [
 
+    path('', landing_page, name='landing'),
     path('login/', auth, name='login'),
     path('home/', home, name='home'),
 
