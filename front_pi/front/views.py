@@ -1,16 +1,11 @@
 from asyncio.log import logger
-import json
-from email.mime import image
 import requests
 from django.shortcuts import render, redirect
 from toolbox import validaEmail
 from front_pi.settings import API_URL
 from .decorators import is_authenticated
-from toolbox import validate_cpf, validate_cadastro_cliente, validate_plataforma_genero_categoria
+from toolbox import validate_cadastro_cliente, validate_plataforma_genero_categoria
 import logging
-from uuid import uuid4
-from collections import ChainMap
-from django.http import HttpResponseRedirect
 
 logger = logging.getLogger(__name__)
 
@@ -37,8 +32,10 @@ def auth(request):
             resp = requests.post(API_URL + '/api/auth/login/', {'email': email, 'password': password})
 
             if resp.json().get('user', False):
-                request.session["Authorization"] = 'Bearer ' + resp.json().get('access')
-                return render(request, 'home/home.html')
+                resp_json = resp.json()
+                request.session["Authorization"] = 'Bearer ' + resp_json.get('access')
+                request.session["username"] = resp_json.get("user").get("username")
+                return redirect("front:home")
             mensagem = ['Usuário ou senha inválidos']
             return render(request, 'auth/auth.html', {'messages': mensagem})
         
@@ -399,7 +396,6 @@ def cadastrar_produtos(request):
     
     return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat, 'generos': resp_gen, 'faixas': resp_faixa, 'categorias': resp_cate})
 
-    return render(request, 'produtos/cadastrar_produtos.html', {'titulo': 'Cadastro de Produto', 'plataformas': resp_plat.json(), 'generos': resp_gen.json(), 'faixas': resp_faixa.json(), 'categorias': resp_cate.json()})
 
 @is_authenticated
 def vendas_list(request):

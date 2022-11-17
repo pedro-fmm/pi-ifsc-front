@@ -50,7 +50,8 @@
                     
                 </form>
 
-                <form enctype="multipart/form-data" action="" class="Sign-Up">
+                <form enctype="multipart/form-data" action="" class="Sign-Up" method="post">
+                    {% csrf_token %}
                     <h2 class="title">Cadastre-se</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
