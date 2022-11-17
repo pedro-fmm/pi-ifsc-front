@@ -16,7 +16,7 @@
             
         <h1 style="text-align: left;">Listagem de Categorias</h1>
         <div class="recent-orders" style="overflow-y: auto; height: 80vh;">
-            <table style="height: 88%;"> 
+            <table style="max-height: 88%;"> 
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -31,7 +31,9 @@
                             
                             <tr>
                                 <td>{{ categoria.nome }}</td>
-                                <td class="primary"><a href="{% url 'front:detalhes_categoria' pk=categoria.id %}">Detalhes</a></td>
+                                <td class="primary">
+                                    <a href="{% url 'front:excluir_categoria' pk=categoria.id  %}">Excluir</a>
+                                </td>
                             </tr>
 
                         {% endfor %}

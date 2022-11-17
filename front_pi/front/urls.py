@@ -57,24 +57,20 @@ urlpatterns = [
     # Plataforma
     
     path('plataformas/', plataformas, name='plataformas'),
-    path('plataforma/<uuid:pk>', detalhes_plataforma, name='detalhes_plataforma'),
     path('plataforma/delete/<uuid:pk>', excluir_plataforma, name='excluir_plataforma'),
     path('plataforma/cadastro/', cadastrar_plataforma, name='cadastrar_plataforma'),
 
     # Faixas
     
     path('faixas/', faixas, name='faixas'),
-    path('faixa/<uuid:pk>', detalhes_faixa, name='detalhes_faixa'),
     path('faixa/delete/<uuid:pk>', excluir_faixa, name='excluir_faixa'),
     path('faixa/cadastro/', cadastrar_faixa, name='cadastrar_faixa'),
  
     # Genero
     
     path('generos/', generos, name='generos'),
-    path('genero/<uuid:pk>', detalhes_genero, name='detalhes_genero'),
     path('genero/delete/<uuid:pk>', excluir_genero, name='excluir_genero'),
     path('genero/cadastro/', cadastrar_genero, name='cadastrar_genero'),
-    path('genero/alterar/<uuid:pk>', alterar_genero, name='alterar_genero'),
     
     # path('error/', error, name='erro'),
     path('analitico/', analitico, name='analitico'),
@@ -82,7 +78,6 @@ urlpatterns = [
     # Categorias
     
     path('categorias/', categorias, name='categorias'),
-    path('categoria/<uuid:pk>', detalhes_categoria, name='detalhes_categoria'),
     path('categoria/delete/<uuid:pk>', excluir_categoria, name='excluir_categoria'),
     path('categoria/cadastro/', cadastrar_categoria, name='cadastrar_categoria'),
 ]

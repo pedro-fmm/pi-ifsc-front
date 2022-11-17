@@ -31,7 +31,7 @@
                             
                             <tr>
                                 <td>{{ genero.nome }}</td>
-                                <td class="primary"><a href="{% url 'front:detalhes_genero' pk=genero.id %}">Detalhes</a></td>
+                                <td class="primary"><a href="{% url 'front:excluir_genero' pk=genero.id  %}">Excluir</a></td>
                             </tr>
 
                         {% endfor %}

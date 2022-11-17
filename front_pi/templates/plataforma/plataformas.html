@@ -31,8 +31,7 @@
                             
                             <tr>
                                 <td>{{ plataforma.nome }}</td>
-                                <td class="primary"><a href="{% url 'front:detalhes_plataforma' pk=plataforma.id %}">Detalhes</a></td>
-                            </tr>
+                                <td class="primary"><a href="{% url 'front:excluir_plataforma' pk=plataforma.id  %}" >Excluir</a></td>                            </tr>
 
                         {% endfor %}
 

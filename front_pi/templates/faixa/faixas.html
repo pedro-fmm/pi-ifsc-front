@@ -31,7 +31,7 @@
                             
                             <tr>
                                 <td>{{ faixa.faixa }}</td>
-                                <td class="primary"><a href="{% url 'front:detalhes_faixa' pk=faixa.id %}">Detalhes</a></td>
+                                <td class="primary"><a href="{% url 'front:excluir_faixa' pk=faixa.id  %}">Excluir</a></td>
                             </tr>
 
                         {% endfor %}
