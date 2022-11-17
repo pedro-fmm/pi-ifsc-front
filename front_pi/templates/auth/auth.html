@@ -11,10 +11,11 @@
     <title>Sign in and Sign up</title>
     <link rel="stylesheet" href="{% static 'css/style_login.css' %}">
     <style>
-        input{
-            width: 90%;
-            border-radius: 50px;
-        }
+       #cadastrar{
+           max-height: 50%;
+           overflow: scroll;
+           overflow-x: hidden;
+       }
     </style>
 </head>
 <body>
@@ -53,48 +54,49 @@
                 <form enctype="multipart/form-data" action="" class="Sign-Up" method="post">
                     {% csrf_token %}
                     <h2 class="title">Cadastre-se</h2>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="cadastro-razao" placeholder="Razão Social">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="cadastro-fantasia" placeholder="Nome fantasia">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-building"></i>
-                        <input type="text" name="cadastro-cnpj" placeholder="CNPJ">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="text" name="cadastro-email" placeholder="Email">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="cadastro-username" placeholder="Nome de usuário">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="cadastro-primeiro-nome" placeholder="Primeiro nome">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="cadastro-ultimo-nome" placeholder="Último nome">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="cadastro-password" placeholder="Senha">
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="cadastro-password2" placeholder="Confirme sua senha Senha">
-                    </div>
-                    <h3>Logo da empresa  
-                        <input type="file" name="icone" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-backgroud)">
-                    </h3>
                    
+                    <div id="cadastrar">
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="cadastro-razao" placeholder="Razão Social">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="cadastro-fantasia" placeholder="Nome fantasia">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-building"></i>
+                            <input type="text" name="cadastro-cnpj" placeholder="CNPJ">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" name="cadastro-email" placeholder="Email">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="cadastro-username" placeholder="Nome de usuário">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="cadastro-primeiro-nome" placeholder="Primeiro nome">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="cadastro-ultimo-nome" placeholder="Último nome">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="cadastro-password" placeholder="Senha">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="cadastro-password2" placeholder="Confirme sua senha Senha">
+                        </div>
+                        <h3>Logo da empresa</h3>
+                        <input type="file" name="icone" accept="image/png, image/jpeg, image/jpg" style="background-color: var(--color-backgroud)">
+                    </div>
                     <input type="hidden" name="form" value="cadastro">
-
+    
                     <input type="submit" value="Sign up" class="btn solid">
                     
                 </form>
