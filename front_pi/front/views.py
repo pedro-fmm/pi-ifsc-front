@@ -6,6 +6,8 @@ from front_pi.settings import API_URL
 from .decorators import is_authenticated
 from toolbox import validate_cadastro_cliente, validate_plataforma_genero_categoria
 import logging
+from datetime import datetime, date, timedelta
+import dateutil.parser
 
 logger = logging.getLogger(__name__)
 
@@ -111,10 +113,23 @@ def auth(request):
 def home(request):
 
     vendas = requests.get(API_URL + '/api/venda/list/', headers={'Authorization': request.session['Authorization']}).json()
+    total_vendas = 0
+    ontem = date.today() - timedelta(1)
+    total_vendas_ultimo_dia = 0
+    numero_vendas_ultimo_dia = 0
 
-    logger.warn(vendas)
+    for venda in vendas:
 
-    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas})
+        total_vendas += float(venda['valor'])
+        logger.warn(venda['dia'])
+
+        dataVenda = datetime.strptime(venda['dia'], '%d/%m/%Y').date()
+        
+        if dataVenda >= ontem:
+            total_vendas_ultimo_dia = float(venda['valor'])
+            numero_vendas_ultimo_dia += 1
+
+    return render(request, 'home/home.html', {'titulo': 'Home', 'vendas': vendas, 'total_vendas': total_vendas, 'numero_vendas_ultimo_dia': numero_vendas_ultimo_dia, 'total_vendas_ultimo_dia': total_vendas_ultimo_dia})
 
 def error(request):
     return render(request, 'error/error.html', {'titulo': 'Error'})
