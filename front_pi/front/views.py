@@ -141,7 +141,7 @@ def cadastrar_clientes(request):
 
         response = requests.post(API_URL + '/api/cliente/create/', headers={"Authorization": request.session["Authorization"]}, json=validate['data'])
 
-        if response.status_code != 201:
+        if response.status_code != 200:
             mensagem = ['Falha na realização do cadastro']
             return render(request, 'clientes/cadastrar_clientes.html', {'titulo': 'Cadastro de cliente', 'messages': mensagem}) 
                   
@@ -454,8 +454,8 @@ def vendas_realizar(request):
     if request.session.get('produtos', None) != None:
 
         cliente = request.session.get('cliente', None)
-        # funcionario = request.session.get()
-        venda_data = {"cliente": cliente, "valor": "0", "vendedor": "2"}
+        funcionario = requests.get(f'{API_URL}/api/funcionario/', headers={'Authorization': request.session['Authorization']}).json()
+        venda_data = {"cliente": cliente, "valor": "0", "vendedor": funcionario['id']}
         response_venda = requests.post(f'{API_URL}/api/venda/create/', data=venda_data, headers={'Authorization': request.session['Authorization']})
         id_venda = response_venda.json()['id']
 
@@ -790,6 +790,8 @@ def cadastrar_plataforma(request):
         nome = request.POST.get("nome", False)
         descricao = request.POST.get("descricao", False)
 
+        mensagem = ""
+
         if not nome:
             mensagem = ['Você deve preencher o campo de nome da plataforma']
             return render(request, 'plataforma/cadastrar_plataforma.html', {'titulo': 'Cadastro de Plataforma', 'messages': mensagem})
@@ -890,7 +892,7 @@ def cadastrar_faixa(request):
         }
 
         resp = requests.post(API_URL + '/api/faixa/create/', data, headers={'Authorization': request.session['Authorization']})
-        if resp.status_code == '201':
+        if resp.status_code == 201:
             mensagem = ['Faixa Etária adicionada com sucesso!']
             return render(request, 'faixa/cadastrar_faixa.html', {'titulo': 'Cadastro de Faixa Etária', 'messages': mensagem})        
         
@@ -948,7 +950,7 @@ def cadastrar_categoria(request):
         }
 
         resp = requests.post(API_URL + '/api/categoria/create/', data, headers={'Authorization': request.session['Authorization']})
-        if resp.status_code == '201':
+        if resp.status_code == 201:
             mensagem = ['Categoria adicionada com sucesso!']
             return render(request, 'categoria/cadastrar_categoria.html', {'titulo': 'Cadastro de Categoria', 'messages': mensagem})        
         
@@ -1035,8 +1037,8 @@ def cadastrar_genero(request):
         }
 
         resp = requests.post(API_URL + '/api/genero/create/', data, headers={'Authorization': request.session['Authorization']})
-        if resp.status_code == '201':
-            mensagem = ['Gênero adicionada com sucesso!']
+        if resp.status_code == 201:
+            mensagem = ['Gênero adicionado com sucesso!']
             return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})        
         
         return render(request, 'genero/cadastrar_genero.html', {'titulo': 'Cadastro de Gênero', 'messages': mensagem})
