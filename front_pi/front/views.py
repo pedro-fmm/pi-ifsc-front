@@ -706,28 +706,55 @@ def analitico(request):
 def funcionario(request):
     resp = requests.get(API_URL + '/api/funcionario/list/', headers={'Authorization': request.session['Authorization']})
     try:
-        return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
+        return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionarios': resp.json()})
     except ValueError:
         return render(request, 'error/error.html', {'titulo': 'Erro'}) 
-    # return render(request, 'funcionario/funcionario.html', {'titulo': 'Funcionario', 'funcionario': resp.json()})
 
 @is_authenticated
 def cadastrar_funcionario(request):
 
     if request.method == 'POST':
-        nome = request.POST['usuario']
+        primeiroNome = request.POST['primeiro-nome']
+        ultimoNome = request.POST['ultimo-nome']
+        username = request.POST['username']
         comissao = request.POST['comissao']
+        email = request.POST['email']
+        senha = request.POST['password']
+        confirmarSenha = request.POST['confirm-password']
+        mensagem = 'deu pau'
 
-        if not nome:
-            mensagem = ['Você deve preencher o campo de nome']
+        if not primeiroNome:
+            mensagem = ['Você deve preencher o campo de Primeiro Nome']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not ultimoNome:
+            mensagem = ['Você deve preencher o campo de Último Nome']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not username:
+            mensagem = ['Você deve preencher o campo de Username']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
         if not comissao:
             mensagem = ['Você deve preencher o campo de comissao']
             return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not email:
+            mensagem = ['Você deve preencher o campo de Email']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not senha:
+            mensagem = ['Você deve preencher o campo de Senha']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if not confirmarSenha:
+            mensagem = ['Você deve preencher o campo de Confirmar Senha']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
+        if confirmarSenha != senha:
+            mensagem = ['Senha não corresponde']
+            return render(request, 'funcionario/cadastrar_funcionario.html', {'messages': mensagem})
 
         data = {
-            'usuario': nome,
-            'comissao': comissao
+            'primeiro_nome': primeiroNome,
+            'ultimo_nome': ultimoNome,
+            'username': username,
+            'comissao': comissao,
+            'email': email,
+            'password': senha
         }
 
         resp = requests.post(API_URL + '/api/funcionario/create/', data, headers={'Authorization': request.session['Authorization']})
