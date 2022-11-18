@@ -12,25 +12,61 @@
 
 {% block content %}
 
+<style>
+    .recent-orders{
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    button{
+        border-radius: 50px;
+        width: 200px;
+        margin: 25px;
+        background-color: var(--color-primary);
+    }
+
+    main p{
+        padding-top: 25px;
+        padding-bottom: 25px;
+        font-size: medium;
+        color: var( --color-dark);
+    }
+
+    .text{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 90%;
+        height: 50px;
+        background-color: var( --color-white);
+        border-radius: 50px;
+    }
+</style>
+
+    
+
     <main>
-            
-        <h1 style="text-align: left;">Realizando venda</h1>
+
+        <h1 style="text-align: left;">Realizando venda</h1>   
         <div class="recent-orders" style="overflow-y: auto; height: 69vh;">
 
             {% if cliente %}
 
-                <div>
+                <div class="text">
                     <p>Cliente: {{ cliente.nome }}</p>
                 </div>
 
                 <div>
-                    <a href="{% url 'front:listar_clientes_venda' %}">Alterar cliente</a>
+                    <button><a href="{% url 'front:listar_clientes_venda' %}" style="color: #fff">Alterar cliente</a></button>
                 </div>
 
             {% else %}
 
                 <div>
-                    <a href="{% url 'front:listar_clientes_venda' %}">Selecionar cliente</a>
+                    <button><a href="{% url 'front:listar_clientes_venda' %}" style="color: #fff">Selecionar cliente</a></button>
                 </div>
 
             {% endif %}
@@ -68,17 +104,19 @@
                 </form> -->
 
                 <div>
-                    <a href="{% url 'front:realizar_venda' %}">Realizar venda</a>
+                    <button><a href="{% url 'front:realizar_venda' %}" style="color: #fff">Realizar venda</a></button>
                 </div>
 
             {% else %}
 
+                <div class="text">
                     <p>Cadastre produtos na venda</p>
-
+                </div>
+                    
             {% endif %}
 
             <div>
-                <a href="{% url 'front:adicionar_produto' %}">Adicionar produto</a>
+                <button><a href="{% url 'front:adicionar_produto' %}" style="color: #fff">Adicionar produto</a></button>
             </div>
 
         </div>
