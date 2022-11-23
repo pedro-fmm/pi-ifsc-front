@@ -237,7 +237,7 @@ def excluir_produto(request, pk):
 
     if response.status_code != 204:
         mensagem = ['Cadastro realizado com sucesso']
-        return render(request, 'produto/detalhes_produto.html', {'titulo': 'Cadastro de produto', 'messages': mensagem})
+        return render(request, 'produtos/detalhes_produto.html', {'titulo': 'Cadastro de produto', 'messages': mensagem})
     
     mensagem = ['Produto deletado com sucesso!']
 
@@ -534,7 +534,7 @@ def excluir_produto(request, pk):
 
     if response.status_code != 204:
         mensagem = ['Cadastro realizado com sucesso']
-        return render(request, 'produto/detalhes_produto.html', {'titulo': 'Cadastro de produto', 'messages': mensagem})
+        return render(request, 'produtos/detalhes_produto.html', {'titulo': 'Cadastro de produto', 'messages': mensagem})
     
     mensagem = ['Produto deletado com sucesso!']
 
