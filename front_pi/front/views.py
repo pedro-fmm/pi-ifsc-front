@@ -66,6 +66,9 @@ def auth(request):
             if not cnpj:
                 mensagem = ['Você deve preencher o campo de CNPJ']
                 return render(request, 'auth/auth.html', {'messages': mensagem})
+            if len(cnpj) != 14:
+                mensagem = ['Seu CNPJ deve ser igual a 14 caracteres numéricos.']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
             if not icone:
                 mensagem = ['Você deve preencher o campo de ícone']
                 return render(request, 'auth/auth.html', {'messages': mensagem})
@@ -86,6 +89,9 @@ def auth(request):
                 return render(request, 'auth/auth.html', {'messages': mensagem})
             if not password:
                 mensagem = ['Você deve digitar uma senha.']
+                return render(request, 'auth/auth.html', {'messages': mensagem})
+            if len(password) < 8:
+                mensagem = ['Sua senha deve ser maior que 8 caracteres.']
                 return render(request, 'auth/auth.html', {'messages': mensagem})
             if not password2:
                 mensagem = ['As senhas devem ser iguais']
