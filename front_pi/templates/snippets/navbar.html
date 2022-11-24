@@ -28,18 +28,12 @@
                 <span class="material-icons-sharp">receipt_long</span>
                 <h3>Vendas</h3>
             </a>
+            {% if not request.session.isadmin %}
             <a id="link-vendas" href="{% url 'front:iniciar_venda' %}">
                 <span class="material-icons-sharp">add_shopping_cart</span>
                 <h3>Realizar Vendas</h3>
             </a>
-            <a id="link-produtos" href="{% url 'front:produtos' %}">
-                <span class="material-icons-sharp">inventory</span>
-                <h3>Produtos</h3>
-            </a>
-            <a id="link-cadastrar-produtos" href="{% url 'front:cadastrar_produtos' %}">
-                <span class="material-symbols-outlined">assignment_add</span>
-                <h3>Cadastrar Produtos</h3>
-            </a>
+            {% else %}
             <a id="link-funcionario" href="{% url 'front:funcionario' %}">
                 <span class="material-symbols-outlined">badge</span>
                 <h3>Funcionários</h3>
@@ -47,6 +41,15 @@
             <a id="link-cadastrar-funcionario" href="{% url 'front:cadastrar_funcionario' %}">
                 <span class="material-symbols-outlined">medical_information</span>
                 <h3>Cadastrar Funcionários</h3>
+            </a>
+            {% endif %}
+            <a id="link-produtos" href="{% url 'front:produtos' %}">
+                <span class="material-icons-sharp">inventory</span>
+                <h3>Produtos</h3>
+            </a>
+            <a id="link-cadastrar-produtos" href="{% url 'front:cadastrar_produtos' %}">
+                <span class="material-symbols-outlined">assignment_add</span>
+                <h3>Cadastrar Produtos</h3>
             </a>
 
             <a id="link-funcionario" href="{% url 'front:plataformas' %}">
@@ -65,6 +68,15 @@
             <a id="link-cadastrar-funcionario" href="{% url 'front:cadastrar_categoria' %}">
                 <span class="material-symbols-outlined">stadia_controller</span>
                 <h3>Cadastrar Categorias</h3>
+            </a>
+
+            <a id="link-funcionario" href="{% url 'front:funcionario' %}">
+                <span class="material-symbols-outlined">badge</span>
+                <h3>Funcionários</h3>
+            </a>
+            <a id="link-cadastrar-funcionario" href="{% url 'front:cadastrar_funcionario' %}">
+                <span class="material-symbols-outlined">medical_information</span>
+                <h3>Cadastrar Funcionários</h3>
             </a>
 
             <a id="link-funcionario" href="{% url 'front:faixas' %}">

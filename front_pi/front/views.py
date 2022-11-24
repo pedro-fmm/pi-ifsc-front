@@ -40,6 +40,7 @@ def auth(request):
                 resp_json = resp.json()
                 request.session["Authorization"] = 'Bearer ' + resp_json.get('access')
                 request.session["username"] = resp_json.get("user").get("username")
+                request.session["isadmin"] = resp_json.get("isadmin", False)
                 return redirect("front:home")
             mensagem = ['Usuário ou senha inválidos']
             return render(request, 'auth/auth.html', {'messages': mensagem})
@@ -489,7 +490,7 @@ def vendas_realizar(request):
 
         request.session['produtos'] = None
         request.session['cliente'] = None
-        return render(request, 'vendas/vendas.html', {'titulo': 'venda realizada'})
+        return vendas_list(request)
 
     return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': 'nao foi'})
 
@@ -792,7 +793,7 @@ def detalhes_funcionario(request, pk):
 
     response = requests.get(f'{API_URL}/api/funcionario/{pk}', headers={'Authorization': request.session['Authorization']})
 
-    return render(request, 'funcionarios/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'funcionario': response.json()})
+    return render(request, 'funcionario/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'funcionario': response.json()})
 
 
 @is_authenticated
@@ -802,11 +803,11 @@ def excluir_funcionario(request, pk):
 
     if response.status_code != 204:
         mensagem = ['Cadastro realizado com sucesso']
-        return render(request, 'funcionarios/detalhes_funcionario.html', {'titulo': 'Cadastro de funcionario', 'messages': mensagem})
+        return render(request, 'funcionario/detalhes_funcionario.html', {'titulo': 'Cadastro de funcionario', 'messages': mensagem})
     
     mensagem = ['Funcionario deletado com sucesso!']
 
-    return render(request, 'funcionarios/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'messages': mensagem})
+    return render(request, 'funcionario/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'messages': mensagem})
 
 @is_authenticated
 def plataformas(request):
