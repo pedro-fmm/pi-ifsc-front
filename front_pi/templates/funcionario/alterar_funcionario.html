@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'css/style-funcionario-cadastro.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <main>        
+        <h1 style="text-align: left;">Alterar Funcionario</h1>
+      
+        {% if messages %}
+            <ul class="messages" style="color: red; font-size: larger;">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if funcionario %}
+
+        <form method="post" action="{% url 'front:cadastrar_funcionario' %}" class="Sign-In">
+
+            {% csrf_token %}
+
+            <div class="register-user" >
+                <h2>Primeiro Nome</h2>
+                <input id="primeiro-nome" name="primeiro-nome" type="text">
+                <h2>Último Nome</h2>
+                <input type="text" name="ultimo-nome">
+                <h2>Username</h2>
+                <input type="text" name="username">
+                <h2>Comissão</h2>
+                <input type="number" name="comissao">
+                <h2>Email</h2>
+                <input type="text" name="email">
+                <h2>Senha</h2>
+                <input type="password" name="password">
+                <h2>Confirmar Senha</h2>
+                <input type="password" name="confirm-password">
+                <button id="cadastrar">Cadastrar</button>
+            </div>
+        </form>
+
+    {% else %}
+        
+        <p>Funcionario inválido</p>
+
+    {% endif %}
+
+    </main>
+
+{% endblock %}

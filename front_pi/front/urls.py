@@ -4,7 +4,7 @@ from .views import clientes, alterar_cliente ,cadastrar_clientes, detalhes_clien
 from .views import produtos, cadastrar_produtos, detalhes_produto, alterar_produto, excluir_produto
 from .views import vendas_list, vendas_iniciar, vendas_adicionar_produto, vendas_realizar, vendas_deletar, vendas_listar_cliente, vendas_selecionar_cliente
 from .views import analitico
-from .views import funcionario, cadastrar_funcionario
+from .views import funcionario, cadastrar_funcionario, detalhes_funcionario, excluir_funcionario
 from .views import cadastrar_faixa, cadastrar_categoria, cadastrar_genero, cadastrar_plataforma
 from .views import faixas, detalhes_faixa, excluir_faixa
 from .views import categorias, detalhes_categoria, excluir_categoria
@@ -53,6 +53,9 @@ urlpatterns = [
     
     path('funcionario/', funcionario, name='funcionario'),
     path('funcionario/cadastro/', cadastrar_funcionario, name='cadastrar_funcionario'),
+    path('funcionario/<uuid:pk>', detalhes_funcionario, name='detalhes_funcionario'),
+    path('funcionario/delete/<uuid:pk>', excluir_funcionario, name='excluir_funcionario'),
+    # path('funcionario/alterar/<uuid:pk>', alterar_funcionario, name='alterar_funcionario'),
 
     # Plataforma
     
