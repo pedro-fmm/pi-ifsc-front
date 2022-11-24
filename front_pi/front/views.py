@@ -792,7 +792,7 @@ def detalhes_funcionario(request, pk):
 
     response = requests.get(f'{API_URL}/api/funcionario/{pk}', headers={'Authorization': request.session['Authorization']})
 
-    return render(request, 'funcionarios/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'funcionario': response.json()})
+    return render(request, 'funcionario/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'funcionario': response.json()})
 
 
 @is_authenticated
@@ -802,11 +802,11 @@ def excluir_funcionario(request, pk):
 
     if response.status_code != 204:
         mensagem = ['Cadastro realizado com sucesso']
-        return render(request, 'funcionarios/detalhes_funcionario.html', {'titulo': 'Cadastro de funcionario', 'messages': mensagem})
+        return render(request, 'funcionario/detalhes_funcionario.html', {'titulo': 'Cadastro de funcionario', 'messages': mensagem})
     
     mensagem = ['Funcionario deletado com sucesso!']
 
-    return render(request, 'funcionarios/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'messages': mensagem})
+    return render(request, 'funcionario/detalhes_funcionario.html', {'titulo': 'Detalhes do funcionario', 'messages': mensagem})
 
 @is_authenticated
 def plataformas(request):
