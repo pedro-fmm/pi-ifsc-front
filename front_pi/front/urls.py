@@ -53,8 +53,8 @@ urlpatterns = [
     
     path('funcionario/', funcionario, name='funcionario'),
     path('funcionario/cadastro/', cadastrar_funcionario, name='cadastrar_funcionario'),
-    path('funcionario/<uuid:pk>', detalhes_funcionario, name='detalhes_funcionario'),
-    path('funcionario/delete/<uuid:pk>', excluir_funcionario, name='excluir_funcionario'),
+    path('funcionario/<int:pk>', detalhes_funcionario, name='detalhes_funcionario'),
+    path('funcionario/delete/<int:pk>', excluir_funcionario, name='excluir_funcionario'),
     # path('funcionario/alterar/<uuid:pk>', alterar_funcionario, name='alterar_funcionario'),
 
     # Plataforma
