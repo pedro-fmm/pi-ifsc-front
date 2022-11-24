@@ -40,6 +40,7 @@ def auth(request):
                 resp_json = resp.json()
                 request.session["Authorization"] = 'Bearer ' + resp_json.get('access')
                 request.session["username"] = resp_json.get("user").get("username")
+                request.session["isadmin"] = resp_json.get("isadmin", False)
                 return redirect("front:home")
             mensagem = ['Usuário ou senha inválidos']
             return render(request, 'auth/auth.html', {'messages': mensagem})
