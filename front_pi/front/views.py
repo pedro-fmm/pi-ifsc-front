@@ -489,7 +489,7 @@ def vendas_realizar(request):
 
         request.session['produtos'] = None
         request.session['cliente'] = None
-        return render(request, 'vendas/vendas.html', {'titulo': 'venda realizada'})
+        return vendas_list(request)
 
     return render(request, 'vendas/venda_realizada.html', {'titulo': 'venda realizada', 'message': 'nao foi'})
 
