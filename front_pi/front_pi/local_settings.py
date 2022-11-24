@@ -41,7 +41,3 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None  
 
 AWS_S3_ADDRESSING_STYLE = "virtual"
-<<<<<<< HEAD
-
-=======
->>>>>>> d719b347296a9234bc316b48be1eff1f3d8da480
